@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "aurora",
+    "title": "Aurora",
+    "category": "Film wizerunkowy",
+    "year": "2025",
+    "summary": "Kampania wideo dla domu jubilerskiego, oparta na grze światła i cienia."
+  },
+  {
+    "slug": "meridian",
+    "title": "Meridian",
+    "category": "Doświadczenie cyfrowe",
+    "year": "2024",
+    "summary": "Interaktywna strona narracyjna dla marki podróży premium."
+  },
+  {
+    "slug": "lumen",
+    "title": "Lumen",
+    "category": "Identyfikacja wizualna",
+    "year": "2024",
+    "summary": "Kompletny system marki dla butiku architektury wnętrz."
+  }
+]

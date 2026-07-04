@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "brand-film",
+    "title": "Film wizerunkowy",
+    "summary": "Kinowe narracje wideo budujące emocjonalną więź z marką."
+  },
+  {
+    "slug": "visual-identity",
+    "title": "Identyfikacja wizualna",
+    "summary": "Spójny język wizualny — od logotypu po system marki."
+  },
+  {
+    "slug": "digital-experience",
+    "title": "Doświadczenia cyfrowe",
+    "summary": "Interaktywne strony i aplikacje zaprojektowane jak opowieści."
+  },
+  {
+    "slug": "art-direction",
+    "title": "Kierownictwo artystyczne",
+    "summary": "Nadzór kreatywny nad kampaniami premium od koncepcji po realizację."
+  }
+]

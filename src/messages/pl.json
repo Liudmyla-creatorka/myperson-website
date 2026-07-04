@@ -1,0 +1,19 @@
+{
+  "common": {
+    "skipToContent": "Przejdź do treści"
+  },
+  "nav": {
+    "home": "Strona główna",
+    "portfolio": "Portfolio",
+    "services": "Usługi",
+    "about": "O nas",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "rights": "Wszelkie prawa zastrzeżone."
+  },
+  "languageSwitcher": {
+    "pl": "PL",
+    "en": "EN"
+  }
+}

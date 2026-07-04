@@ -1,0 +1,22 @@
+{
+  "home": {
+    "title": "MY PERSON",
+    "intro": "Studio narracji wizualnych. Kinowe historie dla marek premium."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "intro": "Wybrane realizacje łączące obraz, ruch i opowieść."
+  },
+  "services": {
+    "title": "Usługi",
+    "intro": "Kompleksowe podejście do budowania premium marek."
+  },
+  "about": {
+    "title": "O nas",
+    "intro": "MY PERSON to studio kreatywne tworzące doświadczenia, które zapadają w pamięć. Łączymy film, projektowanie i technologię, by opowiadać historie marek w sposób, który czuje się intencjonalny i elegancki."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "intro": "Porozmawiajmy o Twoim projekcie."
+  }
+}

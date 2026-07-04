@@ -1,0 +1,22 @@
+.switcher {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.option,
+.active {
+  font-size: var(--text-xs);
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+}
+
+.active {
+  color: var(--color-foreground);
+  font-weight: 600;
+}
+
+.option:hover,
+.option:focus-visible {
+  color: var(--color-foreground);
+}

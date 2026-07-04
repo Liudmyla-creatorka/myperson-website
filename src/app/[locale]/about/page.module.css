@@ -1,0 +1,10 @@
+.wrapper {
+  padding-block: var(--spacing-16);
+  max-width: 60ch;
+}
+
+.intro {
+  margin-top: var(--spacing-6);
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+}

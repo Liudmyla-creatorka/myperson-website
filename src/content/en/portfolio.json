@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "aurora",
+    "title": "Aurora",
+    "category": "Brand Film",
+    "year": "2025",
+    "summary": "A video campaign for a jewelry house, built around light and shadow."
+  },
+  {
+    "slug": "meridian",
+    "title": "Meridian",
+    "category": "Digital Experience",
+    "year": "2024",
+    "summary": "An interactive narrative site for a premium travel brand."
+  },
+  {
+    "slug": "lumen",
+    "title": "Lumen",
+    "category": "Visual Identity",
+    "year": "2024",
+    "summary": "A complete brand system for an interior architecture studio."
+  }
+]

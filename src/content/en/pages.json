@@ -1,0 +1,22 @@
+{
+  "home": {
+    "title": "MY PERSON",
+    "intro": "A visual narratives studio. Cinematic stories for premium brands."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "intro": "Selected work combining image, motion and story."
+  },
+  "services": {
+    "title": "Services",
+    "intro": "A complete approach to building premium brands."
+  },
+  "about": {
+    "title": "About",
+    "intro": "MY PERSON is a creative studio building experiences that stay with people. We combine film, design and technology to tell brand stories that feel intentional and elegant."
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Let's talk about your project."
+  }
+}
