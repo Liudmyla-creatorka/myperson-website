@@ -1,7 +1,10 @@
 {
   "home": {
     "title": "MY PERSON",
-    "intro": "Studio narracji wizualnych. Kinowe historie dla marek premium."
+    "eyebrow": "Studio Narracji Wizualnych",
+    "intro": "Studio narracji wizualnych. Kinowe historie dla marek premium.",
+    "primaryCta": { "label": "Zobacz nasze prace", "href": "/portfolio" },
+    "secondaryCta": { "label": "Skontaktuj się", "href": "/contact" }
   },
   "portfolio": {
     "title": "Portfolio",

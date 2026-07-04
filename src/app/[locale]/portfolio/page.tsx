@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { getPageCopy, getPortfolioItems } from "@/lib/content";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
+import { ScrollRevealList } from "@/components/ScrollRevealList";
 import styles from "./page.module.css";
 
 type PageProps = {
@@ -32,7 +33,7 @@ export default async function PortfolioPage({ params }: PageProps) {
           <h1>{copy.title}</h1>
           <p className={styles.intro}>{copy.intro}</p>
         </header>
-        <ul role="list" className={styles.grid}>
+        <ScrollRevealList className={styles.grid}>
           {items.map((item) => (
             <li key={item.slug}>
               <Link href={`/portfolio/${item.slug}`} className={styles.card}>
@@ -44,7 +45,7 @@ export default async function PortfolioPage({ params }: PageProps) {
               </Link>
             </li>
           ))}
-        </ul>
+        </ScrollRevealList>
       </Container>
     </main>
   );

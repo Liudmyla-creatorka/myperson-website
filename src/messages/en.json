@@ -15,5 +15,8 @@
   "languageSwitcher": {
     "pl": "PL",
     "en": "EN"
+  },
+  "hero": {
+    "scroll": "Scroll"
   }
 }

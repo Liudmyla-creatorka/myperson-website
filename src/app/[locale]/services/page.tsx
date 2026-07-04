@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy, getServices } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
+import { ScrollRevealList } from "@/components/ScrollRevealList";
 import styles from "./page.module.css";
 
 type PageProps = {
@@ -31,14 +32,14 @@ export default async function ServicesPage({ params }: PageProps) {
           <h1>{copy.title}</h1>
           <p className={styles.intro}>{copy.intro}</p>
         </header>
-        <ul role="list" className={styles.list}>
+        <ScrollRevealList className={styles.list}>
           {services.map((service) => (
             <li key={service.slug} className={styles.item}>
               <h2>{service.title}</h2>
               <p>{service.summary}</p>
             </li>
           ))}
-        </ul>
+        </ScrollRevealList>
       </Container>
     </main>
   );

@@ -1,7 +1,10 @@
 {
   "home": {
     "title": "MY PERSON",
-    "intro": "A visual narratives studio. Cinematic stories for premium brands."
+    "eyebrow": "Visual Narratives Studio",
+    "intro": "A visual narratives studio. Cinematic stories for premium brands.",
+    "primaryCta": { "label": "View Our Work", "href": "/portfolio" },
+    "secondaryCta": { "label": "Get in Touch", "href": "/contact" }
   },
   "portfolio": {
     "title": "Portfolio",

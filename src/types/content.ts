@@ -12,7 +12,15 @@ export interface PortfolioItem {
   summary: string;
 }
 
+export interface PageCta {
+  label: string;
+  href: string;
+}
+
 export interface PageCopy {
   title: string;
   intro: string;
+  eyebrow?: string;
+  primaryCta?: PageCta;
+  secondaryCta?: PageCta;
 }
