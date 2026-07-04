@@ -1,5 +1,5 @@
 :root {
-  /* Color primitives */
+  /* Color primitives — internal only, never exposed as Tailwind utilities */
   --color-white: #ffffff;
   --color-black: #0a0a0a;
   --color-neutral-50: #f7f7f5;
@@ -7,6 +7,14 @@
   --color-neutral-600: #61615c;
   --color-neutral-900: #171715;
 
+  /* Layout values with no Tailwind theme namespace */
+  --container-width: 90rem;
+  --gutter: clamp(1rem, 4vw, 4rem);
+
+  color-scheme: light;
+}
+
+@theme {
   /* Semantic colors */
   --color-background: var(--color-neutral-50);
   --color-surface: var(--color-white);
@@ -26,9 +34,7 @@
   --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.75rem);
   --text-display: clamp(3rem, 1.5rem + 7vw, 8rem);
 
-  /* Layout and spacing */
-  --container-width: 90rem;
-  --gutter: clamp(1rem, 4vw, 4rem);
+  /* Spacing */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
   --spacing-3: 0.75rem;
@@ -48,6 +54,4 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 180ms;
   --duration-base: 320ms;
-
-  color-scheme: light;
 }

@@ -2,7 +2,10 @@
 
 @import "./reset.css" layer(reset);
 @import "./tokens.css" layer(tokens);
+@import "tailwindcss/utilities.css" layer(utilities);
 @import "./utilities.css" layer(utilities);
+
+@plugin "@tailwindcss/typography";
 
 @layer base {
   body {
