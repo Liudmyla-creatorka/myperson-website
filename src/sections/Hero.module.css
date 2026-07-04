@@ -1,0 +1,16 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  background-color: #1c1c1e;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--spacing-32);
+}

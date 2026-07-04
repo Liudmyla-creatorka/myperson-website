@@ -1,0 +1,26 @@
+.light {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 26rem;
+  height: 26rem;
+  margin-left: -13rem;
+  margin-top: -13rem;
+  border-radius: var(--radius-full);
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 18%) 0%,
+    rgb(255 255 255 / 6%) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .light {
+    display: none;
+  }
+}

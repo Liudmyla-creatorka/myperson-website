@@ -1,0 +1,17 @@
+.canvasWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.staticFallback {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #2c2a28 0%,
+    #1c1c1e 60%,
+    #141416 100%
+  );
+}
