@@ -1,17 +1,26 @@
-.canvasWrapper {
+.wrapper {
   position: absolute;
   inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.maskDefs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.colorLayer,
+.sketchLayer {
+  pointer-events: none;
+}
+
+.colorLayer {
   z-index: 0;
 }
 
-.staticFallback {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: radial-gradient(
-    ellipse at 50% 40%,
-    #2c2a28 0%,
-    #1c1c1e 60%,
-    #141416 100%
-  );
+.sketchLayer {
+  z-index: 1;
 }

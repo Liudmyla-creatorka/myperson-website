@@ -1,15 +1,15 @@
 .content {
-  color: var(--color-white);
+  color: var(--color-foreground);
 }
 
 .eyebrow {
   display: inline-block;
   margin-bottom: var(--spacing-6);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 60%);
+  color: var(--color-muted);
 }
 
 .headline {
@@ -17,9 +17,11 @@
   margin: 0;
   font-family: var(--font-serif);
   font-size: clamp(3.5rem, 2rem + 8vw, 9rem);
-  font-weight: 400;
+  font-weight: 700;
+  text-transform: uppercase;
   line-height: 1.02;
   letter-spacing: -0.02em;
+  color: var(--color-accent);
   will-change: filter;
 }
 
@@ -29,7 +31,7 @@
   font-size: var(--text-xl);
   line-height: 1.65;
   letter-spacing: 0.01em;
-  color: rgb(255 255 255 / 78%);
+  color: var(--color-accent);
 }
 
 .actions {
@@ -42,15 +44,18 @@
 .primaryCta,
 .secondaryCta {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
-  padding: var(--spacing-2) var(--spacing-5);
-  border: 1px solid rgb(255 255 255 / 35%);
+  padding: var(--spacing-2) var(--spacing-6);
   border-radius: var(--radius-full);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
+  line-height: 1;
+  white-space: nowrap;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 90%);
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
   transition:
     transform 250ms var(--ease-out),
     color 250ms var(--ease-out),
@@ -58,24 +63,23 @@
     background-color 250ms var(--ease-out);
 }
 
+.primaryCta {
+  background-color: rgb(74 14 26 / 10%);
+}
+
 .primaryCta:hover,
 .primaryCta:focus-visible {
-  transform: scale(1.05);
-  background-color: var(--color-white);
-  border-color: var(--color-white);
-  color: #1c1c1e;
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 .secondaryCta {
-  border-color: rgb(255 255 255 / 20%);
-  color: rgb(255 255 255 / 65%);
+  background-color: transparent;
 }
 
 .secondaryCta:hover,
 .secondaryCta:focus-visible {
-  transform: scale(1.05);
-  border-color: var(--color-white);
-  color: var(--color-white);
+  background-color: rgb(74 14 26 / 15%);
 }
 
 .scrollCue {
@@ -94,17 +98,70 @@
   height: 2.5rem;
   background: linear-gradient(
     180deg,
-    rgb(255 255 255 / 70%) 0%,
-    rgb(255 255 255 / 0%) 100%
+    rgb(139 111 71 / 80%) 0%,
+    rgb(139 111 71 / 0%) 100%
   );
 }
 
 .scrollLabel {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgb(255 255 255 / 55%);
+  color: var(--color-muted);
+}
+
+.glassCard {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid rgb(237 234 228 / 18%);
+  border-radius: var(--radius-full);
+  background: rgb(237 234 228 / 8%);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 20%);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-foreground);
+}
+
+.glassCardRec {
+  top: var(--spacing-8);
+  right: var(--spacing-8);
+}
+
+.glassCardTimecode {
+  bottom: 32%;
+  right: var(--spacing-8);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+}
+
+.recDot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  animation: rec-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes rec-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
 }
 
 @media (max-width: 47.99rem) {
@@ -113,7 +170,8 @@
     padding: var(--spacing-2) var(--spacing-4);
   }
 
-  .scrollCue {
+  .scrollCue,
+  .glassCard {
     display: none;
   }
 }

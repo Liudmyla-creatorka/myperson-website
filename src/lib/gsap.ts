@@ -1,9 +1,8 @@
 import gsap from "gsap";
-import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(SplitText, ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-export { gsap, SplitText, ScrollTrigger };
+export { gsap, ScrollTrigger };

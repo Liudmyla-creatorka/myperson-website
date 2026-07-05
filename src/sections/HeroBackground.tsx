@@ -1,125 +1,210 @@
 "use client";
 
-import { useMemo, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { gsap } from "@/lib/gsap";
 import styles from "./HeroBackground.module.css";
 
-const GRAIN_VERTEX_SHADER = `
-  varying vec2 vUv;
+const MASK_ID = "hero-reveal-mask";
+const FILTER_ID = "hero-reveal-liquid";
 
-  void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-  }
-`;
+// Fixed per-blob offsets (px, from the tracked cursor point) and radii —
+// merged by the blur below into one blob, then the merged shape's edge is
+// warped by turbulence so the outline reads as liquid, not geometric.
+const BLOBS = [
+  { dx: -22, dy: 9, rx: 188, ry: 154, freqX: 0.13, freqY: 0.1, phase: 0 },
+  { dx: 28, dy: -14, rx: 147, ry: 125, freqX: 0.17, freqY: 0.14, phase: 1.7 },
+  { dx: -11, dy: -22, rx: 125, ry: 106, freqX: 0.09, freqY: 0.19, phase: 3.1 },
+  { dx: 17, dy: 19, rx: 112, ry: 96, freqX: 0.21, freqY: 0.11, phase: 4.4 },
+];
 
-const GRAIN_FRAGMENT_SHADER = `
-  uniform float uTime;
-  varying vec2 vUv;
-
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-  }
-
-  void main() {
-    vec3 base = vec3(0.055, 0.055, 0.06);
-    float grain = hash(vUv * vec2(900.0, 900.0) + uTime * 42.0);
-    float vignette = smoothstep(1.05, 0.2, distance(vUv, vec2(0.5)));
-    vec3 color = base * mix(0.72, 1.0, vignette) + (grain - 0.5) * 0.035;
-    gl_FragColor = vec4(color, 1.0);
-  }
-`;
-
-function GrainBackdrop() {
-  const materialRef = useRef<THREE.ShaderMaterial>(null);
-  const { viewport } = useThree();
-  const uniforms = useMemo(() => ({ uTime: { value: 0 } }), []);
-
-  useFrame((_state, delta) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value += delta;
-    }
-  });
-
-  return (
-    <mesh scale={[viewport.width, viewport.height, 1]} position={[0, 0, -1]}>
-      <planeGeometry args={[1, 1]} />
-      <shaderMaterial
-        ref={materialRef}
-        uniforms={uniforms}
-        vertexShader={GRAIN_VERTEX_SHADER}
-        fragmentShader={GRAIN_FRAGMENT_SHADER}
-      />
-    </mesh>
-  );
-}
-
-const RIBBON_VERTEX_SHADER = `
-  varying vec3 vNormal;
-  varying vec3 vViewPosition;
-
-  void main() {
-    vNormal = normalize(normalMatrix * normal);
-    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    vViewPosition = -mvPosition.xyz;
-    gl_Position = projectionMatrix * mvPosition;
-  }
-`;
-
-const RIBBON_FRAGMENT_SHADER = `
-  varying vec3 vNormal;
-  varying vec3 vViewPosition;
-
-  void main() {
-    vec3 viewDir = normalize(vViewPosition);
-    float fresnel = pow(1.0 - max(dot(normalize(vNormal), viewDir), 0.0), 3.2);
-    vec3 base = vec3(0.02, 0.02, 0.022);
-    vec3 rim = vec3(1.0) * fresnel * 0.85;
-    gl_FragColor = vec4(base + rim, 1.0);
-  }
-`;
-
-function RibbonKnot() {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((_state, delta) => {
-    const mesh = meshRef.current;
-    if (!mesh) return;
-    mesh.rotation.x += delta * 0.08;
-    mesh.rotation.y += delta * 0.12;
-  });
-
-  return (
-    <mesh ref={meshRef} position={[0.6, 0, 0]} rotation={[0.4, 0.2, 0]}>
-      <torusKnotGeometry args={[1, 0.26, 180, 24, 2, 3]} />
-      <shaderMaterial
-        vertexShader={RIBBON_VERTEX_SHADER}
-        fragmentShader={RIBBON_FRAGMENT_SHADER}
-      />
-    </mesh>
-  );
-}
+const JITTER_AMOUNT = 8; // px, small "not computer-generated" wobble
+const MAX_STRETCH = 0.3; // clamp for velocity-based squash/stretch
 
 export function HeroBackground() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const groupRef = useRef<SVGGElement>(null);
+  const blobRefs = useRef<(SVGEllipseElement | null)[]>([]);
+  const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  if (prefersReducedMotion) {
-    return <div className={styles.staticFallback} aria-hidden="true" />;
-  }
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const wrapper = wrapperRef.current;
+    const group = groupRef.current;
+    if (!wrapper || !group) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+
+    const state = { x: 0, y: 0, reveal: 0 };
+    const previous = { x: 0, y: 0 };
+
+    const setX = gsap.quickTo(state, "x", {
+      duration: 0.6,
+      ease: "power3.out",
+    });
+    const setY = gsap.quickTo(state, "y", {
+      duration: 0.6,
+      ease: "power3.out",
+    });
+    // Driven through the same manual setAttribute path as transform below —
+    // GSAP's normal style-based quickTo on the <g>'s opacity is not honored
+    // reliably for elements used as <mask> content in this engine, so the
+    // reveal strength is tracked as plain state and applied every tick.
+    const setReveal = gsap.quickTo(state, "reveal", {
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    // Tracked on window (not the wrapper) so the reveal keeps following the
+    // cursor even where the Hero content (headline/CTAs) sits on top and
+    // would otherwise intercept pointer events before they reach this
+    // element — the same reasoning CursorLight already uses.
+    function handlePointerMove(event: PointerEvent) {
+      const rect = wrapper!.getBoundingClientRect();
+      const withinBounds =
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+
+      setX(event.clientX - rect.left);
+      setY(event.clientY - rect.top);
+      setReveal(withinBounds ? 1 : 0);
+    }
+
+    let elapsed = 0;
+    function tick(_time: number, deltaMs: number) {
+      const dt = Math.max(deltaMs / 1000, 0.001);
+      elapsed += dt;
+
+      const velocityX = (state.x - previous.x) / dt;
+      const velocityY = (state.y - previous.y) / dt;
+      previous.x = state.x;
+      previous.y = state.y;
+
+      const speed = Math.hypot(velocityX, velocityY);
+      const stretch = Math.min(speed / 1000, MAX_STRETCH);
+      const angle = (Math.atan2(velocityY, velocityX) * 180) / Math.PI;
+
+      group!.setAttribute("opacity", `${state.reveal}`);
+      group!.setAttribute(
+        "transform",
+        `translate(${state.x} ${state.y}) rotate(${angle}) scale(${1 + stretch} ${1 - stretch * 0.4}) rotate(${-angle})`,
+      );
+
+      BLOBS.forEach((blob, index) => {
+        const el = blobRefs.current[index];
+        if (!el) return;
+        const jitterX =
+          Math.sin(elapsed * blob.freqX + blob.phase) * JITTER_AMOUNT;
+        const jitterY =
+          Math.cos(elapsed * blob.freqY + blob.phase) * JITTER_AMOUNT;
+        el.setAttribute("cx", `${blob.dx + jitterX}`);
+        el.setAttribute("cy", `${blob.dy + jitterY}`);
+      });
+
+      // Slow ambient drift of the noise pattern itself, so the blob's edge
+      // keeps subtly breathing even when the cursor is still.
+      if (turbulenceRef.current) {
+        const freq = 0.014 + Math.sin(elapsed * 0.05) * 0.004;
+        turbulenceRef.current.setAttribute(
+          "baseFrequency",
+          `${freq.toFixed(4)}`,
+        );
+      }
+    }
+
+    window.addEventListener("pointermove", handlePointerMove);
+    gsap.ticker.add(tick);
+
+    return () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      gsap.ticker.remove(tick);
+    };
+  }, [prefersReducedMotion]);
 
   return (
-    <div className={styles.canvasWrapper} aria-hidden="true">
-      <Canvas
-        dpr={[1, 1.5]}
-        gl={{ antialias: false }}
-        camera={{ position: [0, 0, 4.2], fov: 45 }}
-      >
-        <GrainBackdrop />
-        <RibbonKnot />
-      </Canvas>
+    <div ref={wrapperRef} className={styles.wrapper} aria-hidden="true">
+      <svg className={styles.maskDefs} aria-hidden="true">
+        <defs>
+          <filter
+            id={FILTER_ID}
+            x="-80%"
+            y="-80%"
+            width="260%"
+            height="260%"
+            colorInterpolationFilters="sRGB"
+          >
+            <feGaussianBlur in="SourceGraphic" stdDeviation="24" result="soft" />
+            <feTurbulence
+              ref={turbulenceRef}
+              type="fractalNoise"
+              baseFrequency="0.014"
+              numOctaves={2}
+              seed={7}
+              result="noise"
+            />
+            <feDisplacementMap
+              in="soft"
+              in2="noise"
+              scale={95}
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+          <mask id={MASK_ID}>
+            <rect
+              x="-5000"
+              y="-5000"
+              width="10000"
+              height="10000"
+              fill="white"
+            />
+            <g ref={groupRef} filter={`url(#${FILTER_ID})`} opacity={0}>
+              {BLOBS.map((blob, index) => (
+                <ellipse
+                  key={index}
+                  ref={(el) => {
+                    blobRefs.current[index] = el;
+                  }}
+                  cx={blob.dx}
+                  cy={blob.dy}
+                  rx={blob.rx}
+                  ry={blob.ry}
+                  fill="black"
+                />
+              ))}
+            </g>
+          </mask>
+        </defs>
+      </svg>
+      <Image
+        src="/images/hero-color.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className={styles.colorLayer}
+        style={{ objectFit: "cover", objectPosition: "center" }}
+      />
+      <Image
+        src="/images/hero-sketch.jpg"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className={styles.sketchLayer}
+        style={{
+          objectFit: "cover",
+          objectPosition: "center",
+          ...(prefersReducedMotion
+            ? {}
+            : { mask: `url(#${MASK_ID})`, WebkitMask: `url(#${MASK_ID})` }),
+        }}
+      />
     </div>
   );
 }

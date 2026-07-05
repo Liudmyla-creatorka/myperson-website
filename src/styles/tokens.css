@@ -1,33 +1,32 @@
 :root {
   /* Color primitives — internal only, never exposed as Tailwind utilities */
-  --color-white: #ffffff;
-  --color-black: #0a0a0a;
-  --color-neutral-50: #f7f7f5;
-  --color-neutral-200: #deded9;
-  --color-neutral-600: #61615c;
-  --color-neutral-900: #171715;
+  /* Brand palette — see design-system/MASTER.md. Do not add colors here. */
+  --color-graphite: #1c1c1e;
+  --color-chalk: #edeae4;
+  --color-oxblood: #4a0e1a;
+  --color-bronze: #8b6f47;
 
   /* Layout values with no Tailwind theme namespace */
   --container-width: 90rem;
   --gutter: clamp(1rem, 4vw, 4rem);
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 @theme {
-  /* Semantic colors */
-  --color-background: var(--color-neutral-50);
-  --color-surface: var(--color-white);
-  --color-foreground: var(--color-neutral-900);
-  --color-muted: var(--color-neutral-600);
-  --color-border: var(--color-neutral-200);
-  --color-accent: var(--color-black);
-  --color-on-accent: var(--color-white);
+  /* Semantic colors — brand palette (design-system/MASTER.md) */
+  --color-background: var(--color-graphite);
+  --color-surface: var(--color-graphite);
+  --color-foreground: var(--color-chalk);
+  --color-muted: var(--color-bronze);
+  --color-border: rgb(139 111 71 / 30%);
+  --color-accent: var(--color-oxblood);
+  --color-on-accent: var(--color-chalk);
 
   /* Typography */
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino,
-    serif;
+  --font-sans:
+    var(--font-sans-loaded, "Montserrat"), Arial, Helvetica, sans-serif;
+  --font-serif: var(--font-serif-loaded, "Sanchez"), Georgia, serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

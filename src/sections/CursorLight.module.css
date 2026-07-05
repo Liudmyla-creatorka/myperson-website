@@ -10,11 +10,11 @@
   border-radius: var(--radius-full);
   background: radial-gradient(
     circle,
-    rgb(255 255 255 / 18%) 0%,
-    rgb(255 255 255 / 6%) 35%,
+    rgb(139 111 71 / 45%) 0%,
+    rgb(139 111 71 / 16%) 35%,
     transparent 70%
   );
-  mix-blend-mode: screen;
+  mix-blend-mode: soft-light;
   pointer-events: none;
   will-change: transform;
 }
