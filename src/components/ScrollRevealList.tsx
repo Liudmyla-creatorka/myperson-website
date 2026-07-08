@@ -8,11 +8,13 @@ import { gsap } from "@/lib/gsap";
 type ScrollRevealListProps = {
   children: ReactNode;
   className?: string;
+  stagger?: number;
 };
 
 export function ScrollRevealList({
   children,
   className,
+  stagger = 0.1,
 }: ScrollRevealListProps) {
   const listRef = useRef<HTMLUListElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -24,10 +26,14 @@ export function ScrollRevealList({
     const items = Array.from(list.children) as HTMLElement[];
 
     if (prefersReducedMotion) {
-      gsap.set(items, { opacity: 1, y: 0 });
+      gsap.set(items, { clearProps: "transform,opacity" });
       return;
     }
 
+    // clearProps removes the inline transform/opacity GSAP leaves behind
+    // once the reveal settles — otherwise those inline styles permanently
+    // outrank any CSS rule that also targets opacity or transform (e.g.
+    // the Usługi cards' hover lift, or their sibling-dimming effect).
     const tween = gsap.fromTo(
       items,
       { opacity: 0, y: 32 },
@@ -36,7 +42,8 @@ export function ScrollRevealList({
         y: 0,
         duration: 0.8,
         ease: "power3.out",
-        stagger: 0.1,
+        stagger,
+        clearProps: "transform,opacity",
         scrollTrigger: {
           trigger: list,
           start: "top 85%",
@@ -49,7 +56,7 @@ export function ScrollRevealList({
       tween.scrollTrigger?.kill();
       tween.kill();
     };
-  }, [prefersReducedMotion]);
+  }, [prefersReducedMotion, stagger]);
 
   return (
     <ul role="list" ref={listRef} className={className}>

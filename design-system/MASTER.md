@@ -7,19 +7,22 @@ This file is the single source of truth for color and typography across the enti
 | Token | Hex | Usage |
 |---|---|---|
 | Deep Graphite | `#1C1C1E` | Main background, sitewide |
+| Graphite Light | `#2A2A2C` | Cards/frames sitting on the base background |
+| Graphite Lighter | `#3A3A3C` | Third elevation tier (hover/active surfaces) |
 | Chalk White | `#EDEAE4` | Text and headings on dark backgrounds |
 | Oxblood | `#4A0E1A` | CTA buttons, accents, 3D-logo elements |
-| Warm Bronze | `#8B6F47` | Secondary accents, captions, small caps, muted text |
+| Oxblood Hover | `#5C1222` | Hover/active state of Oxblood elements |
+| Warm Bronze | `#8B6F47` | Secondary accents, captions, small caps, muted text, borders |
 
 **Avoid:** purple/magenta/violet hues, "generic Canva beige," pure black (`#000000`), pure white (`#FFFFFF`), neon colors, AI-gradient look (multi-hue diagonal gradients).
 
-Only these four colors exist in the brand palette. Alpha/opacity variants of these four (e.g. bronze at 20% for borders) are permitted; inventing new hues is not.
+Only these colors exist in the brand palette. Alpha/opacity variants (e.g. bronze at 20% for borders, the named `--color-chalk-muted`/`--color-chalk-subtle` tokens) are permitted; inventing new hues, or picking an unverified one-off hex "close enough" to Graphite, is not — that drift is exactly what produced a stray purple-gray card background in an earlier pass. Always reference the named token, never a hand-typed hex.
 
 ### Token mapping (`src/styles/tokens.css`)
 
 ```
 --color-background   → Deep Graphite
---color-surface      → Deep Graphite (cards differentiated by border, not a lighter fill)
+--color-surface      → Deep Graphite (page-level; cards/frames use Graphite Light instead)
 --color-foreground   → Chalk White
 --color-muted        → Warm Bronze
 --color-border       → Warm Bronze at low opacity
@@ -31,10 +34,8 @@ This is a sitewide dark theme. It cascades to Header, Footer, and all four minim
 
 ## Typography
 
-- **Headings** — Sanchez (serif), bold, uppercase or title case.
-  - **Known limitation:** Sanchez ships only Regular (400) on Google Fonts — there is no true bold cut. Bold headings use browser-synthesized (faux) bold. If a licensed bold cut becomes available later, swap it in without changing this document's intent.
+- **Headings** — Playfair Display (serif), bold, uppercase or title case. Ships a true 700 weight on Google Fonts, so headings use real bold, not synthesized.
 - **Body / UI text** — Montserrat (sans-serif), regular/light weights.
-  - **Naming note:** the brief specified "Montaser," which does not exist in the Google Fonts catalog (verified against the font dataset). Montserrat is used as the closest match. Flag if a different, specific font was intended.
 
 Both fonts are loaded via `next/font/google` with `latin` + `latin-ext` subsets for full Polish diacritic support (ą ć ę ł ń ó ś ź ż).
 

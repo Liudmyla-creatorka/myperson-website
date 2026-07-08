@@ -3,12 +3,13 @@ import type { ReactNode } from "react";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Montserrat, Sanchez } from "next/font/google";
+import { Montserrat, Playfair_Display } from "next/font/google";
 
 import { routing, type Locale } from "@/i18n/routing";
 import { siteConfig } from "@/lib/site-config";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import "@/styles/globals.css";
 
 const bodyFont = Montserrat({
@@ -18,9 +19,9 @@ const bodyFont = Montserrat({
   display: "swap",
 });
 
-const headingFont = Sanchez({
+const headingFont = Playfair_Display({
   subsets: ["latin", "latin-ext"],
-  weight: "400",
+  weight: ["400", "700"],
   variable: "--font-serif-loaded",
   display: "swap",
 });
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${bodyFont.variable} ${headingFont.variable}`}>
       <body>
         <NextIntlClientProvider>
+          <SmoothScroll />
           <a href="#main-content" className="skip-link">
             {t("skipToContent")}
           </a>

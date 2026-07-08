@@ -4,6 +4,8 @@ import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
 import { Hero } from "@/sections/Hero";
+import { ServicesShowcase } from "@/sections/ServicesShowcase";
+import { Method } from "@/sections/Method";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -24,6 +26,8 @@ export default async function HomePage({ params }: PageProps) {
   return (
     <main id="main-content">
       <Hero locale={locale as Locale} />
+      <ServicesShowcase locale={locale as Locale} />
+      <Method locale={locale as Locale} />
     </main>
   );
 }

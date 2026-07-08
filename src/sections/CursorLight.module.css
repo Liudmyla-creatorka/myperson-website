@@ -2,7 +2,13 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  /* Needs to clear any locally-stacked content in whichever section it's
+     mounted in — e.g. Usługi's card tint overlay is also z-index:1 and,
+     being later in DOM order, was painting on top of and hiding the
+     light wherever a card sat. 5 clears ordinary section content while
+     staying below Header's sticky nav (z-index:10), so the light never
+     tints the header as the cursor passes near the top of the page. */
+  z-index: 5;
   width: 26rem;
   height: 26rem;
   margin-left: -13rem;

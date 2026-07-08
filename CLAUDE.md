@@ -236,3 +236,7 @@ Never skip milestones.
 Never combine milestones.
 
 Complete one milestone, stop, explain the result and wait for approval before continuing.
+
+## Compact Instructions
+
+When you are using compact, please focus on test output and code changes.

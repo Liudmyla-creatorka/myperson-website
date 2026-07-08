@@ -21,5 +21,61 @@
   "contact": {
     "title": "Contact",
     "intro": "Let's talk about your project."
+  },
+  "homeServices": {
+    "title": "Services",
+    "intro": "What we do",
+    "items": [
+      {
+        "slug": "brand-identity",
+        "title": "Brand Identity",
+        "summary": "Complete visual brand identity — from logo and color palette to communication systems and brand guidelines.",
+        "tags": ["LOGO", "PALETTE", "GUIDELINES"]
+      },
+      {
+        "slug": "editorial-content",
+        "title": "Editorial Content",
+        "summary": "Realistic product and lifestyle photography, no studio shoot, models, or set required. Same day — different marketing directions.",
+        "tags": ["PRODUCT SHOTS", "LIFESTYLE", "CAMPAIGNS"]
+      },
+      {
+        "slug": "visual-strategy",
+        "title": "Visual Strategy",
+        "summary": "A strategic plan for how the brand should look at every customer touchpoint. Instagram, website, marketplace, advertising.",
+        "tags": ["AUDIT", "STRATEGY", "ROADMAP"]
+      },
+      {
+        "slug": "video-production",
+        "title": "Video Production",
+        "summary": "Video campaigns for premium brands — from concept and script to production and editing. Ads, presentations, storytelling.",
+        "tags": ["ADS", "REELS", "CAMPAIGNS"]
+      }
+    ]
+  },
+  "homeMethod": {
+    "title": "Method",
+    "intro": "How we work",
+    "items": [
+      {
+        "slug": "analiza",
+        "title": "Analysis",
+        "summary": "An audit of current visual communication. Where the brand loses customer attention, and what it costs."
+      },
+      {
+        "slug": "strategia",
+        "title": "Strategy",
+        "summary": "A consistent visual direction — color, typography, mood, narrative. Everything that builds recognizability."
+      },
+      {
+        "slug": "produkcja",
+        "title": "Production",
+        "summary": "Turning the concept into publish-ready material. Photos, video, content — same day, different stories."
+      },
+      {
+        "slug": "weryfikacja",
+        "title": "Verification",
+        "summary": "Every frame goes through quality control — color, light, proportions, detail."
+      }
+    ]
   }
 }

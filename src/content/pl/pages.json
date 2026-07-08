@@ -21,5 +21,61 @@
   "contact": {
     "title": "Kontakt",
     "intro": "Porozmawiajmy o Twoim projekcie."
+  },
+  "homeServices": {
+    "title": "Usługi",
+    "intro": "Co robimy",
+    "items": [
+      {
+        "slug": "brand-identity",
+        "title": "Brand Identity",
+        "summary": "Pełna tożsamość wizualna marki — od logotypu i palety kolorów po system komunikacji i brand guidelines.",
+        "tags": ["LOGOTYP", "PALETA", "GUIDELINES"]
+      },
+      {
+        "slug": "editorial-content",
+        "title": "Editorial Content",
+        "summary": "Realistyczne zdjęcia produktowe i lifestyle bez sesji, modeli i studia. Ten sam dzień — różne kierunki marketingowe.",
+        "tags": ["PRODUCT SHOTS", "LIFESTYLE", "KAMPANIE"]
+      },
+      {
+        "slug": "visual-strategy",
+        "title": "Strategia wizualna",
+        "summary": "Strategiczny plan — jak marka ma wyglądać na każdym punkcie kontaktu z klientem. Instagram, strona, marketplace, reklama.",
+        "tags": ["AUDYT", "STRATEGIA", "ROADMAP"]
+      },
+      {
+        "slug": "video-production",
+        "title": "Video Production",
+        "summary": "Kampanie wideo dla marek premium — od koncepcji i scenariusza po produkcję i montaż. Reklamy, prezentacje, storytelling.",
+        "tags": ["REKLAMY", "REELS", "KAMPANIE"]
+      }
+    ]
+  },
+  "homeMethod": {
+    "title": "Metoda",
+    "intro": "Jak pracujemy",
+    "items": [
+      {
+        "slug": "analiza",
+        "title": "Analiza",
+        "summary": "Audyt obecnej komunikacji wizualnej. Gdzie marka traci uwagę klienta i ile to kosztuje."
+      },
+      {
+        "slug": "strategia",
+        "title": "Strategia",
+        "summary": "Spójny kierunek wizualny — kolory, typografia, nastrój, narracja. Wszystko, co składa się na rozpoznawalność."
+      },
+      {
+        "slug": "produkcja",
+        "title": "Produkcja",
+        "summary": "Realizacja koncepcji w materiały gotowe do publikacji. Zdjęcia, wideo, content — ten sam dzień, różne historie."
+      },
+      {
+        "slug": "weryfikacja",
+        "title": "Weryfikacja",
+        "summary": "Każdy kadr przechodzi kontrolę jakości — kolory, światło, proporcje, detale."
+      }
+    ]
   }
 }

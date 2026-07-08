@@ -24,3 +24,28 @@ export interface PageCopy {
   primaryCta?: PageCta;
   secondaryCta?: PageCta;
 }
+
+export interface HomeServiceCard {
+  slug: string;
+  title: string;
+  summary: string;
+  tags: string[];
+}
+
+export interface HomeServicesContent {
+  title: string;
+  intro: string;
+  items: HomeServiceCard[];
+}
+
+export interface MethodStep {
+  slug: string;
+  title: string;
+  summary: string;
+}
+
+export interface MethodContent {
+  title: string;
+  intro: string;
+  items: MethodStep[];
+}
