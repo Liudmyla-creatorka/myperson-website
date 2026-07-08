@@ -1,34 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { gsap } from "@/lib/gsap";
-import styles from "./CursorLight.module.css";
-
+// Disabled pending a fresh diagnosis next session — every prior committed
+// version (Hero's original, and the z-index/Fragment-sibling fixes in
+// 6d1744f) was reported broken/seamed once integrated with Usługi/Metoda,
+// so there is no earlier commit to revert to that isn't already known-bad.
+// Inert is the safe baseline until it's rebuilt.
 export function CursorLight() {
-  const ref = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (prefersReducedMotion) return;
-
-    const el = ref.current;
-    if (!el || !window.matchMedia("(pointer: fine)").matches) return;
-
-    const setX = gsap.quickTo(el, "x", { duration: 0.6, ease: "power3.out" });
-    const setY = gsap.quickTo(el, "y", { duration: 0.6, ease: "power3.out" });
-
-    function handlePointerMove(event: PointerEvent) {
-      setX(event.clientX);
-      setY(event.clientY);
-    }
-
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => window.removeEventListener("pointermove", handlePointerMove);
-  }, [prefersReducedMotion]);
-
-  if (prefersReducedMotion) return null;
-
-  return <div ref={ref} className={styles.light} aria-hidden="true" />;
+  return null;
 }

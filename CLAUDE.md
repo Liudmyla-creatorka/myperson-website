@@ -237,6 +237,12 @@ Never combine milestones.
 
 Complete one milestone, stop, explain the result and wait for approval before continuing.
 
+## Working Style
+
+Don't ask clarifying questions or propose options before acting — do the concrete work directly. If something is genuinely ambiguous and it must be asked, ask it in the same message as doing everything else that can be done without the answer; don't stall the whole task on one open question.
+
+Minimize prose in responses. Lead with what changed, skip restating the request back to the user.
+
 ## Compact Instructions
 
 When you are using compact, please focus on test output and code changes.
