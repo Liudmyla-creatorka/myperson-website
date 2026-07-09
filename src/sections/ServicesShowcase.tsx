@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/routing";
 import { getHomeServices } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
 import { ScrollRevealList } from "@/components/ScrollRevealList";
+import { CursorLight } from "@/sections/CursorLight";
 import styles from "./ServicesShowcase.module.css";
 
 type ServicesShowcaseProps = {
@@ -22,39 +23,48 @@ export async function ServicesShowcase({ locale }: ServicesShowcaseProps) {
   const { title, intro, items } = await getHomeServices(locale);
 
   return (
-    <section className={styles.section}>
-      <div className={styles.glow} aria-hidden="true" />
-      <Container className={styles.content}>
-        <p className={styles.eyebrow}>{intro}</p>
-        <h2 className={styles.heading}>{title}</h2>
-        <ScrollRevealList className={styles.grid} stagger={0.08}>
-          {items.map((service, index) => {
-            const layoutClass = CARD_LAYOUT[service.slug];
-            return (
-              <li
-                key={service.slug}
-                className={`${styles.card} ${layoutClass ? styles[layoutClass] : ""}`}
-              >
-                <div className={styles.photo} aria-hidden="true" />
-                <span className={styles.numeral} aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className={styles.textBlock}>
-                  <h3 className={styles.title}>{service.title}</h3>
-                  <p className={styles.summary}>{service.summary}</p>
-                  <ul role="list" className={styles.tags}>
-                    {service.tags.map((tag) => (
-                      <li key={tag} className={styles.tag}>
-                        {tag}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </li>
-            );
-          })}
-        </ScrollRevealList>
-      </Container>
-    </section>
+    <>
+      {/* Rendered as a sibling of .section, not a child — .section has
+          overflow:hidden (needed to crop .glow's off-frame bleed), and
+          browsers clip position:fixed descendants to an overflow:hidden
+          ancestor's paint region even though the ancestor isn't their
+          containing block. That silently clipped CursorLight to nothing
+          whenever .section's own box didn't cover the pointer position. */}
+      <CursorLight />
+      <section className={styles.section}>
+        <div className={styles.glow} aria-hidden="true" />
+        <Container className={styles.content}>
+          <p className={styles.eyebrow}>{intro}</p>
+          <h2 className={styles.heading}>{title}</h2>
+          <ScrollRevealList className={styles.grid} stagger={0.08}>
+            {items.map((service, index) => {
+              const layoutClass = CARD_LAYOUT[service.slug];
+              return (
+                <li
+                  key={service.slug}
+                  className={`${styles.card} ${layoutClass ? styles[layoutClass] : ""}`}
+                >
+                  <div className={styles.photo} aria-hidden="true" />
+                  <span className={styles.numeral} aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.textBlock}>
+                    <h3 className={styles.title}>{service.title}</h3>
+                    <p className={styles.summary}>{service.summary}</p>
+                    <ul role="list" className={styles.tags}>
+                      {service.tags.map((tag) => (
+                        <li key={tag} className={styles.tag}>
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ScrollRevealList>
+        </Container>
+      </section>
+    </>
   );
 }

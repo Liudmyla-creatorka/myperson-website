@@ -155,15 +155,21 @@
   background-position: 100% 40%;
 }
 
-/* Solid --graphite tint over the photo — present-but-secondary texture,
-   not a gradient. Fixed at 78% always; it does not react to hover — the
+/* Frosted tint over the photo — translucent + blurred rather than a
+   near-opaque solid, so CursorLight's soft-light blend (painted above
+   everything, fixed position) reads through as warmth over the card
+   instead of getting smothered by the old 78%-opaque tint. backdrop-filter
+   samples .photo (z-index:0, directly behind this layer) — kept to a
+   light 6px so the contact-sheet crop stays legible under it rather than
+   washing out into a blur. Fixed always; does not react to hover — the
    photo layer stays exactly as-is regardless of interaction state. */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-color: rgb(28 28 30 / 78%);
+  background-color: rgb(20 20 20 / 55%);
+  backdrop-filter: blur(6px);
   pointer-events: none;
 }
 
