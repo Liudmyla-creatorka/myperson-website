@@ -90,13 +90,16 @@
 }
 
 .track {
+  grid-column: 2;
   display: flex;
   flex-direction: column;
 }
 
 .section.pinned .track {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   will-change: transform;
 }
 
