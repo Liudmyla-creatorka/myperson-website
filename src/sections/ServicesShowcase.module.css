@@ -1,7 +1,24 @@
+/* Single continuous photo for the whole section — not per-card crops.
+   The dark veil is a flat color layered into this SAME background-image
+   stack (not a separate element) specifically so there is exactly one
+   dimming layer for the entire section, applied once. Every card below is
+   fully transparent at rest (see .card / .card::before) — nothing stacks
+   on top of this, so nothing can double up into a near-solid-black block.
+   background-color is a fallback shown only while the image loads / if it
+   fails. */
 .section {
   position: relative;
   overflow: hidden;
   background-color: var(--color-graphite);
+  background-image:
+    linear-gradient(rgb(13 13 13 / 77%), rgb(13 13 13 / 77%)),
+    url("/images/services-contact-sheet.jpg");
+  background-size:
+    cover,
+    cover;
+  background-position:
+    center,
+    center;
   padding-block: var(--spacing-32);
 }
 
@@ -67,10 +84,16 @@
     margin-inline: auto;
   }
 
+  /* 5/4 — solved directly from card 2's own geometry so their bottom
+     edges land together: card 1 spans 5 columns (~385.6px wide), card 2
+     spans 7 at aspect-ratio 16/9 (~309.0px tall). 5/4 gives card 1 a
+     height of ~308.5px at that same width — within a sub-pixel of card
+     2's, not just "shorter". (Was 4/5, then 3/4 originally — neither was
+     solved against card 2's actual height, just eyeballed reductions.) */
   .cardBrandIdentity {
     grid-column: 1 / span 5;
     grid-row: 1;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 5 / 4;
   }
 
   .cardEditorialContent {
@@ -99,78 +122,50 @@
   }
 }
 
+/* No border, no shadow, no background at rest — a card must be
+   invisible as a shape, or it reads as a floating box sliced out of the
+   photo instead of a window into one continuous image. Both appear only
+   on hover (see .card:hover below), framing just the zone the user is
+   actually engaging with. Border width stays 1px (transparent, not 0) at
+   rest so nothing shifts size when the bronze border appears on hover. */
 .card {
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: var(--spacing-8) var(--spacing-6);
-  border: 1px solid rgb(139 111 71 / 30%);
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
-  background-color: var(--color-graphite-light);
-  box-shadow: 0 0.75rem 1.5rem rgb(0 0 0 / 35%);
+  background-color: transparent;
+  box-shadow: none;
   transition:
     transform var(--duration-base) var(--ease-out),
     border-color var(--duration-base) var(--ease-out),
     box-shadow var(--duration-base) var(--ease-out);
 }
 
-/* The photo lives on its own element (not .card's background) purely so
-   the numeral/text layers can sit cleanly on top of it via z-index — it
-   does NOT react to hover in any way (no filter, no dimming): the hover
-   reward lives entirely in .textBlock's pop-forward effect below. */
-.photo {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  /* Fixed oversized scale (not `cover`) is deliberate: `cover`'s crop
-     amount depends on how close a card's own aspect ratio is to the
-     source image's (2752x1536, ~16:9) — card02 is also ~16:9, so cover
-     barely cropped it at all. A fixed 300% width forces every card to be
-     an equally "zoomed in" ~1/3-width window regardless of its own
-     aspect ratio; only background-position then decides which region. */
-  background-image: url("/images/services-contact-sheet.jpg");
-  background-size: 300% auto;
-  background-repeat: no-repeat;
-}
-
-/* Each card samples a different region of the same contact-sheet photo —
-   one shared, cached image. At background-size:300%, position X=0/32/64/
-   100% gives visible-width windows of [0-33%] / [21-55%] / [43-76%] /
-   [67-100%] of the image — four distinct, slightly-overlapping segments
-   that together span its full width, left to right in card order. */
-.cardBrandIdentity .photo {
-  background-position: 0% 20%;
-}
-
-.cardEditorialContent .photo {
-  background-position: 32% 45%;
-}
-
-.cardVisualStrategy .photo {
-  background-position: 64% 60%;
-}
-
-.cardVideoProduction .photo {
-  background-position: 100% 40%;
-}
-
-/* Frosted tint over the photo — translucent + blurred rather than a
-   near-opaque solid, so CursorLight's soft-light blend (painted above
-   everything, fixed position) reads through as warmth over the card
-   instead of getting smothered by the old 78%-opaque tint. backdrop-filter
-   samples .photo (z-index:0, directly behind this layer) — kept to a
-   light 6px so the contact-sheet crop stays legible under it rather than
-   washing out into a blur. Fixed always; does not react to hover — the
-   photo layer stays exactly as-is regardless of interaction state. */
+/* Fully inert at rest — .section's own background already carries the
+   one and only dimming layer for the whole section (see .section above),
+   so this must contribute nothing at rest or it stacks into a near-solid
+   block over every card. Only on hover does this add its own tint+blur,
+   as the sole additional layer for that specific zone. */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 1;
-  background-color: rgb(20 20 20 / 55%);
-  backdrop-filter: blur(6px);
+  background-color: rgb(20 20 20 / 0%);
+  backdrop-filter: blur(0px);
   pointer-events: none;
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    backdrop-filter var(--duration-base) var(--ease-out);
+}
+
+.card:hover::before,
+.card:focus-within::before {
+  background-color: rgb(20 20 20 / 45%);
+  backdrop-filter: blur(10px);
 }
 
 /* Oxblood glow confined to the bottom edge only — a short, wide ellipse
@@ -206,60 +201,77 @@
   opacity: 1;
 }
 
-/* Oversized background numeral — a bleeding editorial watermark, not a
-   legible label. Positioned per-card below so each one bleeds off a
-   different edge; cropping comes from the card's own overflow:hidden. */
+/* The "flashlight" — a local, per-card cursor-follow glow (see
+   ServicesCardSpotlight.tsx), z-index:2 so it sits directly between the
+   hover tint/blur layer below (1) and the text above (3). mix-blend-mode
+   makes it mix with .card::before's tinted/blurred surface rather than
+   paint flatly over it. Hidden until the card is actually hovered — it
+   only "switches on" while engaging with that specific card. */
+.spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 18rem;
+  height: 18rem;
+  margin-left: -9rem;
+  margin-top: -9rem;
+  border-radius: var(--radius-full);
+  background: radial-gradient(
+    circle,
+    rgb(139 111 71 / 55%) 0%,
+    rgb(139 111 71 / 20%) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: soft-light;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-out);
+  will-change: transform;
+}
+
+.card:hover .spotlight,
+.card:focus-within .spotlight {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .spotlight {
+    display: none;
+  }
+}
+
+/* Background numeral watermark — bottom-right corner, fully inside the
+   card's own padding box (no negative offset, no rotation) so it's always
+   contained by .card's overflow:hidden with margin to spare, never
+   touching the border. Same position/size on all 4 cards — a consistent
+   mark instead of a per-card bleeding crop. */
 .numeral {
   position: absolute;
+  right: var(--spacing-6);
+  bottom: var(--spacing-4);
   z-index: 2;
   font-family: var(--font-serif);
   font-weight: 700;
-  font-size: clamp(6rem, 11vw, 11.25rem);
+  font-size: clamp(3rem, 6vw, 5.5rem);
   line-height: 1;
-  color: rgb(139 111 71 / 15%);
+  color: rgb(139 111 71 / 32%);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
 }
 
-/* Card 01 — cropped at the top edge: glyph bleeds upward off-frame,
-   only its lower ~60% visible inside the card. */
-.cardBrandIdentity .numeral {
-  top: -3.75rem;
-  left: var(--spacing-6);
-}
-
-/* Card 02 — cropped at the right edge, rotated -4deg. */
-.cardEditorialContent .numeral {
-  right: -1.75rem;
-  bottom: var(--spacing-4);
-  transform: rotate(-4deg);
-}
-
-/* Card 03 — cropped at the bottom edge. */
-.cardVisualStrategy .numeral {
-  bottom: -3.5rem;
-  left: var(--spacing-6);
-}
-
-/* Card 04 — cropped at the left edge, rotated +3deg. */
-.cardVideoProduction .numeral {
-  left: -1.75rem;
-  bottom: var(--spacing-4);
-  transform: rotate(3deg);
-}
-
 @media (max-width: 64rem) {
   .numeral {
-    font-size: clamp(5rem, 22vw, 7rem);
+    font-size: clamp(2.5rem, 12vw, 4rem);
   }
 }
 
 /* Wraps title/summary/tags as a single unit so hover can lift the whole
    text block toward the viewer (translateY + scale) as one move, and so
    .tags's margin-top:auto still pushes tags to the card's bottom edge
-   now that .photo/.numeral (both position:absolute) no longer count as
-   flex siblings for .card's own flex layout. */
+   now that .numeral (position:absolute) no longer counts as a flex
+   sibling for .card's own flex layout. */
 .textBlock {
   position: relative;
   z-index: 3;
@@ -273,10 +285,14 @@
 }
 
 /* The whole hover reward: text pops toward the viewer. Nothing else on
-   the card (photo, other cards) reacts — this is a text-only interaction. */
+   the card (photo, other cards) reacts — this is a text-only interaction.
+   Scale/translateY kept modest (was 1.08/-6px) so the title never crosses
+   the card's own top padding at the peak of the animation — the 3D
+   floating-forward feel comes from the scale + drop-shadow together, not
+   from a large vertical shift. */
 .card:hover .textBlock,
 .card:focus-within .textBlock {
-  transform: scale(1.08) translateY(-6px);
+  transform: scale(1.04) translateY(-3px);
   filter: drop-shadow(0 10px 18px rgb(0 0 0 / 45%));
 }
 
