@@ -30,6 +30,17 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+// Restricts [locale] to exactly the values above (pl/en). Without this,
+// Next.js treats [locale] as an open dynamic segment: any unmatched path
+// with no dot in it (e.g. a browser's automatic /favicon.ico request,
+// since it has no static favicon.ico to serve) falls through to this
+// route with an arbitrary string as `locale`, which then reaches every
+// section's content-loading call before the layout's own notFound()
+// check has a chance to stop it. dynamicParams:false makes Next 404 at
+// the router level for any value outside generateStaticParams, before
+// any Server Component in this segment executes.
+export const dynamicParams = false;
+
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
