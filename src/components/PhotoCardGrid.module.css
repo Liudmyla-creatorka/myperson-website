@@ -5,14 +5,20 @@
    fully transparent at rest (see .card / .card::before) — nothing stacks
    on top of this, so nothing can double up into a near-solid-black block.
    background-color is a fallback shown only while the image loads / if it
-   fails. */
+   fails. The photo itself comes from --pcg-bg-image, set inline per
+   instance (PhotoCardGrid.tsx) so this one module serves any section that
+   wants this exact treatment with a different background. */
 .section {
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
   background-color: var(--color-graphite);
   background-image:
     linear-gradient(rgb(13 13 13 / 77%), rgb(13 13 13 / 77%)),
-    url("/images/services-contact-sheet.jpg");
+    var(--pcg-bg-image);
   background-size:
     cover,
     cover;
@@ -38,9 +44,16 @@
   pointer-events: none;
 }
 
+/* No explicit width here — the "container" utility class already applied
+   alongside this one (see PhotoCardGrid.tsx's <Container>) computes the
+   real gutter-inset width (min(100% - 2*var(--gutter), var(--container-width)))
+   and centers it with margin-inline:auto. A width here would win the
+   cascade over that (same specificity, this file loads later) and flatten
+   the gutter to 0 — which is exactly what happened last pass. */
 .content {
   position: relative;
   z-index: 1;
+  padding-top: var(--spacing-4);
 }
 
 .eyebrow {
@@ -72,53 +85,70 @@
   margin-top: var(--spacing-6);
 }
 
+/* Desktop only: the section becomes a strict single "page turn" — exactly
+   one viewport tall, never 1.5-2 screens of scroll. Mobile keeps its
+   natural stacked-column height (min-height:100vh on .section already
+   guarantees no gap, it just isn't height-clamped there since a 4-card
+   single column genuinely needs more than one small screen). Every
+   padding/gap/card-size value below is the desktop-only geometry scaled
+   to ~65% of its base value (a 35% cut) so the two-row grid plus copy
+   comfortably clears inside the 100vh clamp instead of merely matching it. */
 @media (min-width: 64.01rem) {
+  .section {
+    max-height: 100vh;
+    max-height: 100svh;
+    padding-block: calc(var(--spacing-32) * 0.6);
+  }
+
   .grid {
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto auto;
     /* Scales the whole composition down ~17.5% — narrower columns mean
        proportionally shorter cards too, since each card's height comes
-       from aspect-ratio × its own (now smaller) column width. gap stays
-       the literal 24px spacing-6 value, untouched by this. */
+       from aspect-ratio × its own (now smaller) column width. */
     max-width: 82.5%;
     margin-inline: auto;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
   }
 
   /* 5/4 — solved directly from card 2's own geometry so their bottom
      edges land together: card 1 spans 5 columns (~385.6px wide), card 2
      spans 7 at aspect-ratio 16/9 (~309.0px tall). 5/4 gives card 1 a
      height of ~308.5px at that same width — within a sub-pixel of card
-     2's, not just "shorter". (Was 4/5, then 3/4 originally — neither was
-     solved against card 2's actual height, just eyeballed reductions.) */
-  .cardBrandIdentity {
+     2's, not just "shorter". Every ratio below is the corresponding
+     base ratio divided by 0.65, so each card ends up ~35% shorter at the
+     same column width while preserving the original row-matching math
+     (dividing both sides of an equal-heights relationship by the same
+     constant keeps them equal). */
+  .cardOne {
     grid-column: 1 / span 5;
     grid-row: 1;
-    aspect-ratio: 5 / 4;
+    aspect-ratio: 1.92;
   }
 
-  .cardEditorialContent {
+  .cardTwo {
     grid-column: 6 / span 7;
     grid-row: 1;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 2.74;
   }
 
   /* Row 2 aspect ratios tuned ~11% shorter than the original 16/10 and
      3/5 (same column widths, since those come from grid-column span,
      not aspect-ratio) — brings the whole row height down without
      touching the 01/02 row or the shared-grid alignment. */
-  .cardVisualStrategy {
+  .cardThree {
     grid-column: 1 / span 7;
     grid-row: 2;
-    aspect-ratio: 1.8;
+    aspect-ratio: 2.77;
   }
 
-  /* 1.26 (not the earlier 0.68) is chosen to make card04's height match
-     card03's exactly — both share grid-row:2 / align-items:start, so
-     equal height means their bottom edges land on the same line. */
-  .cardVideoProduction {
+  /* Kept proportional to card three so their bottom edges still land on
+     the same grid-row:2 line at the smaller size. */
+  .cardFour {
     grid-column: 8 / span 5;
     grid-row: 2;
-    aspect-ratio: 1.26;
+    aspect-ratio: 1.94;
   }
 }
 
@@ -201,44 +231,17 @@
   opacity: 1;
 }
 
-/* The "flashlight" — a local, per-card cursor-follow glow (see
-   ServicesCardSpotlight.tsx), z-index:2 so it sits directly between the
-   hover tint/blur layer below (1) and the text above (3). mix-blend-mode
-   makes it mix with .card::before's tinted/blurred surface rather than
-   paint flatly over it. Hidden until the card is actually hovered — it
-   only "switches on" while engaging with that specific card. */
-.spotlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 18rem;
-  height: 18rem;
-  margin-left: -9rem;
-  margin-top: -9rem;
-  border-radius: var(--radius-full);
-  background: radial-gradient(
-    circle,
-    rgb(139 111 71 / 55%) 0%,
-    rgb(139 111 71 / 20%) 40%,
-    transparent 70%
-  );
-  mix-blend-mode: soft-light;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-base) var(--ease-out);
-  will-change: transform;
-}
-
-.card:hover .spotlight,
-.card:focus-within .spotlight {
+/* The cursor-follow "flashlight" itself is rendered by <CardSpotlight>
+   (see src/components/CardSpotlight.tsx + its own module for the visual
+   gradient/blend-mode). This section only owns *when* it switches on:
+   :global(...) reaches past CSS Modules' per-file class hashing to that
+   component's unscoped data-card-spotlight hook. z-index:2 there sits
+   between this card's ::before tint/blur layer (1) and its text layer
+   (3). Hidden until the card is actually hovered — it only "switches
+   on" while engaging with that specific card. */
+.card:hover :global([data-card-spotlight]),
+.card:focus-within :global([data-card-spotlight]) {
   opacity: 1;
-}
-
-@media (pointer: coarse) {
-  .spotlight {
-    display: none;
-  }
 }
 
 /* Background numeral watermark — bottom-right corner, fully inside the
@@ -267,6 +270,20 @@
   }
 }
 
+/* Desktop-only ~35% cut, matching the grid/card-geometry scale-down above
+   — kept as its own block (rather than folded into that one) so it lands
+   after the base .card/.numeral rules in source order and actually wins
+   the cascade instead of being overridden by them. */
+@media (min-width: 64.01rem) {
+  .card {
+    padding: calc(var(--spacing-8) * 0.65) calc(var(--spacing-6) * 0.65);
+  }
+
+  .numeral {
+    font-size: clamp(2rem, 4vw, 3.6rem);
+  }
+}
+
 /* Wraps title/summary/tags as a single unit so hover can lift the whole
    text block toward the viewer (translateY + scale) as one move, and so
    .tags's margin-top:auto still pushes tags to the card's bottom edge
@@ -286,10 +303,10 @@
 
 /* The whole hover reward: text pops toward the viewer. Nothing else on
    the card (photo, other cards) reacts — this is a text-only interaction.
-   Scale/translateY kept modest (was 1.08/-6px) so the title never crosses
-   the card's own top padding at the peak of the animation — the 3D
-   floating-forward feel comes from the scale + drop-shadow together, not
-   from a large vertical shift. */
+   Scale/translateY kept modest so the title never crosses the card's own
+   top padding at the peak of the animation — the 3D floating-forward feel
+   comes from the scale + drop-shadow together, not from a large vertical
+   shift. */
 .card:hover .textBlock,
 .card:focus-within .textBlock {
   transform: scale(1.04) translateY(-3px);
@@ -316,7 +333,7 @@
 }
 
 /* Typographic tag list — plain text separated by a slash, no pill
-   background/border. */
+   background/border. Only rendered by consumers that pass tags. */
 .tags {
   display: flex;
   flex-wrap: wrap;
