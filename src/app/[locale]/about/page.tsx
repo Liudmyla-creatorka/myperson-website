@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
 import { Container } from "@/components/ui/Container";
+import { MethodShowcase } from "@/sections/MethodShowcase";
 import styles from "./page.module.css";
 
 type PageProps = {
@@ -29,6 +30,8 @@ export default async function AboutPage({ params }: PageProps) {
         <h1>{copy.title}</h1>
         <p className={styles.intro}>{copy.intro}</p>
       </Container>
+
+      <MethodShowcase locale={locale as Locale} />
     </main>
   );
 }

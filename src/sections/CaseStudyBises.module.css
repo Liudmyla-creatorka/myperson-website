@@ -1,0 +1,140 @@
+/* Same flex-direction:column / not-viewport-locked reasoning as
+   CampaignsShowcase.module.css — see that file. */
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-24);
+  background-color: var(--color-graphite);
+}
+
+.headerRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerText {
+  max-width: 34rem;
+  text-align: right;
+}
+
+.eyebrow {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.heading {
+  margin: 0 0 var(--spacing-4);
+}
+
+.description {
+  margin: 0;
+  color: var(--color-chalk);
+  line-height: 1.6;
+}
+
+.imageGrid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-4);
+}
+
+@media (min-width: 48rem) {
+  .imageGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.imageCell {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-graphite-light);
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+/* Semi-transparent, sliding-up label — hidden below the card's own bottom
+   edge at rest, revealed on hover for mouse users and on focus for
+   keyboard/touch (a plain <button> is the simplest way to make the reveal
+   reachable by keyboard, since :hover alone never fires for them). */
+.imageOverlay {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding: var(--spacing-4);
+  background: linear-gradient(
+    to top,
+    rgb(13 13 13 / 90%) 0%,
+    rgb(13 13 13 / 60%) 55%,
+    transparent 100%
+  );
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    transform var(--duration-base) var(--ease-out),
+    opacity var(--duration-base) var(--ease-out);
+}
+
+.imageCell:hover .imageOverlay,
+.imageCell:focus-visible .imageOverlay {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.imageVariant {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--text-base);
+  color: var(--color-chalk);
+}
+
+.imageTags {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--color-bronze);
+}
+
+.ctaRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-6);
+}
+
+.ctaLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  color: var(--color-bronze);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.ctaLink:hover,
+.ctaLink:focus-visible {
+  border-color: var(--color-bronze);
+}

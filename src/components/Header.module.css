@@ -16,9 +16,25 @@
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
   font-size: var(--text-lg);
   font-weight: 600;
   letter-spacing: 0.05em;
+}
+
+.logoMark {
+  position: relative;
+  width: 2.25rem;
+  height: 2.25rem;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.logoMarkImage {
+  object-fit: cover;
 }
 
 .nav {
@@ -52,4 +68,32 @@
   .navList {
     justify-content: center;
   }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.cta {
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid var(--color-bronze);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-chalk);
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.cta:hover,
+.cta:focus-visible {
+  background-color: var(--color-bronze);
+  color: var(--color-graphite);
 }

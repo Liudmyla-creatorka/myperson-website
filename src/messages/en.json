@@ -10,7 +10,12 @@
     "contact": "Contact"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "contactHeading": "Contact",
+    "socialHeading": "Follow us"
+  },
+  "cta": {
+    "audit": "APPLY FOR AUDIT"
   },
   "languageSwitcher": {
     "pl": "PL",

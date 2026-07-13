@@ -1,0 +1,177 @@
+/* flex-direction:column, same reasoning as PortfolioFilmstrip.module.css —
+   keeps every child on the "container" utility's own gutter-computing
+   width safely. Not viewport-locked like Uslugi/Metoda/the Portfolio reel:
+   this section's content (heading + copy + a two-up video grid) doesn't
+   need to fit exactly one screen. */
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-24);
+  background-color: var(--color-graphite);
+}
+
+.headerRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerText {
+  max-width: 34rem;
+  text-align: right;
+}
+
+.eyebrow {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.heading {
+  margin: 0 0 var(--spacing-4);
+}
+
+.intro {
+  margin: 0;
+  color: var(--color-chalk);
+  line-height: 1.6;
+}
+
+/* Mobile-first: the grid is just the two video frames, always centered as
+   a pair — the caption never participates in this layout (see
+   .campaignMeta below), so it can never push or shift the centering. */
+.grid {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+@media (min-width: 64.01rem) {
+  .grid {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-6);
+  }
+}
+
+/* Sized to exactly the video card (no extra width), so the frame — not the
+   caption — is what the centered .grid measures and aligns. The caption is
+   positioned absolute (see .campaignMeta) against this frame, floating
+   outside it without adding to its box. */
+.campaignFrame {
+  position: relative;
+}
+
+.campaignCard {
+  position: relative;
+  overflow: hidden;
+  width: clamp(13rem, 24vw, 18rem);
+  aspect-ratio: 9 / 16;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-graphite-light);
+  box-shadow: 0 1rem 2rem rgb(0 0 0 / 35%);
+  cursor: pointer;
+  outline: none;
+  transition: box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.campaignCard:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-bronze);
+}
+
+.campaignVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    filter var(--duration-base) var(--ease-out);
+}
+
+/* Only the non-hovered/-focused card dims; at rest (no card active) both
+   sit at full brightness. */
+.campaignCard[data-state="dimmed"] .campaignVideo {
+  opacity: 0.4;
+  filter: grayscale(15%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaignVideo {
+    transition: none;
+  }
+}
+
+/* Mobile: flows in normal order below its own video, inside .campaignFrame
+   (see markup) — the only sane placement when there's no side margin to
+   float into. Swaps to absolute, floated-in-the-margin positioning at the
+   desktop breakpoint below. */
+.campaignMeta {
+  max-width: 20rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.campaignTitle {
+  margin: 0 0 var(--spacing-1);
+  font-size: var(--text-base);
+  letter-spacing: 0.04em;
+}
+
+.campaignSubtitle {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  color: var(--color-bronze);
+}
+
+.campaignDescription {
+  margin: 0;
+  color: var(--color-chalk-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+/* Editorial spread: the two video frames stay dead-centered as a pair —
+   .grid's row layout above only ever measures the two .campaignFrame
+   boxes, which are sized to exactly their video card (see .campaignFrame).
+   Each caption is pulled out of flow with position:absolute and floated
+   into the empty margin outside its own frame (`right/left: 100%`), so it
+   can never push or interact with that centering. Width is a vw-based
+   clamp — narrow enough to stay clear of the frame pair even at this
+   breakpoint's minimum width — rather than a fixed rem size, so it can
+   never overflow the viewport. */
+@media (min-width: 64.01rem) {
+  .campaignMeta {
+    position: absolute;
+    top: clamp(6rem, 9vw, 10rem);
+    width: clamp(9rem, 11vw, 13rem);
+    max-width: none;
+    margin: 0;
+  }
+
+  .campaignMeta[data-side="left"] {
+    right: 100%;
+    margin-right: var(--spacing-6);
+    text-align: left;
+  }
+
+  .campaignMeta[data-side="right"] {
+    left: 100%;
+    margin-left: var(--spacing-6);
+    text-align: right;
+  }
+}

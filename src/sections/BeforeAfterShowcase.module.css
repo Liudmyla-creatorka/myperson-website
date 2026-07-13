@@ -1,0 +1,177 @@
+/* Same section shell as CampaignsShowcase.module.css — flex column, no
+   viewport lock (this content doesn't need to fit one screen), and the
+   same CinematicVideoBackdrop (see TSX) for a unified, dark, cinematic
+   thread across both sections. */
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding-block: var(--spacing-24);
+  background-color: var(--color-graphite);
+}
+
+.headerRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerText {
+  max-width: 34rem;
+  text-align: right;
+}
+
+.eyebrow {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.heading {
+  margin: 0 0 var(--spacing-4);
+}
+
+.intro {
+  margin: 0;
+  color: var(--color-chalk);
+  line-height: 1.6;
+}
+
+.grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-8);
+}
+
+@media (max-width: 48rem) {
+  .grid {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+}
+
+/* The grid item: card + meta stacked together, so each pair lands in one
+   grid cell (card, caption beneath) rather than card and meta competing
+   for separate cells across the 3-column row. Also the reason the
+   hover/focus rules below can reach .meta from .card with `~` — they're
+   siblings under this one wrapper, not spread across the whole grid. */
+.cardColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-graphite-light);
+  cursor: pointer;
+  outline: none;
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-bronze);
+}
+
+/* Before and after sit stacked in the same box, both always mounted, both
+   always rendered at full source quality — no filter ever touches either
+   image's pixels, so "Przed" stays exactly as sharp and clean as "Po".
+   The dim read at rest comes entirely from .cardVeil, a translucent scrim
+   painted on top; hovering/focusing lifts that veil and crossfades in the
+   after image with a slight scale-to-1 settle, a controlled 0.7s
+   illumination rather than any texture "clearing up". */
+.beforeImage,
+.afterImage {
+  object-fit: cover;
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.afterImage {
+  opacity: 0;
+  transform: scale(1.04);
+}
+
+.card:hover .beforeImage,
+.card:focus-visible .beforeImage {
+  opacity: 0;
+}
+
+.card:hover .afterImage,
+.card:focus-visible .afterImage {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cardVeil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgb(13 13 13 / 30%);
+  pointer-events: none;
+  transition: opacity 0.7s var(--ease-out);
+}
+
+.card:hover .cardVeil,
+.card:focus-visible .cardVeil {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beforeImage,
+  .afterImage,
+  .cardVeil {
+    transition: none;
+  }
+}
+
+.meta {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--spacing-4);
+  text-align: center;
+}
+
+.cardTitle {
+  margin: 0 0 var(--spacing-2);
+  font-size: var(--text-base);
+  letter-spacing: 0.04em;
+  color: var(--color-chalk-muted);
+  transition: color 0.7s var(--ease-out);
+}
+
+.cardDescription {
+  margin: 0;
+  color: var(--color-chalk-muted);
+  opacity: 0.6;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  transition: opacity 0.7s var(--ease-out);
+}
+
+.card:hover ~ .meta .cardTitle,
+.card:focus-visible ~ .meta .cardTitle {
+  color: var(--color-chalk);
+}
+
+.card:hover ~ .meta .cardDescription,
+.card:focus-visible ~ .meta .cardDescription {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardTitle,
+  .cardDescription {
+    transition: none;
+  }
+}

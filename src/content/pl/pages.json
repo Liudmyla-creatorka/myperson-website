@@ -8,6 +8,7 @@
   },
   "portfolio": {
     "title": "Portfolio",
+    "eyebrow": "Nasze Prace",
     "intro": "Wybrane realizacje łączące obraz, ruch i opowieść."
   },
   "services": {
@@ -16,7 +17,7 @@
   },
   "about": {
     "title": "O nas",
-    "intro": "MY PERSON to studio kreatywne tworzące doświadczenia, które zapadają w pamięć. Łączymy film, projektowanie i technologię, by opowiadać historie marek w sposób, który czuje się intencjonalny i elegancki."
+    "intro": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Przekształcamy obecność marek w spójne, kinowe doświadczenia, które natychmiast budują ich pozycję rynkową."
   },
   "contact": {
     "title": "Kontakt",
@@ -77,5 +78,106 @@
         "summary": "Każdy kadr przechodzi kontrolę jakości — kolory, światło, proporcje, detale."
       }
     ]
+  },
+  "homeCampaigns": {
+    "title": "Wybrane kampanie",
+    "eyebrow": "Realizacje wideo",
+    "intro": "Każdy projekt zaczyna się od strategii. Każdy kadr ma cel — sprzedać produkt lub zmienić sposób, w jaki klient postrzega markę.",
+    "items": [
+      {
+        "slug": "campaign-1",
+        "videoSrc": "/videos/campaign-1.mp4",
+        "title": "KAMIEN.PL",
+        "subtitle": "Współpraca / Campaign",
+        "description": "Ekskluzywna wizualizacja form naturalnego marmuru, zrealizowana przy użyciu nowatorskich technologii wizualnych."
+      },
+      {
+        "slug": "campaign-2",
+        "videoSrc": "/videos/campaign-2.mp4",
+        "title": "AURA JEWELRY",
+        "subtitle": "Concept Editorial",
+        "description": "Klimatyczna, kinematograficzna prezentacja detali wysokiej biżuterii, łącząca rzemiosło z nowoczesną sztuką cyfrową."
+      }
+    ]
+  },
+  "homeCaseStudyBises": {
+    "title": "80 kart produktów — Bises",
+    "eyebrow": "Realizacje — E-commerce",
+    "description": "Bises — ukraińska marka premium pościeli. Każda karta produktu to spójny system wizualny: profesjonalne zdjęcia produktowe w 4 wariantach kolorystycznych, zoptymalizowane pod konwersję w sklepie internetowym.",
+    "images": [
+      {
+        "src": "/images/bedding-brown.jpg",
+        "variant": "Wariant Cozy",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-green.jpg",
+        "variant": "Wariant Forest",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-fireplace.jpg",
+        "variant": "Wariant Kominek",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-grey.jpg",
+        "variant": "Wariant Stone",
+        "tags": "LIFESTYLE • INTERIOR"
+      }
+    ],
+    "siteCta": { "label": "Zobacz stronę", "href": "https://bises.ua/" },
+    "instagramCta": {
+      "label": "Zobacz Instagram",
+      "href": "https://www.instagram.com/bises.official"
+    }
+  },
+  "homeBeforeAfter": {
+    "title": "Jeden produkt. Nowa historia.",
+    "eyebrow": "Transformacje",
+    "intro": "Każdy kadr zaczyna się od surowego ujęcia. Kończy się na obrazie, który sprzedaje.",
+    "items": [
+      {
+        "slug": "perfume",
+        "title": "Perfume Campaign",
+        "description": "Od surowego ujęcia produktowego do świetlistej, księżycowej scenerii — ta sama butelka, zupełnie nowa opowieść.",
+        "beforeImage": "/images/perfume-studio.jpg",
+        "afterImage": "/images/perfume-moon.jpg"
+      },
+      {
+        "slug": "food",
+        "title": "Food Brand Identity",
+        "description": "Zwykłe ujęcie kuchenne przeobrażone w apetyczną, redakcyjną kompozycję gotową na okładkę.",
+        "beforeImage": "/images/food-before.jpg",
+        "afterImage": "/images/food-after.jpg"
+      },
+      {
+        "slug": "eyewear",
+        "title": "Eyewear Campaign",
+        "description": "Precyzyjny kadr produktowy ustępuje miejsca kinematograficznemu portretowi w naturalnym świetle.",
+        "beforeImage": "/images/glasses-product.jpg",
+        "afterImage": "/images/portrait-glasses.jpg"
+      }
+    ]
+  },
+  "homePhilosophy": {
+    "eyebrow": "Filozofia",
+    "title": "Dlaczego MY PERSON",
+    "paragraphs": [
+      "Nie tworzymy contentu dla contentu.",
+      "Każdy kadr ma cel — sprzedać produkt, zbudować markę albo zmienić sposób, w jaki klient ją postrzega.",
+      "Pracujemy z markami, które wiedzą, że dobry produkt nie wystarczy — trzeba go pokazać tak, żeby klient sam chciał go wybrać.",
+      "Klient nie płaci za technologię. Płaci za rezultat, który zmienia percepcję jego marki na rynku.",
+      "W naszej wizji sztuczna inteligencja nie jest fundamentem — jest wyłącznie zaawansowanym narzędziem wykonawczym. Sercem, reżyserem i prawdziwym autorem każdej filmowej opowieści pozostaje Człowiek. AI słucha, ale to my nadajemy sens, styl i kinową głębię."
+    ]
+  },
+  "homeContact": {
+    "eyebrow": "KONTAKT",
+    "title": "Gotowa marka zasługuje na wizualny język, który ją wyróżnia.",
+    "subheading": "Aplikuj na zamknięty audyt wizualny. Przeglądam każde zgłoszenie osobiście. Odpowiadam w 48 godzin.",
+    "ctaLabel": "APLIKUJ TERAZ"
+  },
+  "footer": {
+    "description": "Wizualna tożsamość, która sprzedaje. Studio wizualne oparte na strategii dla marek premium."
   }
 }

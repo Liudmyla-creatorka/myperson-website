@@ -1,10 +1,12 @@
 .wrapper {
-  padding-block: var(--spacing-16);
-  max-width: 60ch;
+  padding-block: var(--spacing-4) 0;
+  text-align: left;
 }
 
 .intro {
   margin-top: var(--spacing-6);
+  max-width: 100ch;
   font-size: var(--text-lg);
   color: var(--color-muted);
+  text-align: left;
 }

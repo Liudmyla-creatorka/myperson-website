@@ -1,23 +1,32 @@
 [
   {
     "slug": "aurora",
-    "title": "Aurora",
+    "title": "AURA",
     "category": "Film wizerunkowy",
     "year": "2025",
-    "summary": "Kampania wideo dla domu jubilerskiego, oparta na grze światła i cienia."
+    "summary": "Innowacyjne wizualizacje kampanii produktowej oparte na technologii generative AI, tworzące luksusowy storytelling dla marki premium.",
+    "image": "/images/work-1.jpg",
+    "subtitle": "Product Campaign",
+    "tags": "AI PRODUCTION · LIFESTYLE"
   },
   {
     "slug": "meridian",
-    "title": "Meridian",
+    "title": "Fashion Editorial",
     "category": "Doświadczenie cyfrowe",
     "year": "2024",
-    "summary": "Interaktywna strona narracyjna dla marki podróży premium."
+    "summary": "Wizjonerska sesja fashion editorial, zrealizowana w 100% z wykorzystaniem sztucznej inteligencji, definiująca nową erę wizerunku w branży.",
+    "image": "/images/work-2.jpg",
+    "subtitle": "Fashion Editorial",
+    "tags": "AI PRODUCTION · FASHION"
   },
   {
     "slug": "lumen",
-    "title": "Lumen",
+    "title": "Personal Brand",
     "category": "Identyfikacja wizualna",
     "year": "2024",
-    "summary": "Kompletny system marki dla butiku architektury wnętrz."
+    "summary": "Strategiczna budowa marki osobistej poprzez kinematograficzne, wygenerowane przez AI portrety.",
+    "image": "/images/work-3.jpg",
+    "subtitle": "Personal Brand",
+    "tags": "AI PRODUCTION · PORTRAIT"
   }
 ]

@@ -1,0 +1,316 @@
+/* Same dark-veil-over-photo language as Uslugi/Metoda (see
+   PhotoCardGrid.module.css) for sitewide consistency, but the background is
+   now a looping video rather than a photo, and the composition is
+   asymmetric (reel top-left, filmstrip path lower-middle) rather than a
+   centered card grid, so it gets its own module instead of reusing that
+   one. flex-direction:column (not row) is deliberate: it's what lets every
+   child below keep using the "container" utility class's own gutter-
+   computing width safely — see PhotoCardGrid history for why row-direction
+   plus an accidental width override caused layout bugs previously. */
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-8);
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--color-graphite);
+  padding-block: var(--spacing-16);
+}
+
+@media (min-width: 64.01rem) {
+  .section {
+    max-height: 100vh;
+    max-height: 100svh;
+  }
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Legibility wash over the loop so header text and the (invisible) hotspot
+   focus rings still read clearly against moving footage. */
+.veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgb(13 13 13 / 55%) 0%,
+    rgb(13 13 13 / 30%) 40%,
+    rgb(13 13 13 / 55%) 100%
+  );
+  pointer-events: none;
+}
+
+/* Right-aligned and pushed to the far edge: the reel disc baked into the
+   video's own footage occupies the upper-left, so the header lives in the
+   opposite corner rather than competing with it. */
+.headerRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headerText {
+  text-align: right;
+}
+
+.eyebrow {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.heading {
+  margin: 0;
+}
+
+/* Sits over the horizontal band where the video's own filmstrip frames
+   travel across center screen. Sized/spaced like the old visible card
+   track (clamp width, 4:5 aspect, same gap rhythm) so hotspots line up
+   with the baked-in footage, but every visual property below is
+   deliberately absent — no border, fill, or shadow — per spec: these are
+   invisible click/keyboard targets, not chrome. */
+.hotspotLayer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-6);
+}
+
+.hotspot {
+  position: relative;
+  flex-shrink: 0;
+  width: clamp(13rem, 20vw, 17rem);
+  aspect-ratio: 4 / 5;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  /* No visible affordance at rest (the brief calls for fully transparent
+     hotspots) — hover/focus-visible/active are the discoverability cues:
+     a soft lift (scale) plus the .hotspotHint tag fading in, so sighted
+     pointer/keyboard/touch users all learn these are clickable without any
+     chrome sitting on the frame at rest. */
+  outline: none;
+  transform: scale(1);
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.hotspot:focus-visible {
+  box-shadow: 0 0 0 2px var(--color-bronze);
+}
+
+@media (hover: hover) {
+  .hotspot:hover {
+    transform: scale(1.03);
+  }
+
+  .hotspot:hover .hotspotHint {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.hotspot:focus-visible {
+  transform: scale(1.03);
+}
+
+.hotspot:focus-visible .hotspotHint,
+.hotspot:active .hotspotHint {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+/* Tap gets its own (slightly firmer) feedback rather than reusing the
+   hover scale — a real "press" on touch, not a hover state stuck open. */
+.hotspot:active {
+  transform: scale(0.97);
+}
+
+.hotspotHint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, calc(-50% + 0.4rem));
+  padding: var(--spacing-2) var(--spacing-4);
+  border: 1px solid rgb(139 111 71 / 55%);
+  border-radius: var(--radius-full);
+  background-color: rgb(13 13 13 / 55%);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-chalk);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+/* Dims and blurs the paused video underneath so focus reads entirely on
+   the film-frame popup. Starts at opacity:0 — the open/close tweens in the
+   TSX own the transition; this is just the pre-mount resting state so
+   there's no one-frame flash at full opacity before JS runs. */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+  padding: var(--spacing-6);
+  overflow-y: auto;
+  background-color: rgb(6 5 4 / 82%);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+}
+
+/* An isolated 35mm negative frame: charcoal-to-dark-amber body, sprocket
+   strips top and bottom (see .sprocketRow), and stock/frame-number edge
+   markings (see .filmLabelRow) — the real photo and typography sit in the
+   unperforated middle band. Standard card width (not a magic number tied to
+   text-wrap tuning) — the image's own aspect-ratio + max-height (see
+   .frameImageWrap) is what keeps the whole thing inside the viewport, so
+   the card itself can stay a normal, comfortable rectangle. */
+.filmFrame {
+  position: relative;
+  width: min(100%, 30rem);
+  max-height: min(85vh, 85svh);
+  opacity: 0;
+  overflow: hidden;
+  border: 1px solid rgb(139 111 71 / 45%);
+  border-radius: var(--radius-sm);
+  background: linear-gradient(180deg, #2c2115 0%, #17120c 100%);
+  box-shadow: 0 2rem 4rem rgb(0 0 0 / 55%);
+}
+
+.modalClose {
+  position: absolute;
+  top: var(--spacing-3);
+  right: var(--spacing-3);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgb(237 234 228 / 30%);
+  border-radius: var(--radius-full);
+  background-color: rgb(13 13 13 / 55%);
+  color: var(--color-chalk);
+  font-size: var(--text-lg);
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.modalClose:hover,
+.modalClose:focus-visible {
+  border-color: var(--color-bronze);
+}
+
+/* Punched sprocket holes: a radial-gradient tile repeated along the strip,
+   dark enough to read as a cut hole against the amber/charcoal body rather
+   than a printed dot. */
+.sprocketRow {
+  height: 0.85rem;
+  background-image: radial-gradient(
+    circle,
+    #050403 0 0.24rem,
+    transparent 0.26rem 100%
+  );
+  background-repeat: repeat-x;
+  background-position: 0.7rem center;
+  background-size: 1.4rem 100%;
+}
+
+.filmLabelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-1) var(--spacing-4);
+}
+
+.filmLabel {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgb(139 111 71 / 75%);
+}
+
+.frameNumber {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: rgb(139 111 71 / 75%);
+}
+
+/* work-1/2/3.jpg are all near-identical vertical portrait photography
+   (1536x2752, 1536x2754, 1152x2048 — every one ~0.558). aspect-ratio is the
+   primary rule: at the card's standard 30rem width there's plenty of
+   headroom, so on most viewports the image fills this box edge to edge at
+   true proportions, no letterbox, no crop. max-height is only a safety
+   ceiling for short viewports, where object-fit:contain (see TSX) centers
+   the full, uncropped, undistorted photo within the wider box rather than
+   ever stretching or cutting it. */
+.frameImageWrap {
+  position: relative;
+  width: calc(100% - 2 * var(--spacing-4));
+  aspect-ratio: 1536 / 2752;
+  max-height: min(55vh, 55svh, 24rem);
+  margin: 0 var(--spacing-4);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+}
+
+.frameBody {
+  padding: var(--spacing-4) var(--spacing-4) var(--spacing-2);
+}
+
+.modalTags {
+  margin: 0 0 var(--spacing-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.modalTitle {
+  margin: 0 0 var(--spacing-1);
+  font-size: var(--text-base);
+}
+
+.modalSubtitle {
+  margin: 0 0 var(--spacing-4);
+  color: var(--color-chalk-muted);
+  font-size: var(--text-xs);
+}
+
+.modalLink {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--color-bronze);
+}

@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
-import { getPageCopy, getPortfolioItems } from "@/lib/content";
-import { Link } from "@/i18n/navigation";
-import { Container } from "@/components/ui/Container";
-import { ScrollRevealList } from "@/components/ScrollRevealList";
-import styles from "./page.module.css";
+import { getPageCopy } from "@/lib/content";
+import { PortfolioReel } from "@/sections/PortfolioReel";
+import { CampaignsShowcase } from "@/sections/CampaignsShowcase";
+import { BeforeAfterShowcase } from "@/sections/BeforeAfterShowcase";
+import { CaseStudyBises } from "@/sections/CaseStudyBises";
 
 type PageProps = {
   params: Promise<{ locale: string }>;
@@ -24,29 +24,15 @@ export default async function PortfolioPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale as Locale);
   const copy = await getPageCopy("portfolio", locale as Locale);
-  const items = await getPortfolioItems(locale as Locale);
 
   return (
     <main id="main-content">
-      <Container className={styles.wrapper}>
-        <header>
-          <h1>{copy.title}</h1>
-          <p className={styles.intro}>{copy.intro}</p>
-        </header>
-        <ScrollRevealList className={styles.grid}>
-          {items.map((item) => (
-            <li key={item.slug}>
-              <Link href={`/portfolio/${item.slug}`} className={styles.card}>
-                <span className={styles.meta}>
-                  {item.category} · {item.year}
-                </span>
-                <h2>{item.title}</h2>
-                <p>{item.summary}</p>
-              </Link>
-            </li>
-          ))}
-        </ScrollRevealList>
-      </Container>
+      <h1 className="visually-hidden">{copy.title}</h1>
+
+      <PortfolioReel locale={locale as Locale} />
+      <CampaignsShowcase locale={locale as Locale} />
+      <BeforeAfterShowcase locale={locale as Locale} />
+      <CaseStudyBises locale={locale as Locale} />
     </main>
   );
 }

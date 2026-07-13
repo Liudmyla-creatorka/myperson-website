@@ -8,6 +8,7 @@
   },
   "portfolio": {
     "title": "Portfolio",
+    "eyebrow": "Our Work",
     "intro": "Selected work combining image, motion and story."
   },
   "services": {
@@ -16,7 +17,7 @@
   },
   "about": {
     "title": "About",
-    "intro": "MY PERSON is a creative studio building experiences that stay with people. We combine film, design and technology to tell brand stories that feel intentional and elegant."
+    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. We turn brand presence into cohesive, cinematic experiences that immediately establish market position."
   },
   "contact": {
     "title": "Contact",
@@ -77,5 +78,106 @@
         "summary": "Every frame goes through quality control — color, light, proportions, detail."
       }
     ]
+  },
+  "homeCampaigns": {
+    "title": "Selected Campaigns",
+    "eyebrow": "Video Work",
+    "intro": "Every project starts with strategy. Every frame has a purpose — sell the product, or shift how the customer sees the brand.",
+    "items": [
+      {
+        "slug": "campaign-1",
+        "videoSrc": "/videos/campaign-1.mp4",
+        "title": "KAMIEN.PL",
+        "subtitle": "Collaboration / Campaign",
+        "description": "An exclusive visualization of natural marble's forms, brought to life through innovative visual technology."
+      },
+      {
+        "slug": "campaign-2",
+        "videoSrc": "/videos/campaign-2.mp4",
+        "title": "AURA JEWELRY",
+        "subtitle": "Concept Editorial",
+        "description": "An atmospheric, cinematic presentation of fine jewelry detail, pairing craftsmanship with contemporary digital art."
+      }
+    ]
+  },
+  "homeCaseStudyBises": {
+    "title": "80 Product Cards — Bises",
+    "eyebrow": "Case Study — E-commerce",
+    "description": "Bises — a premium Ukrainian bedding brand. Every product card is one consistent visual system: professional product photography in 4 colorways, optimized for conversion in the online store.",
+    "images": [
+      {
+        "src": "/images/bedding-brown.jpg",
+        "variant": "Cozy Variant",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-green.jpg",
+        "variant": "Forest Variant",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-fireplace.jpg",
+        "variant": "Fireplace Variant",
+        "tags": "LIFESTYLE • INTERIOR"
+      },
+      {
+        "src": "/images/bedding-grey.jpg",
+        "variant": "Stone Variant",
+        "tags": "LIFESTYLE • INTERIOR"
+      }
+    ],
+    "siteCta": { "label": "Visit Website", "href": "https://bises.ua/" },
+    "instagramCta": {
+      "label": "View Instagram",
+      "href": "https://www.instagram.com/bises.official"
+    }
+  },
+  "homeBeforeAfter": {
+    "title": "One product. A new story.",
+    "eyebrow": "Transformations",
+    "intro": "Every frame starts as a raw shot. It ends as an image that sells.",
+    "items": [
+      {
+        "slug": "perfume",
+        "title": "Perfume Campaign",
+        "description": "From a raw studio shot to a luminous, moonlit scene — the same bottle, an entirely new story.",
+        "beforeImage": "/images/perfume-studio.jpg",
+        "afterImage": "/images/perfume-moon.jpg"
+      },
+      {
+        "slug": "food",
+        "title": "Food Brand Identity",
+        "description": "An ordinary kitchen shot transformed into an appetizing, editorial-ready composition.",
+        "beforeImage": "/images/food-before.jpg",
+        "afterImage": "/images/food-after.jpg"
+      },
+      {
+        "slug": "eyewear",
+        "title": "Eyewear Campaign",
+        "description": "A precise product study gives way to a cinematic, natural-light portrait.",
+        "beforeImage": "/images/glasses-product.jpg",
+        "afterImage": "/images/portrait-glasses.jpg"
+      }
+    ]
+  },
+  "homePhilosophy": {
+    "eyebrow": "Philosophy",
+    "title": "Why MY PERSON",
+    "paragraphs": [
+      "We don't create content for content's sake.",
+      "Every frame has a purpose — sell the product, build the brand, or change how the customer perceives it.",
+      "We work with brands that know a good product isn't enough — it has to be shown in a way that makes the customer want to choose it themselves.",
+      "The client doesn't pay for technology. They pay for a result that changes how the market perceives their brand.",
+      "In our vision, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but it is we who give it meaning, style, and cinematic depth."
+    ]
+  },
+  "homeContact": {
+    "eyebrow": "CONTACT",
+    "title": "A brand that's ready deserves a visual language that sets it apart.",
+    "subheading": "Apply for a private visual audit. I review every submission personally. I respond within 48 hours.",
+    "ctaLabel": "APPLY NOW"
+  },
+  "footer": {
+    "description": "A visual identity that sells. A visual studio built on strategy for premium brands."
   }
 }

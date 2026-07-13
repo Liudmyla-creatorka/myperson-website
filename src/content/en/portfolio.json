@@ -1,23 +1,32 @@
 [
   {
     "slug": "aurora",
-    "title": "Aurora",
+    "title": "AURA",
     "category": "Brand Film",
     "year": "2025",
-    "summary": "A video campaign for a jewelry house, built around light and shadow."
+    "summary": "Innovative product campaign visuals built on generative AI technology, crafting luxury storytelling for a premium brand.",
+    "image": "/images/work-1.jpg",
+    "subtitle": "Product Campaign",
+    "tags": "AI PRODUCTION · LIFESTYLE"
   },
   {
     "slug": "meridian",
-    "title": "Meridian",
+    "title": "Fashion Editorial",
     "category": "Digital Experience",
     "year": "2024",
-    "summary": "An interactive narrative site for a premium travel brand."
+    "summary": "A visionary fashion editorial shoot, produced entirely with artificial intelligence, defining a new era of image-making for the industry.",
+    "image": "/images/work-2.jpg",
+    "subtitle": "Fashion Editorial",
+    "tags": "AI PRODUCTION · FASHION"
   },
   {
     "slug": "lumen",
-    "title": "Lumen",
+    "title": "Personal Brand",
     "category": "Visual Identity",
     "year": "2024",
-    "summary": "A complete brand system for an interior architecture studio."
+    "summary": "Strategic personal brand-building through cinematic, AI-generated portraits.",
+    "image": "/images/work-3.jpg",
+    "subtitle": "Personal Brand",
+    "tags": "AI PRODUCTION · PORTRAIT"
   }
 ]

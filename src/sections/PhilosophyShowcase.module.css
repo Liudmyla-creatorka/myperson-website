@@ -1,0 +1,117 @@
+/* Unlike CampaignsShowcase/BeforeAfterShowcase, this section does NOT use
+   the shared CinematicVideoBackdrop — that component's fixed 85% overlay
+   was too heavy for this artwork (the light beam / filmstrip / mannequin
+   need to read clearly), and touching the shared component would also
+   darken the protected Wybrane kampanie / Before-After sections that reuse
+   it. So the backdrop and its own, much lighter scrim are local to this
+   section only. */
+.section {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--spacing-32);
+  background-color: var(--color-graphite);
+}
+
+/* The artwork itself (/images/philosophy-bg.jpg) is now composed with its
+   subject on the right and a clean, dark left side, so the backdrop can be
+   a plain full-bleed cover/center image — no more object-position or
+   fade-gradient trickery to keep the artwork clear of the text column. */
+.visual {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.backdrop {
+  object-fit: cover;
+  object-position: center;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(rgb(0 0 0 / 55%), rgb(0 0 0 / 70%));
+  pointer-events: none;
+  transition: background var(--duration-base) var(--ease-out);
+}
+
+/* Same on/off contract as PhotoCardGrid's cards (see that module's own
+   comment on this rule): CardSpotlight is invisible until its ancestor is
+   hovered. There are no separate "cards" here, so the whole section is
+   the hover zone the flashlight switches on for. */
+.section:hover :global([data-card-spotlight]) {
+  opacity: 1;
+}
+
+/* PhotoCardGrid's cards darken+blur on hover (.card::before) specifically
+   to give their spotlight something dark to pop against — without that,
+   the same soft-light gradient reads as a near-invisible warm smudge over
+   a photo this dark. This is that same darkening step, just applied to
+   the section's existing static scrim instead of a separate layer, so the
+   glow has equivalent contrast here. */
+.section:hover .scrim {
+  background: linear-gradient(rgb(0 0 0 / 68%), rgb(0 0 0 / 82%));
+}
+
+/* Left edge matches the same inset the shared .container utility produces
+   (see src/styles/utilities.css) — gutter on normal widths, or half the
+   leftover space once the viewport exceeds container-width — so this
+   section's text lines up with Usługi/Metoda instead of hugging the
+   screen edge. Written directly rather than via the Container component,
+   since Container's own margin-inline:auto centering would have to be
+   fought again for this section's asymmetric max-width. */
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-6);
+  text-align: left;
+  padding-left: max(var(--gutter), calc((100% - var(--container-width)) / 2));
+  padding-right: var(--gutter);
+}
+
+/* Restricts the text column to the clean left side of the artwork once
+   there is room for it; mobile keeps the full-width single column. */
+@media (min-width: 48rem) {
+  .inner {
+    max-width: 45%;
+    padding-right: 0;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-bronze);
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
+}
+
+/* A single oxblood accent border unifies all paragraph blocks as one
+   continuous statement, rather than separating them by weight or style. */
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  border-left: 2px solid var(--color-oxblood);
+  padding-left: var(--spacing-6);
+}
+
+.paragraph {
+  margin: 0;
+  color: var(--color-chalk);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.7;
+}
