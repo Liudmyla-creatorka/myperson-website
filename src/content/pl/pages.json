@@ -4,7 +4,7 @@
     "eyebrow": "Studio Narracji Wizualnych",
     "intro": "Studio narracji wizualnych. Kinowe historie dla marek premium.",
     "primaryCta": { "label": "Zobacz nasze prace", "href": "/portfolio" },
-    "secondaryCta": { "label": "Skontaktuj się", "href": "/contact" }
+    "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" }
   },
   "portfolio": {
     "title": "Portfolio",
