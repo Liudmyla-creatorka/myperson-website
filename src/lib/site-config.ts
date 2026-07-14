@@ -2,6 +2,7 @@ export const siteConfig = {
   name: "MY PERSON",
   description: "Visual Narratives Studio.",
   tagline: "Visual Narratives Studio",
+  siteUrl: "https://myperson.agency",
   email: "kontakt@myperson.agency",
   phone: "+48 534 029 978",
   phoneHref: "+48534029978",

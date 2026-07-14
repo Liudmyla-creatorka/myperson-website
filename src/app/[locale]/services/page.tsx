@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { ServicesShowcase } from "@/sections/ServicesShowcase";
 
 type PageProps = {
@@ -14,7 +15,12 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const copy = await getPageCopy("services", locale as Locale);
-  return { title: copy.title, description: copy.intro };
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "/services",
+    title: copy.title,
+    description: copy.intro,
+  });
 }
 
 export default async function ServicesPage({ params }: PageProps) {

@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { Hero } from "@/sections/Hero";
 import { PhilosophyShowcase } from "@/sections/PhilosophyShowcase";
 import { ContactCta } from "@/sections/ContactCta";
@@ -16,7 +17,16 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { locale } = await params;
   const copy = await getPageCopy("home", locale as Locale);
-  return { title: copy.title, description: copy.intro };
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: "",
+    // The eyebrow ("Studio Narracji Wizualnych" / "Visual Narratives
+    // Studio") makes a more useful <title> than copy.title, which is just
+    // the brand name "MY PERSON" — that would otherwise duplicate itself
+    // against the layout's "%s | MY PERSON" template.
+    title: copy.eyebrow ?? copy.title,
+    description: copy.intro,
+  });
 }
 
 export default async function HomePage({ params }: PageProps) {

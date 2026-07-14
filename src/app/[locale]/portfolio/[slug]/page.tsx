@@ -4,6 +4,7 @@ import { setRequestLocale } from "next-intl/server";
 
 import { routing, type Locale } from "@/i18n/routing";
 import { getPortfolioItemBySlug, getPortfolioItems } from "@/lib/content";
+import { buildPageMetadata } from "@/lib/seo";
 import { Container } from "@/components/ui/Container";
 import styles from "./page.module.css";
 
@@ -27,7 +28,12 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const item = await getPortfolioItemBySlug(slug, locale as Locale);
   if (!item) return {};
-  return { title: item.title, description: item.summary };
+  return buildPageMetadata({
+    locale: locale as Locale,
+    path: `/portfolio/${slug}`,
+    title: item.title,
+    description: item.summary,
+  });
 }
 
 export default async function PortfolioDetailPage({ params }: PageProps) {
