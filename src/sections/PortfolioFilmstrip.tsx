@@ -6,6 +6,7 @@ import Image from "next/image";
 import type { PortfolioItem } from "@/types/content";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
+import { SoundToggle } from "@/components/SoundToggle";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { gsap } from "@/lib/gsap";
 import styles from "./PortfolioFilmstrip.module.css";
@@ -19,6 +20,8 @@ type PortfolioFilmstripProps = {
   closeLabel: string;
   viewCaseStudyLabel: string;
   hoverHintLabel: string;
+  muteLabel: string;
+  unmuteLabel: string;
 };
 
 export function PortfolioFilmstrip({
@@ -30,8 +33,11 @@ export function PortfolioFilmstrip({
   closeLabel,
   viewCaseStudyLabel,
   hoverHintLabel,
+  muteLabel,
+  unmuteLabel,
 }: PortfolioFilmstripProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [soundOn, setSoundOn] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
@@ -43,8 +49,37 @@ export function PortfolioFilmstrip({
 
   function openItem(index: number, trigger: HTMLButtonElement) {
     lastTriggerRef.current = trigger;
-    videoRef.current?.pause();
+    const video = videoRef.current;
+    video?.pause();
+    if (video && soundOn) {
+      video.muted = true;
+      video.volume = 0;
+      setSoundOn(false);
+    }
     setActiveIndex(index);
+  }
+
+  function toggleReelSound() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (soundOn) {
+      gsap.to(video, {
+        volume: 0,
+        duration: 0.4,
+        ease: "power1.in",
+        onComplete: () => {
+          video.muted = true;
+        },
+      });
+      setSoundOn(false);
+      return;
+    }
+
+    video.muted = false;
+    video.volume = 0;
+    gsap.to(video, { volume: 1, duration: 0.6, ease: "power1.out" });
+    setSoundOn(true);
   }
 
   function closeModal() {
@@ -122,6 +157,14 @@ export function PortfolioFilmstrip({
         aria-hidden="true"
       />
       <div className={styles.veil} aria-hidden="true" />
+
+      <SoundToggle
+        muted={!soundOn}
+        onToggle={toggleReelSound}
+        labelMuted={unmuteLabel}
+        labelUnmuted={muteLabel}
+        className={styles.reelSoundToggle}
+      />
 
       {/* The reel itself lives in the video's own upper-left footage — no
           separate graphic drawn on top of it. The header is pushed to the

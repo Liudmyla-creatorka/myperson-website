@@ -24,6 +24,8 @@ export async function PortfolioReel({ locale }: PortfolioReelProps) {
         locale === "pl" ? "Zobacz pełne case study" : "View full case study"
       }
       hoverHintLabel={locale === "pl" ? "Zobacz" : "View"}
+      muteLabel={locale === "pl" ? "Wycisz dźwięk" : "Mute sound"}
+      unmuteLabel={locale === "pl" ? "Włącz dźwięk" : "Unmute sound"}
     />
   );
 }

@@ -25,7 +25,11 @@ export async function CampaignsShowcase({ locale }: CampaignsShowcaseProps) {
       </Container>
 
       <Container>
-        <CampaignsGrid items={items} />
+        <CampaignsGrid
+          items={items}
+          muteLabel={locale === "pl" ? "Wycisz dźwięk" : "Mute sound"}
+          unmuteLabel={locale === "pl" ? "Włącz dźwięk" : "Unmute sound"}
+        />
       </Container>
     </section>
   );

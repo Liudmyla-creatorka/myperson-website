@@ -65,6 +65,13 @@
   text-align: right;
 }
 
+.reelSoundToggle {
+  position: absolute;
+  z-index: 2;
+  right: var(--gutter);
+  bottom: var(--spacing-6);
+}
+
 .eyebrow {
   margin: 0 0 var(--spacing-2);
   font-family: var(--font-sans);

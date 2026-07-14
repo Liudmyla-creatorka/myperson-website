@@ -114,6 +114,13 @@
   }
 }
 
+.soundToggle {
+  position: absolute;
+  z-index: 3;
+  right: var(--spacing-2);
+  bottom: var(--spacing-2);
+}
+
 /* Mobile: flows in normal order below its own video, inside .campaignFrame
    (see markup) — the only sane placement when there's no side margin to
    float into. Swaps to absolute, floated-in-the-margin positioning at the
