@@ -65,11 +65,15 @@
   text-align: right;
 }
 
+/* Anchored top-left — deliberately far from the hotspot band (which sits
+   vertically centered) and from .headerText (right-aligned) so this reads
+   unambiguously as a control for the single ambient reel video, never as
+   something attached to one of the static case-study hotspot cards. */
 .reelSoundToggle {
   position: absolute;
   z-index: 2;
-  right: var(--gutter);
-  bottom: var(--spacing-6);
+  top: var(--spacing-6);
+  left: var(--gutter);
 }
 
 .eyebrow {
