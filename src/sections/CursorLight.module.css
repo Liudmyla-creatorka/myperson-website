@@ -24,3 +24,21 @@
   pointer-events: none;
   will-change: transform;
 }
+
+/* soft-light at these alpha stops was tuned as a faint desktop atmosphere
+   effect — on a phone screen (different viewing distance, brighter ambient
+   light, and less reliable mix-blend-mode compositing on some mobile GPUs)
+   that reads as invisible rather than subtle. Bolder stops + a touch of
+   normal-blend opacity underneath give it a visible presence regardless of
+   how the blend itself renders on a given device. */
+@media (pointer: coarse) {
+  .light {
+    opacity: 0.9;
+    background: radial-gradient(
+      circle,
+      rgb(139 111 71 / 75%) 0%,
+      rgb(139 111 71 / 32%) 40%,
+      transparent 72%
+    );
+  }
+}
