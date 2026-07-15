@@ -24,9 +24,3 @@
   pointer-events: none;
   will-change: transform;
 }
-
-@media (pointer: coarse) {
-  .light {
-    display: none;
-  }
-}

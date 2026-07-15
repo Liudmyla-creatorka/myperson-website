@@ -231,6 +231,29 @@
   opacity: 1;
 }
 
+/* Touch never triggers :hover, so without this the card's whole reveal
+   (tint, lift, glow, text pop) would just never happen on mobile — a
+   lighter version of the same treatment fires on tap instead. */
+@media (pointer: coarse) {
+  .card:active {
+    transform: scale(0.98);
+    border-color: var(--color-bronze);
+  }
+
+  .card:active::before {
+    background-color: rgb(20 20 20 / 45%);
+    backdrop-filter: blur(10px);
+  }
+
+  .card:active::after {
+    opacity: 1;
+  }
+
+  .card:active .textBlock {
+    transform: scale(1.02);
+  }
+}
+
 /* The cursor-follow "flashlight" itself is rendered by <CardSpotlight>
    (see src/components/CardSpotlight.tsx + its own module for the visual
    gradient/blend-mode). This section only owns *when* it switches on:

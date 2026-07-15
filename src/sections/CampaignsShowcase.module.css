@@ -83,11 +83,22 @@
   box-shadow: 0 1rem 2rem rgb(0 0 0 / 35%);
   cursor: pointer;
   outline: none;
-  transition: box-shadow var(--duration-fast) var(--ease-out);
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .campaignCard:focus-visible {
   box-shadow: 0 0 0 2px var(--color-bronze);
+}
+
+/* Touch has no :hover state to reward a tap with, so this stands in for
+   it — a light press-down, same idea as .hotspot:active on the Home
+   filmstrip's hotspots. */
+@media (pointer: coarse) {
+  .campaignCard:active {
+    transform: scale(0.98);
+  }
 }
 
 .campaignVideo {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { CampaignItem } from "@/types/content";
 import { SoundToggle } from "@/components/SoundToggle";
@@ -21,6 +21,7 @@ export function CampaignsGrid({
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [soundOnIndex, setSoundOnIndex] = useState<number | null>(null);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   function silence(index: number) {
     const video = videoRefs.current[index];
@@ -73,8 +74,32 @@ export function CampaignsGrid({
     setSoundOnIndex(index);
   }
 
+  // Touch has no hover-to-preview/mouseleave-to-stop pair, so a tap
+  // elsewhere on the page is what stands in for "moving the mouse away" —
+  // otherwise a card activated by tap would just keep playing forever.
+  useEffect(() => {
+    function handleDocumentTouchStart(event: TouchEvent) {
+      if (activeIndex === null) return;
+      const grid = gridRef.current;
+      if (
+        grid &&
+        event.target instanceof Node &&
+        !grid.contains(event.target)
+      ) {
+        deactivate(activeIndex);
+      }
+    }
+
+    document.addEventListener("touchstart", handleDocumentTouchStart, {
+      passive: true,
+    });
+    return () =>
+      document.removeEventListener("touchstart", handleDocumentTouchStart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
   return (
-    <div className={styles.grid}>
+    <div ref={gridRef} className={styles.grid}>
       {items.map((item, index) => {
         const state =
           activeIndex === null
@@ -95,6 +120,7 @@ export function CampaignsGrid({
               tabIndex={0}
               onMouseEnter={() => activate(index)}
               onMouseLeave={() => deactivate(index)}
+              onTouchStart={() => activate(index)}
               onFocus={() => activate(index)}
               onBlur={(event) => {
                 if (

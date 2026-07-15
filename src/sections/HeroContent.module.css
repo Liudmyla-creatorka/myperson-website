@@ -82,6 +82,22 @@
   background-color: rgb(74 14 26 / 15%);
 }
 
+/* The magnetic pull + press-scale in HeroContent.tsx is pointer:fine-only
+   (a cursor-relative pull makes no sense under a finger) — this is its
+   touch equivalent, a plain tap press-down. */
+@media (pointer: coarse) {
+  .primaryCta:active {
+    transform: scale(0.97);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+  }
+
+  .secondaryCta:active {
+    transform: scale(0.97);
+    background-color: rgb(74 14 26 / 15%);
+  }
+}
+
 .scrollCue {
   position: absolute;
   bottom: var(--spacing-8);
