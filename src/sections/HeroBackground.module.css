@@ -12,6 +12,15 @@
   overflow: hidden;
 }
 
+/* The element whose opacity/transform attributes actually get rewritten
+   every tick (see HeroBackground.tsx) — this is the real "moving mask
+   element" a hardware-acceleration hint belongs on, since GSAP itself
+   never touches this SVG <g> directly (its tweens only drive plain JS
+   state, applied here via manual setAttribute calls). */
+.maskGroup {
+  will-change: opacity, transform;
+}
+
 .colorLayer,
 .sketchLayer {
   pointer-events: none;

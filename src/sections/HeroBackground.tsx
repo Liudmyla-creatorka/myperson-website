@@ -57,11 +57,20 @@ export function HeroBackground() {
       ease: "power2.out",
     });
 
+    // getBoundingClientRect() forces a synchronous layout read — fine once,
+    // but calling it on every single pointermove/touchmove (which can fire
+    // well over 60x/sec on some touchscreens) is a real per-event cost for
+    // a rect that essentially never changes mid-gesture. Cached instead,
+    // refreshed only on resize/orientation change.
+    let rect = wrapper.getBoundingClientRect();
+    function refreshRect() {
+      rect = wrapper!.getBoundingClientRect();
+    }
+
     // Shared by both input paths below: given a point in viewport
     // coordinates, converts to wrapper-local space and updates reveal
     // strength based on whether that point is actually over the Hero.
     function updateFromPoint(clientX: number, clientY: number) {
-      const rect = wrapper!.getBoundingClientRect();
       const withinBounds =
         clientX >= rect.left &&
         clientX <= rect.right &&
@@ -89,10 +98,28 @@ export function HeroBackground() {
     // alongside normal page scrolling rather than capturing the gesture,
     // so dragging/scrolling through the Hero sweeps the reveal across it
     // instead of breaking scroll.
+    //
+    // touchmove can fire far more often than the screen actually repaints
+    // on some hardware — coalesced to at most one update per animation
+    // frame rather than processing every raw event.
+    let pendingTouch: { x: number; y: number } | null = null;
+    let touchRafId: number | null = null;
+
+    function flushTouch() {
+      touchRafId = null;
+      if (pendingTouch) {
+        updateFromPoint(pendingTouch.x, pendingTouch.y);
+        pendingTouch = null;
+      }
+    }
+
     function handleTouchMove(event: TouchEvent) {
       const touch = event.touches[0];
       if (!touch) return;
-      updateFromPoint(touch.clientX, touch.clientY);
+      pendingTouch = { x: touch.clientX, y: touch.clientY };
+      if (touchRafId === null) {
+        touchRafId = requestAnimationFrame(flushTouch);
+      }
     }
 
     function handleTouchStart(event: TouchEvent) {
@@ -164,6 +191,7 @@ export function HeroBackground() {
       });
     }
 
+    window.addEventListener("resize", refreshRect);
     gsap.ticker.add(tick);
 
     return () => {
@@ -174,7 +202,9 @@ export function HeroBackground() {
         window.removeEventListener("touchmove", handleTouchMove);
         window.removeEventListener("touchend", handleTouchEnd);
         window.removeEventListener("touchcancel", handleTouchEnd);
+        if (touchRafId !== null) cancelAnimationFrame(touchRafId);
       }
+      window.removeEventListener("resize", refreshRect);
       gsap.ticker.remove(tick);
     };
   }, [prefersReducedMotion]);
@@ -216,7 +246,12 @@ export function HeroBackground() {
               height="10000"
               fill="white"
             />
-            <g ref={groupRef} filter={`url(#${FILTER_ID})`} opacity={0}>
+            <g
+              ref={groupRef}
+              className={styles.maskGroup}
+              filter={`url(#${FILTER_ID})`}
+              opacity={0}
+            >
               {BLOBS.map((blob, index) => (
                 <ellipse
                   key={index}
