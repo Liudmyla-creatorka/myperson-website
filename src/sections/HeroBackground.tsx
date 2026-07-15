@@ -36,7 +36,6 @@ export function HeroBackground() {
     const wrapper = wrapperRef.current;
     const group = groupRef.current;
     if (!wrapper || !group) return;
-    if (!window.matchMedia("(pointer: fine)").matches) return;
 
     const state = { x: 0, y: 0, reveal: 0 };
     const previous = { x: 0, y: 0 };
@@ -58,21 +57,52 @@ export function HeroBackground() {
       ease: "power2.out",
     });
 
+    // Shared by both input paths below: given a point in viewport
+    // coordinates, converts to wrapper-local space and updates reveal
+    // strength based on whether that point is actually over the Hero.
+    function updateFromPoint(clientX: number, clientY: number) {
+      const rect = wrapper!.getBoundingClientRect();
+      const withinBounds =
+        clientX >= rect.left &&
+        clientX <= rect.right &&
+        clientY >= rect.top &&
+        clientY <= rect.bottom;
+
+      setX(clientX - rect.left);
+      setY(clientY - rect.top);
+      setReveal(withinBounds ? 1 : 0);
+    }
+
     // Tracked on window (not the wrapper) so the reveal keeps following the
     // cursor even where the Hero content (headline/CTAs) sits on top and
     // would otherwise intercept pointer events before they reach this
     // element — the same reasoning CursorLight already uses.
     function handlePointerMove(event: PointerEvent) {
-      const rect = wrapper!.getBoundingClientRect();
-      const withinBounds =
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom;
+      updateFromPoint(event.clientX, event.clientY);
+    }
 
-      setX(event.clientX - rect.left);
-      setY(event.clientY - rect.top);
-      setReveal(withinBounds ? 1 : 0);
+    // Touch has no persistent hover, so there's no "pointer left the
+    // section" event the way mouseleave/pointermove-outside gives us for
+    // free — touchend/touchcancel are what stand in for that, fading the
+    // reveal back out once the finger lifts. touchmove is intentionally
+    // *not* preventDefault()'d: the reveal tracks the finger passively
+    // alongside normal page scrolling rather than capturing the gesture,
+    // so dragging/scrolling through the Hero sweeps the reveal across it
+    // instead of breaking scroll.
+    function handleTouchMove(event: TouchEvent) {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateFromPoint(touch.clientX, touch.clientY);
+    }
+
+    function handleTouchStart(event: TouchEvent) {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updateFromPoint(touch.clientX, touch.clientY);
+    }
+
+    function handleTouchEnd() {
+      setReveal(0);
     }
 
     let elapsed = 0;
@@ -117,11 +147,34 @@ export function HeroBackground() {
       }
     }
 
-    window.addEventListener("pointermove", handlePointerMove);
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+
+    if (isFinePointer) {
+      window.addEventListener("pointermove", handlePointerMove);
+    } else {
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: true,
+      });
+      window.addEventListener("touchmove", handleTouchMove, {
+        passive: true,
+      });
+      window.addEventListener("touchend", handleTouchEnd, { passive: true });
+      window.addEventListener("touchcancel", handleTouchEnd, {
+        passive: true,
+      });
+    }
+
     gsap.ticker.add(tick);
 
     return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
+      if (isFinePointer) {
+        window.removeEventListener("pointermove", handlePointerMove);
+      } else {
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
+        window.removeEventListener("touchcancel", handleTouchEnd);
+      }
       gsap.ticker.remove(tick);
     };
   }, [prefersReducedMotion]);
