@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { Link } from "@/i18n/navigation";
@@ -14,6 +14,23 @@ const MAGNETIC_STRENGTH = 0.3;
 const HOVER_SCALE = 1.03;
 const PRESS_SCALE = 0.97;
 
+// Roughly the on-screen radius of the cursor-reveal blob (see BLOBS/
+// JITTER_AMOUNT in HeroBackground.tsx) — deliberately tighter than the
+// paragraph's own bounding box padding would suggest, since the mask's
+// actual solid (fully opaque) reveal area is much smaller than its nominal
+// ellipse radii once blur softens the edges. Too generous here flips the
+// whole paragraph to Chalk before the photo underneath has actually been
+// uncovered, reading as light-on-light.
+const REVEAL_PADDING = 80;
+
+// ponytail: hardcoded to this PL copy's exact wording — these words
+// consistently land over the brightest part of hero-color.jpg's diagonal
+// light streak, where even the reveal's Chalk washes out against it and
+// reads as invisible. Content-coupled by nature (a word list, not a
+// layout rule), so if the copy or hero image composition changes,
+// re-check which words (if any) still need this.
+const PROTECTED_WORDS = new Set(["Tożsamość", "na", "kinowy", "język"]);
+
 type HeroContentProps = {
   copy: PageCopy;
 };
@@ -21,11 +38,21 @@ type HeroContentProps = {
 export function HeroContent({ copy }: HeroContentProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const paragraphRef = useRef<HTMLParagraphElement>(null);
   const scrollCueRef = useRef<HTMLDivElement>(null);
   const primaryCtaRef = useRef<HTMLAnchorElement>(null);
   const secondaryCtaRef = useRef<HTMLAnchorElement>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const [isTextRevealed, setIsTextRevealed] = useState(false);
   const t = useTranslations("hero");
+
+  // The reveal-color swap (below) is a single toggle for the whole
+  // paragraph, but the mask's actual open patch is small and local to the
+  // cursor — so a word can end up Chalk while the sketch layer (light) is
+  // still what's showing behind it specifically. PROTECTED_WORDS stay on
+  // the base oxblood permanently, sidestepping that without needing the
+  // reveal logic to track per-word layout.
+  const introWords = copy.intro.split(" ");
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -72,6 +99,65 @@ export function HeroContent({ copy }: HeroContentProps) {
       timeline.kill();
       scrollTween?.scrollTrigger?.kill();
       scrollTween?.kill();
+    };
+  }, [prefersReducedMotion]);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    const paragraph = paragraphRef.current;
+    if (!paragraph) return;
+
+    let rect = paragraph.getBoundingClientRect();
+    function refreshRect() {
+      rect = paragraph!.getBoundingClientRect();
+    }
+
+    function isNearParagraph(x: number, y: number) {
+      return (
+        x >= rect.left - REVEAL_PADDING &&
+        x <= rect.right + REVEAL_PADDING &&
+        y >= rect.top - REVEAL_PADDING &&
+        y <= rect.bottom + REVEAL_PADDING
+      );
+    }
+
+    function handlePointerMove(event: PointerEvent) {
+      setIsTextRevealed(isNearParagraph(event.clientX, event.clientY));
+    }
+
+    function handleTouchMove(event: TouchEvent) {
+      const touch = event.touches[0];
+      if (!touch) return;
+      setIsTextRevealed(isNearParagraph(touch.clientX, touch.clientY));
+    }
+
+    function handleTouchEnd() {
+      setIsTextRevealed(false);
+    }
+
+    window.addEventListener("resize", refreshRect);
+
+    const isFinePointer = window.matchMedia("(pointer: fine)").matches;
+    if (isFinePointer) {
+      window.addEventListener("pointermove", handlePointerMove);
+    } else {
+      window.addEventListener("touchmove", handleTouchMove, { passive: true });
+      window.addEventListener("touchend", handleTouchEnd, { passive: true });
+      window.addEventListener("touchcancel", handleTouchEnd, {
+        passive: true,
+      });
+    }
+
+    return () => {
+      window.removeEventListener("resize", refreshRect);
+      if (isFinePointer) {
+        window.removeEventListener("pointermove", handlePointerMove);
+      } else {
+        window.removeEventListener("touchmove", handleTouchMove);
+        window.removeEventListener("touchend", handleTouchEnd);
+        window.removeEventListener("touchcancel", handleTouchEnd);
+      }
     };
   }, [prefersReducedMotion]);
 
@@ -166,8 +252,26 @@ export function HeroContent({ copy }: HeroContentProps) {
       <h1 ref={headlineRef} className={styles.headline}>
         {copy.title}
       </h1>
-      <p data-fade className={styles.paragraph}>
-        {copy.intro}
+      <p
+        ref={paragraphRef}
+        data-fade
+        className={
+          isTextRevealed
+            ? `${styles.paragraph} ${styles.paragraphRevealed}`
+            : styles.paragraph
+        }
+      >
+        {introWords.map((word, index) => (
+          <span
+            key={index}
+            className={
+              PROTECTED_WORDS.has(word) ? styles.paragraphProtected : undefined
+            }
+          >
+            {word}
+            {index < introWords.length - 1 ? " " : ""}
+          </span>
+        ))}
       </p>
       <div data-fade className={styles.actions}>
         {copy.primaryCta ? (

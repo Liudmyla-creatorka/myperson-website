@@ -4,7 +4,7 @@
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: var(--spacing-6);
+  margin-bottom: var(--spacing-3);
   font-family: var(--font-sans);
   font-size: var(--text-xs);
   letter-spacing: 0.35em;
@@ -27,10 +27,27 @@
 
 .paragraph {
   max-width: 38ch;
-  margin-top: var(--spacing-8);
-  font-size: var(--text-xl);
-  line-height: 1.65;
+  margin-top: var(--spacing-16);
+  font-size: clamp(1.625rem, 1.4rem + 0.95vw, 2.3125rem);
+  font-weight: 600;
+  line-height: 1.6;
   letter-spacing: 0.01em;
+  color: var(--color-accent);
+  transition: color var(--duration-base) var(--ease-out);
+}
+
+/* Applied while the cursor-reveal blob (see HeroBackground.tsx) sits over
+   this text — at that point the sketch layer is cut away and the darker
+   realistic photo shows through underneath, so oxblood stops reading
+   against it. Swaps to the same light Chalk used for text elsewhere on
+   dark backgrounds (nav, footer). */
+.paragraphRevealed {
+  color: var(--color-chalk);
+}
+
+/* Always oxblood regardless of .paragraphRevealed — see PROTECTED_WORDS
+   in HeroContent.tsx for why these specific words are exempt. */
+.paragraphProtected {
   color: var(--color-accent);
 }
 
@@ -38,7 +55,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
-  margin-top: var(--spacing-12);
+  margin-top: var(--spacing-24);
 }
 
 .primaryCta,

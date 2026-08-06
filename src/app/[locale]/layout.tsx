@@ -10,11 +10,12 @@ import { siteConfig } from "@/lib/site-config";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { CookieConsent } from "@/components/CookieConsent";
 import "@/styles/globals.css";
 
 const bodyFont = Montserrat({
   subsets: ["latin", "latin-ext"],
-  weight: ["300", "400"],
+  weight: ["300", "400", "600"],
   variable: "--font-sans-loaded",
   display: "swap",
 });
@@ -87,6 +88,7 @@ export default async function LocaleLayout({
           <Header />
           {children}
           <Footer locale={locale as Locale} />
+          <CookieConsent />
         </NextIntlClientProvider>
       </body>
     </html>

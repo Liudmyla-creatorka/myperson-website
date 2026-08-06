@@ -23,6 +23,10 @@
     "title": "Contact",
     "intro": "Let's talk about your project."
   },
+  "landingPages": {
+    "title": "Websites & Landing Pages",
+    "intro": "Animated websites and landing pages — MY PERSON's flagship product. More details coming soon."
+  },
   "homeServices": {
     "title": "Services",
     "intro": "What we do",
@@ -170,6 +174,10 @@
       "The client doesn't pay for technology. They pay for a result that changes how the market perceives their brand.",
       "In our vision, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but it is we who give it meaning, style, and cinematic depth."
     ]
+  },
+  "homeLandingPages": {
+    "eyebrow": "Flagship product",
+    "title": "Websites & Landing Pages"
   },
   "homeContact": {
     "eyebrow": "CONTACT",

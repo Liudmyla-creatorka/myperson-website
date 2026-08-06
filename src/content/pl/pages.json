@@ -2,7 +2,7 @@
   "home": {
     "title": "MY PERSON",
     "eyebrow": "Studio Narracji Wizualnych",
-    "intro": "Studio narracji wizualnych. Kinowe historie dla marek premium.",
+    "intro": "Tożsamość Twojej marki premium przekładam na kinowy język — strony i wizualizacje jak kadr z filmu.",
     "primaryCta": { "label": "Zobacz nasze prace", "href": "/portfolio" },
     "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" }
   },
@@ -22,6 +22,10 @@
   "contact": {
     "title": "Kontakt",
     "intro": "Porozmawiajmy o Twoim projekcie."
+  },
+  "landingPages": {
+    "title": "Strony i Landing Page'y",
+    "intro": "Animowane strony i landing page'y — flagowy produkt MY PERSON. Wkrótce więcej szczegółów."
   },
   "homeServices": {
     "title": "Usługi",
@@ -164,18 +168,22 @@
     "eyebrow": "Filozofia",
     "title": "Dlaczego MY PERSON",
     "paragraphs": [
-      "Nie tworzymy contentu dla contentu.",
+      "Nie tworzę contentu dla contentu.",
       "Każdy kadr ma cel — sprzedać produkt, zbudować markę albo zmienić sposób, w jaki klient ją postrzega.",
-      "Pracujemy z markami, które wiedzą, że dobry produkt nie wystarczy — trzeba go pokazać tak, żeby klient sam chciał go wybrać.",
+      "Pracuję z markami, które wiedzą, że dobry produkt nie wystarczy — trzeba go pokazać tak, żeby klient sam chciał go wybrać.",
       "Klient nie płaci za technologię. Płaci za rezultat, który zmienia percepcję jego marki na rynku.",
-      "W naszej wizji sztuczna inteligencja nie jest fundamentem — jest wyłącznie zaawansowanym narzędziem wykonawczym. Sercem, reżyserem i prawdziwym autorem każdej filmowej opowieści pozostaje Człowiek. AI słucha, ale to my nadajemy sens, styl i kinową głębię."
+      "W mojej wizji sztuczna inteligencja nie jest fundamentem — jest wyłącznie zaawansowanym narzędziem wykonawczym. Sercem, reżyserem i prawdziwym autorem każdej filmowej opowieści pozostaje Człowiek. AI słucha, ale to ja nadaję sens, styl i kinową głębię."
     ]
+  },
+  "homeLandingPages": {
+    "eyebrow": "Flagowy produkt",
+    "title": "Strony i Landing Page'y"
   },
   "homeContact": {
     "eyebrow": "KONTAKT",
     "title": "Gotowa marka zasługuje na wizualny język, który ją wyróżnia.",
     "subheading": "Aplikuj na zamknięty audyt wizualny. Przeglądam każde zgłoszenie osobiście. Odpowiadam w 48 godzin.",
-    "ctaLabel": "APLIKUJ TERAZ"
+    "ctaLabel": "Aplikuj teraz"
   },
   "footer": {
     "description": "Wizualna tożsamość, która sprzedaje. Studio wizualne oparte na strategii dla marek premium."

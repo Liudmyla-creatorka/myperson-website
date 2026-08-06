@@ -6,6 +6,7 @@
     "home": "Home",
     "portfolio": "Portfolio",
     "services": "Services",
+    "landingPages": "Websites & Landing Pages",
     "about": "About",
     "contact": "Contact"
   },
@@ -14,14 +15,16 @@
     "contactHeading": "Contact",
     "socialHeading": "Follow us"
   },
-  "cta": {
-    "audit": "APPLY FOR AUDIT"
-  },
   "languageSwitcher": {
     "pl": "PL",
     "en": "EN"
   },
   "hero": {
     "scroll": "Scroll"
+  },
+  "cookieConsent": {
+    "message": "I use cookies to analyze site traffic (Google Analytics, Microsoft Clarity). You can accept or decline.",
+    "accept": "Accept",
+    "decline": "Decline"
   }
 }

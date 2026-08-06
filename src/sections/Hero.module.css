@@ -12,5 +12,6 @@
 .container {
   position: relative;
   z-index: 2;
-  padding-block: var(--spacing-32);
+  padding-top: var(--spacing-8);
+  padding-bottom: var(--spacing-32);
 }

@@ -1,6 +1,5 @@
 .footer {
   border-top: 1px solid rgb(139 111 71 / 12%);
-  margin-top: var(--spacing-32);
   background-color: var(--color-graphite);
 }
 

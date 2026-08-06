@@ -6,12 +6,19 @@ import type {
   ContactCtaContent,
   FooterContent,
   HomeServicesContent,
+  LandingPagesContent,
   MethodContent,
   PageCopy,
   PhilosophyContent,
 } from "@/types/content";
 
-type PageKey = "home" | "portfolio" | "services" | "about" | "contact";
+type PageKey =
+  | "home"
+  | "portfolio"
+  | "services"
+  | "about"
+  | "contact"
+  | "landingPages";
 
 interface PagesData extends Record<PageKey, PageCopy> {
   homeServices: HomeServicesContent;
@@ -20,6 +27,7 @@ interface PagesData extends Record<PageKey, PageCopy> {
   homeCaseStudyBises: CaseStudyContent;
   homeBeforeAfter: BeforeAfterContent;
   homePhilosophy: PhilosophyContent;
+  homeLandingPages: LandingPagesContent;
   homeContact: ContactCtaContent;
   footer: FooterContent;
 }
@@ -75,6 +83,13 @@ export async function getHomePhilosophy(
 ): Promise<PhilosophyContent> {
   const data = await loadPagesData(locale);
   return data.homePhilosophy;
+}
+
+export async function getHomeLandingPages(
+  locale: Locale,
+): Promise<LandingPagesContent> {
+  const data = await loadPagesData(locale);
+  return data.homeLandingPages;
 }
 
 export async function getHomeContact(

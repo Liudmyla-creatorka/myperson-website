@@ -6,6 +6,7 @@
     "home": "Strona główna",
     "portfolio": "Portfolio",
     "services": "Usługi",
+    "landingPages": "Strony i Landing Page'y",
     "about": "O nas",
     "contact": "Kontakt"
   },
@@ -14,14 +15,16 @@
     "contactHeading": "Kontakt",
     "socialHeading": "Media społecznościowe"
   },
-  "cta": {
-    "audit": "APLIKUJ NA AUDYT"
-  },
   "languageSwitcher": {
     "pl": "PL",
     "en": "EN"
   },
   "hero": {
     "scroll": "Przewiń"
+  },
+  "cookieConsent": {
+    "message": "Używam plików cookie do analizy ruchu na stronie (Google Analytics, Microsoft Clarity). Możesz zaakceptować lub odrzucić.",
+    "accept": "Akceptuję",
+    "decline": "Odrzucam"
   }
 }
