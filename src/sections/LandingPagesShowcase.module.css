@@ -1,49 +1,147 @@
-.section {
-  padding-top: var(--spacing-16);
-  padding-bottom: var(--spacing-32);
-  background-color: var(--color-graphite);
+.demoIntro {
+  position: relative;
+  background: var(--color-graphite);
 }
 
-.inner {
+.demoLabel {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-6);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-chalk-muted);
+  background: var(--color-graphite);
+  font-family: var(--font-sans);
+  font-size: .625rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.serviceSection {
+  position: relative;
+  padding-block: clamp(7rem, 14vw, 13rem);
+  background:
+    radial-gradient(circle at 83% 8%, rgb(74 14 26 / 20%), transparent 32rem),
+    var(--color-graphite);
+  color: var(--color-chalk);
+  border-top: 1px solid var(--color-border);
+}
+
+.serviceInner {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-6);
-  text-align: left;
+  gap: clamp(5rem, 10vw, 9rem);
 }
 
-.eyebrow {
-  margin: 0;
+.serviceLead {
+  max-width: 70rem;
+}
+
+.eyebrow,
+.index {
+  margin: 0 0 var(--spacing-6);
+  color: var(--color-bronze);
   font-family: var(--font-sans);
   font-size: var(--text-xs);
-  letter-spacing: 0.35em;
+  letter-spacing: .28em;
   text-transform: uppercase;
-  color: var(--color-bronze);
 }
 
-.heading {
+.title {
+  max-width: 13ch;
   margin: 0;
-  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
   color: var(--color-chalk);
+  font-family: var(--font-serif);
+  font-size: clamp(3.2rem, 8vw, 8rem);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.045em;
+  text-transform: none;
 }
 
-.mockups {
+.intro {
+  max-width: 50rem;
+  margin: var(--spacing-12) 0 0;
+  color: var(--color-chalk-muted);
+  font-size: clamp(1.125rem, 1rem + .6vw, 1.55rem);
+  line-height: 1.65;
+}
+
+.scopeGrid,
+.pricingBlock {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-6);
-  width: 100%;
-  margin-top: var(--spacing-6);
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(3rem, 8vw, 9rem);
+  padding-top: var(--spacing-10);
+  border-top: 1px solid var(--color-border);
 }
 
-@media (min-width: 48rem) {
-  .mockups {
-    grid-template-columns: 1fr 1fr;
-  }
+.scopeGrid h2,
+.pricingBlock h2 {
+  max-width: 15ch;
+  margin: 0 0 var(--spacing-6);
+  color: var(--color-chalk);
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.6vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.025em;
+  text-transform: none;
 }
 
-.mockupSlot {
-  aspect-ratio: 16 / 10;
-  border: 1px dashed var(--color-border);
-  border-radius: var(--radius-md);
-  background-color: var(--color-graphite-light);
+.scopeGrid p:not(.index),
+.pricingBlock p:not(.index) {
+  max-width: 36rem;
+  margin: 0;
+  color: var(--color-chalk-muted);
+  line-height: 1.7;
+}
+
+.scopeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.scopeList li {
+  padding: var(--spacing-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: clamp(1rem, .9rem + .35vw, 1.25rem);
+}
+
+.pricingBlock > .index {
+  align-self: start;
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(100%, 34rem);
+  padding: var(--spacing-5) var(--spacing-6);
+  border: 1px solid var(--color-bronze);
+  border-radius: 999px;
+  color: var(--color-chalk);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  letter-spacing: .08em;
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.cta:hover,
+.cta:focus-visible {
+  color: var(--color-graphite);
+  background: var(--color-bronze);
+}
+
+@media (max-width: 48rem) {
+  .demoLabel { padding-inline: var(--spacing-4); font-size: .54rem; }
+  .demoLabel span:last-child { display: none; }
+  .scopeGrid,
+  .pricingBlock { grid-template-columns: 1fr; gap: var(--spacing-8); }
+  .title { font-size: clamp(3rem, 15vw, 5.25rem); }
+  .serviceInner { gap: 5rem; }
 }

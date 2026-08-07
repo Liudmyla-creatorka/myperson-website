@@ -4,7 +4,7 @@ import { routing } from "@/i18n/routing";
 import { getPortfolioItems } from "@/lib/content";
 import { siteConfig } from "@/lib/site-config";
 
-const staticPaths = ["", "/portfolio", "/services", "/about"];
+const staticPaths = ["", "/portfolio", "/services", "/landing-pages", "/about"];
 
 function alternates(path: string) {
   return Object.fromEntries(

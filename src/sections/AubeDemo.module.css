@@ -1,0 +1,143 @@
+.demoRoot {
+  --aube-cream: #f7f0ec;
+  --aube-pointer-x: .5;
+  --aube-pointer-y: .5;
+  --aube-hero-p: 0;
+  --aube-copy-alpha: 1;
+  --aube-nav-alpha: 1;
+  width: 100%;
+  overflow: clip;
+  color: var(--aube-cream);
+  background: #b8a5bd;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+.demoRoot button { color: inherit; font: inherit; }
+
+.heroStory { height: 285vh; position: relative; }
+.heroSticky,
+.sceneSticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.heroSticky { isolation: isolate; background: #c6b3c8; }
+.heroAtmosphere {
+  position: absolute;
+  inset: -4%;
+  z-index: -4;
+  background: linear-gradient(115deg, rgba(117,106,148,.16), rgba(244,200,214,.12)), url("/aube/hero-wide.png") center/cover no-repeat;
+  transform: scale(1.08) translate(calc((var(--aube-pointer-x) - .5) * -1.4vw), calc((var(--aube-pointer-y) - .5) * -1.4vw));
+  filter: saturate(.88) brightness(.94);
+  transition: transform .55s cubic-bezier(.2,.7,.2,1);
+}
+.heroVideo { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; object-position: center; filter: saturate(.9) brightness(.96); }
+.heroSticky::after { content: ""; position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(64,51,77,.22), transparent 38%, transparent 70%, rgba(68,46,63,.13)); pointer-events: none; }
+.cursorAura { position: absolute; z-index: -1; width: 36vw; aspect-ratio: 1; border-radius: 50%; left: calc(var(--aube-pointer-x) * 100% - 18vw); top: calc(var(--aube-pointer-y) * 100% - 18vw); background: radial-gradient(circle, rgba(255,230,245,.22), transparent 68%); filter: blur(24px); pointer-events: none; transition: left .25s ease-out, top .25s ease-out; }
+
+.aubeTopbar { position: absolute; z-index: 30; top: 0; left: 0; width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; padding: clamp(84px, 8.5vh, 104px) clamp(22px, 4.2vw, 72px) 0; opacity: var(--aube-nav-alpha); }
+.brandLockup { width: fit-content; display: flex; flex-direction: column; font-family: Baskerville, "Times New Roman", serif; line-height: .78; letter-spacing: -.035em; font-size: clamp(22px, 2vw, 34px); text-shadow: 0 1px 16px rgba(45,32,45,.14); }
+.brandLockup small { margin-top: 8px; font: 500 8px/1 Arial, sans-serif; letter-spacing: .3em; }
+.microNav { display: flex; gap: 3px; padding: 3px; border-radius: 999px; background: rgba(246,237,243,.3); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,.25); }
+.microNav button, .microNav span, .cartPill, .demoBadge { border: 0; background: transparent; border-radius: 999px; padding: 8px 13px; font-size: 10px; letter-spacing: .05em; white-space: nowrap; }
+.microNav button { cursor: pointer; }
+.microNav button:hover { background: rgba(249,242,246,.56); }
+.aubeActions { justify-self: end; display: flex; gap: 6px; align-items: center; }
+.cartPill, .demoBadge { background: rgba(249,242,246,.48); border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(14px); }
+.demoBadge { font-size: 7px; letter-spacing: .15em; }
+
+.speciesName { position: absolute; z-index: 5; top: 46%; left: 4.2vw; right: 4.2vw; display: flex; justify-content: space-between; transform: translateY(-50%); font: 400 clamp(38px, 6.2vw, 104px)/.85 Baskerville, "Times New Roman", serif; letter-spacing: -.04em; color: rgba(253,244,248,.7); opacity: var(--aube-copy-alpha); pointer-events: none; }
+.heroCopy { position: absolute; z-index: 12; left: 4.2vw; bottom: 5.7vh; max-width: min(61vw, 920px); opacity: var(--aube-copy-alpha); transform: translateY(calc(var(--aube-hero-p) * -18px)); }
+.eyebrow { margin: 0 0 13px; font: 500 9px/1.3 Arial, sans-serif; letter-spacing: .22em; text-transform: uppercase; }
+.heroCopy h2 { margin: 0; text-transform: none; color: inherit; font: 400 clamp(62px, 8vw, 138px)/.73 Baskerville, "Times New Roman", serif; letter-spacing: -.07em; text-shadow: 0 2px 30px rgba(50,34,50,.13); }
+.heroCopy h2 em { font-weight: 400; }
+.heroAside { position: absolute; z-index: 13; right: 4.2vw; bottom: 6.3vh; width: min(24vw, 330px); opacity: var(--aube-copy-alpha); }
+.heroAside p { margin: 0 0 18px; font-size: clamp(10px, .85vw, 13px); line-height: 1.55; color: rgba(255,248,250,.82); }
+.heroAside button { width: 100%; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,.35); background: rgba(245,235,242,.22); backdrop-filter: blur(14px); border-radius: 999px; padding: 11px 15px; font-size: 10px; cursor: pointer; transition: background .3s, transform .3s; }
+.heroAside button:hover { background: rgba(247,240,244,.42); transform: translateY(-2px); }
+.scrollCue { position: absolute; z-index: 15; right: 4.2vw; top: 50%; writing-mode: vertical-rl; font-size: 8px; letter-spacing: .16em; text-transform: uppercase; opacity: calc(var(--aube-copy-alpha) * .72); }
+
+.ingredientScene { position: relative; height: 155vh; --aube-scene-scale: 1.085; --aube-scene-y: 2.8vh; --aube-copy-y: 54px; --aube-scene-alpha: .12; }
+.sceneSticky { isolation: isolate; background: #c9bdcc; }
+.sceneImage { position: absolute; z-index: -3; inset: -4%; width: 108%; height: 108%; object-fit: cover; object-position: center; transform: translate3d(0,var(--aube-scene-y),0) scale(var(--aube-scene-scale)); will-change: transform; }
+.sceneShade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(90deg, rgba(36,27,35,.33), rgba(43,34,43,.04) 44%, rgba(43,34,43,.08)); }
+.alignRight .sceneShade { background: linear-gradient(270deg, rgba(36,27,35,.3), rgba(43,34,43,.03) 48%, rgba(43,34,43,.06)); }
+.ingredientCopy { position: absolute; z-index: 5; left: 5vw; bottom: 8vh; width: min(42vw, 610px); transform: translateY(var(--aube-copy-y)); opacity: var(--aube-scene-alpha); }
+.alignRight .ingredientCopy { left: auto; right: 5vw; text-align: right; }
+.ingredientCopy h2 { margin: 0 0 8px; text-transform: none; color: inherit; font: 400 clamp(54px, 7vw, 118px)/.79 Baskerville, "Times New Roman", serif; letter-spacing: -.055em; }
+.ingredientCopy h3 { margin: 0 0 24px; text-transform: none; color: inherit; font: italic 400 clamp(28px, 3.2vw, 56px)/.98 Baskerville, "Times New Roman", serif; letter-spacing: -.035em; }
+.ingredientBody { max-width: 390px; margin: 0; font-size: clamp(11px, .95vw, 14px); line-height: 1.6; }
+.alignRight .ingredientBody { margin-left: auto; }
+.ingredientLine { width: min(230px, 55%); height: 1px; margin-top: 28px; background: rgba(255,255,255,.3); }
+.ingredientLine span { display: block; width: 54%; height: 1px; background: currentColor; }
+.alignRight .ingredientLine { margin-left: auto; }
+.sceneNumber { position: absolute; top: 11vh; right: 4vw; font: italic 400 clamp(74px, 11vw, 180px)/.7 Baskerville, "Times New Roman", serif; opacity: .2; letter-spacing: -.08em; }
+.alignRight .sceneNumber { right: auto; left: 4vw; }
+.edgeLabel { position: absolute; right: 2.2vw; top: 50%; margin: 0; writing-mode: vertical-rl; font-size: 7px; letter-spacing: .2em; text-transform: uppercase; opacity: .6; }
+.toneDark { color: #fff7fa; }
+.toneLight { color: #4b3544; }
+.toneLight .sceneShade { background: linear-gradient(90deg, rgba(243,225,236,.38), transparent 55%); }
+
+.bottleScene { height: 165vh; }
+.bottleStage { background: #bbaac2; }
+.bottleImage { position: absolute; z-index: -3; inset: -2%; width: 104%; height: 104%; object-fit: cover; object-position: 50% 50%; transform: translateY(var(--aube-scene-y)) scale(var(--aube-scene-scale)); filter: saturate(.9); }
+.bottleHaze { position: absolute; inset: 0; z-index: -2; background: radial-gradient(circle at 50% 65%, rgba(246,226,237,.05), transparent 32%), linear-gradient(90deg, rgba(64,43,62,.3), transparent 44%); }
+.bottleVignette { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(49,32,50,.08), transparent 55%, rgba(47,32,47,.35)); }
+.bottleCopy { position: absolute; z-index: 5; left: 5vw; top: 50%; transform: translateY(calc(-50% + var(--aube-copy-y))); width: min(38vw, 560px); opacity: var(--aube-scene-alpha); }
+.bottleCopy h2 { margin: 0 0 26px; text-transform: none; color: inherit; font: 400 clamp(62px, 7.3vw, 125px)/.78 Baskerville, "Times New Roman", serif; letter-spacing: -.06em; }
+.bottleCopy h2 em { font-weight: 400; }
+.bottleCopy > p:not(.eyebrow) { width: min(370px, 100%); font-size: 12px; line-height: 1.65; }
+.purchaseCard { position: absolute; z-index: 7; right: 5vw; bottom: 10vh; width: min(300px, 24vw); padding: 18px; border: 1px solid rgba(255,255,255,.32); border-radius: 22px; background: rgba(101,77,99,.2); box-shadow: 0 18px 60px rgba(53,35,53,.13); backdrop-filter: blur(18px); color: #fff8fa; opacity: var(--aube-scene-alpha); transform: translateY(var(--aube-copy-y)); }
+.purchaseMeta { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 30px; font-size: 8px; letter-spacing: .15em; text-transform: uppercase; opacity: .78; }
+.purchasePrice { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,.22); }
+.purchasePrice span { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; opacity: .76; }
+.purchasePrice strong { font: 400 clamp(24px, 2.2vw, 36px)/1 Baskerville, "Times New Roman", serif; letter-spacing: -.035em; white-space: nowrap; }
+.addToCart { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; border: 1px solid rgba(255,255,255,.38); border-radius: 999px; background: rgba(250,242,247,.17); color: inherit; cursor: pointer; font-size: 10px; transition: background .3s, transform .3s; }
+.addToCart:hover { background: rgba(250,242,247,.34); transform: translateY(-1px); }
+.isAdded { background: rgba(234,242,221,.2); }
+.demoFooter { position: absolute; z-index: 8; left: 5vw; right: 5vw; bottom: 28px; display: flex; justify-content: space-between; gap: 20px; font-size: 8px; letter-spacing: .16em; text-transform: uppercase; opacity: .75; }
+
+@media (max-width: 800px) {
+  .heroStory { height: 255vh; }
+  .aubeTopbar { grid-template-columns: 1fr auto; padding-top: 118px; }
+  .microNav { display: none; }
+  .demoBadge { display: none; }
+  .speciesName { top: 37%; font-size: 12vw; }
+  .heroCopy { left: 22px; right: 22px; bottom: 18vh; max-width: none; }
+  .heroCopy h2 { font-size: clamp(56px, 16vw, 88px); line-height: .8; }
+  .heroAside { left: 22px; right: 22px; bottom: 4.5vh; width: auto; display: grid; grid-template-columns: 1fr auto; gap: 14px; align-items: end; }
+  .heroAside p { margin: 0; max-width: 62vw; }
+  .heroAside button { width: 108px; }
+  .scrollCue { display: none; }
+  .ingredientScene { height: 135vh; }
+  .ingredientCopy, .alignRight .ingredientCopy { left: 22px; right: 22px; bottom: 7vh; width: auto; text-align: left; }
+  .ingredientCopy h2 { font-size: clamp(48px, 14vw, 76px); }
+  .ingredientCopy h3 { font-size: 32px; max-width: 86%; }
+  .ingredientBody, .alignRight .ingredientBody { max-width: 82%; margin-left: 0; }
+  .alignRight .ingredientLine { margin-left: 0; }
+  .sceneNumber, .alignRight .sceneNumber { left: auto; right: 22px; top: 12vh; }
+  .edgeLabel { right: 12px; }
+  .bottleCopy { left: 22px; right: 22px; top: auto; bottom: 33vh; width: auto; transform: translateY(var(--aube-copy-y)); }
+  .bottleCopy h2 { font-size: clamp(56px, 15vw, 82px); }
+  .purchaseCard { right: 22px; left: 22px; bottom: 5.5vh; width: auto; padding: 14px; border-radius: 18px; }
+  .purchaseMeta { margin-bottom: 12px; }
+  .purchasePrice { margin-bottom: 10px; padding-bottom: 10px; }
+  .demoFooter { left: 22px; right: 22px; flex-direction: column; gap: 5px; }
+}
+
+@media (max-height: 620px) and (min-width: 801px) {
+  .heroCopy h2 { font-size: 11vh; }
+  .heroAside { bottom: 4vh; }
+  .ingredientCopy { bottom: 5vh; }
+  .ingredientCopy h2 { font-size: 12vh; }
+  .ingredientCopy h3 { font-size: 5.4vh; margin-bottom: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursorAura { display: none; }
+  .heroAtmosphere, .sceneImage, .bottleImage { transform: none !important; transition: none !important; }
+}
