@@ -10,12 +10,12 @@ type LandingPagesShowcaseProps = {
 const serviceCopy = {
   pl: {
     eyebrow: "STRONY INTERNETOWE & LANDING PAGE'E",
-    title: "Tworzymy cyfrowe doświadczenia, nie tylko strony.",
+    title: "Tworzę cyfrowe doświadczenia, nie tylko strony.",
     intro:
-      "Projektujemy i realizujemy strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
+      "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
     scopeTitle: "Od koncepcji do działającej strony.",
     scopeIntro:
-      "Zakres projektu dobieramy do marki, jej potrzeb i sposobu, w jaki strona ma być wykorzystywana.",
+      "Zakres projektu dobieram do marki, jej potrzeb i sposobu, w jaki strona ma być wykorzystywana.",
     items: [
       "Koncepcja i struktura",
       "UX/UI & art direction",
@@ -27,17 +27,17 @@ const serviceCopy = {
     ],
     pricingTitle: "Zakres, który wynika z potrzeb.",
     pricing:
-      "Nie każda strona potrzebuje tych samych funkcji, technologii czy poziomu interakcji. Finalną wycenę przygotowujemy po określeniu potrzeb, funkcjonalności, integracji oraz zakresu projektu.",
+      "Nie każda strona potrzebuje tych samych funkcji, technologii czy poziomu interakcji. Finalną wycenę przygotowuję po określeniu potrzeb, funkcjonalności, integracji oraz zakresu projektu.",
     cta: "Porozmawiajmy o projekcie",
   },
   en: {
     eyebrow: "WEBSITES & LANDING PAGES",
-    title: "We create digital experiences, not just pages.",
+    title: "I create digital experiences, not just pages.",
     intro:
-      "We design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+      "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
     scopeTitle: "From concept to a working website.",
     scopeIntro:
-      "The scope is shaped around the brand, its needs and the way the website will be used.",
+      "I shape the scope around the brand, its needs and the way the website will be used.",
     items: [
       "Concept and structure",
       "UX/UI & art direction",
@@ -49,7 +49,7 @@ const serviceCopy = {
     ],
     pricingTitle: "A scope built around real needs.",
     pricing:
-      "Not every website needs the same functionality, technology or level of interaction. Final pricing is prepared after defining the required functionality, integrations and project scope.",
+      "Not every website needs the same functionality, technology or level of interaction. I prepare final pricing after defining the required functionality, integrations and project scope.",
     cta: "Let’s talk about your project",
   },
 } as const;
