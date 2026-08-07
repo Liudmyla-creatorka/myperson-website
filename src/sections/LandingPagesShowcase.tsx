@@ -13,6 +13,7 @@ const serviceCopy = {
     title: "Tworzę cyfrowe doświadczenia, nie tylko strony.",
     intro:
       "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
+    scopeIndex: "01 / ZAKRES",
     scopeTitle: "Od koncepcji do działającej strony.",
     scopeIntro:
       "Zakres projektu dobieram do marki, jej potrzeb i sposobu, w jaki strona ma być wykorzystywana.",
@@ -25,16 +26,18 @@ const serviceCopy = {
       "Formularze, analityka i integracje",
       "Przygotowanie i wdrożenie",
     ],
+    pricingIndex: "02 / WYCENA",
     pricingTitle: "Zakres, który wynika z potrzeb.",
     pricing:
       "Nie każda strona potrzebuje tych samych funkcji, technologii czy poziomu interakcji. Finalną wycenę przygotowuję po określeniu potrzeb, funkcjonalności, integracji oraz zakresu projektu.",
-    cta: "Porozmawiajmy o projekcie",
+    cta: "Porozmawiaj ze mną o projekcie",
   },
   en: {
     eyebrow: "WEBSITES & LANDING PAGES",
-    title: "I create digital experiences, not just pages.",
+    title: "I create digital experiences, not just websites.",
     intro:
       "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+    scopeIndex: "01 / SCOPE",
     scopeTitle: "From concept to a working website.",
     scopeIntro:
       "I shape the scope around the brand, its needs and the way the website will be used.",
@@ -47,10 +50,11 @@ const serviceCopy = {
       "Forms, analytics and integrations",
       "Launch preparation and deployment",
     ],
+    pricingIndex: "02 / PRICING",
     pricingTitle: "A scope built around real needs.",
     pricing:
       "Not every website needs the same functionality, technology or level of interaction. I prepare final pricing after defining the required functionality, integrations and project scope.",
-    cta: "Let’s talk about your project",
+    cta: "Tell me about your project",
   },
 } as const;
 
@@ -64,7 +68,7 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
           <span>MY PERSON / LIVE WEB EXPERIENCE</span>
           <span>AUBE — CONCEPT BRAND</span>
         </div>
-        <AubeDemo />
+        <AubeDemo locale={locale} />
       </section>
 
       <section className={styles.serviceSection} aria-labelledby="landing-service-title">
@@ -77,7 +81,7 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
 
           <div className={styles.scopeGrid}>
             <div>
-              <p className={styles.index}>01 / ZAKRES</p>
+              <p className={styles.index}>{copy.scopeIndex}</p>
               <h2>{copy.scopeTitle}</h2>
               <p>{copy.scopeIntro}</p>
             </div>
@@ -87,7 +91,7 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
           </div>
 
           <div className={styles.pricingBlock}>
-            <p className={styles.index}>02 / WYCENA</p>
+            <p className={styles.index}>{copy.pricingIndex}</p>
             <div>
               <h2>{copy.pricingTitle}</h2>
               <p>{copy.pricing}</p>

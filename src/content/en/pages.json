@@ -3,12 +3,12 @@
     "title": "MY PERSON",
     "eyebrow": "Visual Narratives Studio",
     "intro": "A visual narratives studio. Cinematic stories for premium brands.",
-    "primaryCta": { "label": "View Our Work", "href": "/portfolio" },
+    "primaryCta": { "label": "View My Work", "href": "/portfolio" },
     "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" }
   },
   "portfolio": {
     "title": "Portfolio",
-    "eyebrow": "Our Work",
+    "eyebrow": "My Work",
     "intro": "Selected work combining image, motion and story."
   },
   "services": {
@@ -17,7 +17,7 @@
   },
   "about": {
     "title": "About",
-    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. We turn brand presence into cohesive, cinematic experiences that immediately establish market position."
+    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. I turn brand presence into cohesive, cinematic experiences that immediately establish market position."
   },
   "contact": {
     "title": "Contact",
@@ -29,7 +29,7 @@
   },
   "homeServices": {
     "title": "Services",
-    "intro": "What we do",
+    "intro": "What I do",
     "items": [
       {
         "slug": "brand-identity",
@@ -59,7 +59,7 @@
   },
   "homeMethod": {
     "title": "Method",
-    "intro": "How we work",
+    "intro": "How I work",
     "items": [
       {
         "slug": "analiza",
@@ -168,11 +168,11 @@
     "eyebrow": "Philosophy",
     "title": "Why MY PERSON",
     "paragraphs": [
-      "We don't create content for content's sake.",
+      "I don't create content for content's sake.",
       "Every frame has a purpose — sell the product, build the brand, or change how the customer perceives it.",
-      "We work with brands that know a good product isn't enough — it has to be shown in a way that makes the customer want to choose it themselves.",
+      "I work with brands that know a good product isn't enough — it has to be shown in a way that makes the customer want to choose it themselves.",
       "The client doesn't pay for technology. They pay for a result that changes how the market perceives their brand.",
-      "In our vision, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but it is we who give it meaning, style, and cinematic depth."
+      "In my approach, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but I give it meaning, style, and cinematic depth."
     ]
   },
   "homeLandingPages": {

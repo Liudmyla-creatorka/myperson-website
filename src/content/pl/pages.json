@@ -3,12 +3,12 @@
     "title": "MY PERSON",
     "eyebrow": "Studio Narracji Wizualnych",
     "intro": "Tożsamość Twojej marki premium przekładam na kinowy język — strony i wizualizacje jak kadr z filmu.",
-    "primaryCta": { "label": "Zobacz nasze prace", "href": "/portfolio" },
+    "primaryCta": { "label": "Zobacz moje prace", "href": "/portfolio" },
     "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" }
   },
   "portfolio": {
     "title": "Portfolio",
-    "eyebrow": "Nasze Prace",
+    "eyebrow": "Moje Prace",
     "intro": "Wybrane realizacje łączące obraz, ruch i opowieść."
   },
   "services": {
@@ -16,8 +16,8 @@
     "intro": "Kompleksowe podejście do budowania premium marek."
   },
   "about": {
-    "title": "O nas",
-    "intro": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Przekształcamy obecność marek w spójne, kinowe doświadczenia, które natychmiast budują ich pozycję rynkową."
+    "title": "O mnie",
+    "intro": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Przekształcam obecność marek w spójne, kinowe doświadczenia, które natychmiast budują ich pozycję rynkową."
   },
   "contact": {
     "title": "Kontakt",
@@ -29,7 +29,7 @@
   },
   "homeServices": {
     "title": "Usługi",
-    "intro": "Co robimy",
+    "intro": "Co robię",
     "items": [
       {
         "slug": "brand-identity",
@@ -59,7 +59,7 @@
   },
   "homeMethod": {
     "title": "Metoda",
-    "intro": "Jak pracujemy",
+    "intro": "Jak pracuję",
     "items": [
       {
         "slug": "analiza",

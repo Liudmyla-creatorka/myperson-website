@@ -21,7 +21,8 @@
 
 .serviceSection {
   position: relative;
-  padding-block: clamp(7rem, 14vw, 13rem);
+  padding-top: 4rem;
+  padding-bottom: 6rem;
   background:
     radial-gradient(circle at 83% 8%, rgb(74 14 26 / 20%), transparent 32rem),
     var(--color-graphite);
@@ -32,7 +33,7 @@
 .serviceInner {
   display: flex;
   flex-direction: column;
-  gap: clamp(5rem, 10vw, 9rem);
+  gap: 4rem;
 }
 
 .serviceLead {
@@ -49,15 +50,15 @@
   text-transform: uppercase;
 }
 
+/* Matches the "DLACZEGO MY PERSON" scale on Home: font-size only, everything
+   else (serif, 700, letter-spacing -0.01em, 1.5 line-height from body) comes
+   from the global h1-h3 rule in globals.css - reusing the system instead of
+   re-declaring it. text-transform:none keeps sentence case for this headline. */
 .title {
-  max-width: 13ch;
+  max-width: 32ch;
   margin: 0;
   color: var(--color-chalk);
-  font-family: var(--font-serif);
-  font-size: clamp(3.2rem, 8vw, 8rem);
-  font-weight: 400;
-  line-height: .92;
-  letter-spacing: -.045em;
+  font-size: 2.25rem;
   text-transform: none;
 }
 
@@ -65,7 +66,7 @@
   max-width: 50rem;
   margin: var(--spacing-12) 0 0;
   color: var(--color-chalk-muted);
-  font-size: clamp(1.125rem, 1rem + .6vw, 1.55rem);
+  font-size: 1.125rem;
   line-height: 1.65;
 }
 
@@ -73,21 +74,30 @@
 .pricingBlock {
   display: grid;
   grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-  gap: clamp(3rem, 8vw, 9rem);
-  padding-top: var(--spacing-10);
-  border-top: 1px solid var(--color-border);
+  gap: 3rem;
+  padding: 2rem var(--spacing-6);
+  border: 1px solid transparent;
+  border-top-color: var(--color-border);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--duration-base) var(--ease-out),
+    border-color var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.scopeGrid:hover,
+.pricingBlock:hover {
+  background-color: var(--color-graphite-light);
+  border-color: var(--color-bronze);
+  transform: translateY(-4px);
 }
 
 .scopeGrid h2,
 .pricingBlock h2 {
-  max-width: 15ch;
+  max-width: 20ch;
   margin: 0 0 var(--spacing-6);
   color: var(--color-chalk);
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 3.6vw, 4rem);
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: -.025em;
+  font-size: 1.5rem;
   text-transform: none;
 }
 
@@ -96,7 +106,8 @@
   max-width: 36rem;
   margin: 0;
   color: var(--color-chalk-muted);
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
 .scopeList {
@@ -109,39 +120,51 @@
 .scopeList li {
   padding: var(--spacing-4) 0;
   border-bottom: 1px solid var(--color-border);
-  font-size: clamp(1rem, .9rem + .35vw, 1.25rem);
+  font-size: 1rem;
 }
 
 .pricingBlock > .index {
   align-self: start;
 }
 
+/* Reuses ContactCta's filled oxblood/chalk button recipe (same colors,
+   duration-fast + ease-out timing) instead of the previous outline pill,
+   which had collapsed to ~0 padding because --spacing-5 doesn't exist in
+   tokens.css (only 1/2/3/4/6/8/12/16/24/32) - an invalid var() zeroes out
+   the whole padding shorthand at computed-value time. */
 .cta {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  width: min(100%, 34rem);
-  padding: var(--spacing-5) var(--spacing-6);
-  border: 1px solid var(--color-bronze);
-  border-radius: 999px;
+  justify-content: center;
+  gap: var(--spacing-2);
+  width: fit-content;
+  min-height: 44px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-oxblood);
   color: var(--color-chalk);
   text-decoration: none;
-  font-size: var(--text-sm);
-  letter-spacing: .08em;
-  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  font-family: var(--font-sans);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
 }
 
 .cta:hover,
 .cta:focus-visible {
-  color: var(--color-graphite);
-  background: var(--color-bronze);
+  background-color: var(--color-oxblood-hover);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 48rem) {
   .demoLabel { padding-inline: var(--spacing-4); font-size: .54rem; }
   .demoLabel span:last-child { display: none; }
+  .serviceSection { padding-top: 3rem; padding-bottom: 4.5rem; }
   .scopeGrid,
   .pricingBlock { grid-template-columns: 1fr; gap: var(--spacing-8); }
-  .title { font-size: clamp(3rem, 15vw, 5.25rem); }
-  .serviceInner { gap: 5rem; }
+  .serviceInner { gap: 3rem; }
 }

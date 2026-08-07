@@ -2,43 +2,141 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import type { Locale } from "@/i18n/routing";
 import styles from "./AubeDemo.module.css";
 
-const ingredients = [
-  {
-    kicker: "01 / Ukojenie",
-    title: "Rumianek",
-    display: "Cisza dla skóry.",
-    copy: "Ekstrakt z rumianku otula skórę kojącą pielęgnacją, pomaga przywrócić komfort i pozostawia ją miękką w dotyku.",
-    image: "/aube/chamomile.png",
-    tone: "light",
-    align: "left",
+type AubeIngredient = {
+  kicker: string;
+  title: string;
+  display: string;
+  copy: string;
+  image: string;
+  tone: "light" | "dark";
+  align: "left" | "right";
+};
+
+// AUBE is a concept-brand demo, not the MY PERSON site itself - its PL copy
+// stays exactly as shipped (do not touch). EN is a full translation of every
+// AUBE-authored string; the handful of already-English brand/marketing terms
+// (e.g. "Botanical body serum / 100 ml", "Scroll to enter") are intentionally
+// identical in both - that's the existing AUBE voice, not an untranslated gap.
+const ingredientsByLocale: Record<Locale, AubeIngredient[]> = {
+  pl: [
+    {
+      kicker: "01 / Ukojenie",
+      title: "Rumianek",
+      display: "Cisza dla skóry.",
+      copy: "Ekstrakt z rumianku otula skórę kojącą pielęgnacją, pomaga przywrócić komfort i pozostawia ją miękką w dotyku.",
+      image: "/aube/chamomile.png",
+      tone: "light",
+      align: "left",
+    },
+    {
+      kicker: "02 / Nawilżenie",
+      title: "Kwas hialuronowy",
+      display: "Nawilżenie, które zostaje.",
+      copy: "Kwas hialuronowy pomaga zatrzymać wodę w naskórku. Skóra staje się gładsza, sprężysta i świeża — bez uczucia ciężkości.",
+      image: "/aube/hyaluronic.jpeg",
+      tone: "dark",
+      align: "right",
+    },
+    {
+      kicker: "03 / Odżywienie",
+      title: "Olej z pestek winogron",
+      display: "Miękkość bez ciężkości.",
+      copy: "Lekki olej z pestek winogron wspiera barierę skóry, wygładza i nadaje subtelny blask, zachowując jedwabiste wykończenie.",
+      image: "/aube/grape-oil.jpeg",
+      tone: "dark",
+      align: "left",
+    },
+  ],
+  en: [
+    {
+      kicker: "01 / Comfort",
+      title: "Chamomile",
+      display: "Quiet, for the skin.",
+      copy: "Chamomile extract wraps the skin in soothing care, helps restore comfort, and leaves it soft to the touch.",
+      image: "/aube/chamomile.png",
+      tone: "light",
+      align: "left",
+    },
+    {
+      kicker: "02 / Hydration",
+      title: "Hyaluronic Acid",
+      display: "Hydration that stays.",
+      copy: "Hyaluronic acid helps the skin hold on to moisture. It becomes smoother, more supple and fresh — without any feeling of heaviness.",
+      image: "/aube/hyaluronic.jpeg",
+      tone: "dark",
+      align: "right",
+    },
+    {
+      kicker: "03 / Nourishment",
+      title: "Grapeseed Oil",
+      display: "Softness without weight.",
+      copy: "Light grapeseed oil supports the skin's barrier, smooths, and adds a subtle glow while keeping a silky finish.",
+      image: "/aube/grape-oil.jpeg",
+      tone: "dark",
+      align: "left",
+    },
+  ],
+};
+
+const aubeCopyByLocale = {
+  pl: {
+    rootLabel: "AUBE — demonstracyjny landing page MY PERSON",
+    navFormula: "Formuła",
+    navIngredients: "Składniki",
+    navAriaLabel: "Nawigacja demonstracyjna AUBE",
+    cartLabel: (count: number) => `Koszyk (${count})`,
+    heroHeadingLine1: "Natura zamknięta",
+    heroHeadingEm: "w każdej kropli.",
+    heroAsideBody:
+      "Lekkie serum do ciała z rumiankiem, kwasem hialuronowym i olejem z pestek winogron. Nawilża, koi i przywraca skórze naturalną miękkość.",
+    heroCta: "Poznaj formułę",
+    bottleHeadingLine1: "Twoja skóra.",
+    bottleHeadingEm: "Twój rytuał.",
+    bottleBody:
+      "Trzy aktywne składniki. Jedna lekka formuła stworzona dla codziennego komfortu, nawilżenia i miękkości skóry.",
+    priceLabel: "Cena",
+    addToCart: "Dodaj do koszyka",
+    addedToCart: "Dodano do koszyka",
+    purchaseAriaLabel: "Zakup AUBE Body Serum",
+    bottleImgAlt: "Flakon AUBE Body Serum",
   },
-  {
-    kicker: "02 / Nawilżenie",
-    title: "Kwas hialuronowy",
-    display: "Nawilżenie, które zostaje.",
-    copy: "Kwas hialuronowy pomaga zatrzymać wodę w naskórku. Skóra staje się gładsza, sprężysta i świeża — bez uczucia ciężkości.",
-    image: "/aube/hyaluronic.jpeg",
-    tone: "dark",
-    align: "right",
+  en: {
+    rootLabel: "AUBE — MY PERSON interactive landing page demo",
+    navFormula: "Formula",
+    navIngredients: "Ingredients",
+    navAriaLabel: "AUBE demo navigation",
+    cartLabel: (count: number) => `Cart (${count})`,
+    heroHeadingLine1: "Nature, captured",
+    heroHeadingEm: "in every drop.",
+    heroAsideBody:
+      "A light body serum with chamomile, hyaluronic acid and grapeseed oil. Hydrates, soothes and restores the skin's natural softness.",
+    heroCta: "Explore the Formula",
+    bottleHeadingLine1: "Your skin.",
+    bottleHeadingEm: "Your ritual.",
+    bottleBody:
+      "Three active ingredients. One light formula made for everyday comfort, hydration and softness.",
+    priceLabel: "Price",
+    addToCart: "Add to Cart",
+    addedToCart: "Added to Cart",
+    purchaseAriaLabel: "Purchase AUBE Body Serum",
+    bottleImgAlt: "AUBE Body Serum bottle",
   },
-  {
-    kicker: "03 / Odżywienie",
-    title: "Olej z pestek winogron",
-    display: "Miękkość bez ciężkości.",
-    copy: "Lekki olej z pestek winogron wspiera barierę skóry, wygładza i nadaje subtelny blask, zachowując jedwabiste wykończenie.",
-    image: "/aube/grape-oil.jpeg",
-    tone: "dark",
-    align: "left",
-  },
-];
+} as const satisfies Record<Locale, unknown>;
 
 function clamp(value: number, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
 }
 
-export function AubeDemo() {
+type AubeDemoProps = {
+  locale: Locale;
+};
+
+export function AubeDemo({ locale }: AubeDemoProps) {
+  const ingredients = ingredientsByLocale[locale];
+  const t = aubeCopyByLocale[locale];
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const heroVideoRef = useRef<HTMLVideoElement>(null);
@@ -113,7 +211,7 @@ export function AubeDemo() {
   };
 
   return (
-    <div ref={rootRef} className={styles.demoRoot} aria-label="AUBE — demonstracyjny landing page MY PERSON">
+    <div ref={rootRef} className={styles.demoRoot} aria-label={t.rootLabel}>
       <section ref={heroRef} className={styles.heroStory} aria-label="AUBE Body Serum">
         <div className={styles.heroSticky}>
           <div className={styles.heroAtmosphere} aria-hidden="true" />
@@ -134,14 +232,14 @@ export function AubeDemo() {
               <span>AUBE</span>
               <small>BODY SERUM</small>
             </div>
-            <nav className={styles.microNav} aria-label="Nawigacja demonstracyjna AUBE">
-              <button type="button" onClick={scrollToFormula}>Formuła</button>
-              <button type="button" onClick={scrollToFormula}>Składniki</button>
+            <nav className={styles.microNav} aria-label={t.navAriaLabel}>
+              <button type="button" onClick={scrollToFormula}>{t.navFormula}</button>
+              <button type="button" onClick={scrollToFormula}>{t.navIngredients}</button>
               <span>AUBE</span>
             </nav>
             <div className={styles.aubeActions}>
               <span className={styles.demoBadge}>DEMO / CONCEPT</span>
-              <span className={styles.cartPill} aria-live="polite">Koszyk ({inCart ? 1 : 0})</span>
+              <span className={styles.cartPill} aria-live="polite">{t.cartLabel(inCart ? 1 : 0)}</span>
             </div>
           </header>
 
@@ -152,12 +250,12 @@ export function AubeDemo() {
 
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>Botanical body serum / 100 ml</p>
-            <h2>Natura zamknięta<br /><em>w każdej kropli.</em></h2>
+            <h2>{t.heroHeadingLine1}<br /><em>{t.heroHeadingEm}</em></h2>
           </div>
 
           <div className={styles.heroAside}>
-            <p>Lekkie serum do ciała z rumiankiem, kwasem hialuronowym i olejem z pestek winogron. Nawilża, koi i przywraca skórze naturalną miękkość.</p>
-            <button type="button" onClick={scrollToFormula}>Poznaj formułę <span>↘</span></button>
+            <p>{t.heroAsideBody}</p>
+            <button type="button" onClick={scrollToFormula}>{t.heroCta} <span>↘</span></button>
           </div>
 
           <p className={styles.scrollCue}>Scroll to enter <span>↓</span></p>
@@ -194,22 +292,22 @@ export function AubeDemo() {
       >
         <div className={`${styles.sceneSticky} ${styles.bottleStage}`}>
           <div className={styles.bottleHaze} />
-          <img className={styles.bottleImage} src="/aube/bottle-wide.jpeg" alt="Flakon AUBE Body Serum" />
+          <img className={styles.bottleImage} src="/aube/bottle-wide.jpeg" alt={t.bottleImgAlt} />
           <div className={styles.bottleVignette} />
           <div className={styles.bottleCopy}>
             <p className={styles.eyebrow}>AUBE / Botanical body serum</p>
-            <h2>Twoja skóra.<br /><em>Twój rytuał.</em></h2>
-            <p>Trzy aktywne składniki. Jedna lekka formuła stworzona dla codziennego komfortu, nawilżenia i miękkości skóry.</p>
+            <h2>{t.bottleHeadingLine1}<br /><em>{t.bottleHeadingEm}</em></h2>
+            <p>{t.bottleBody}</p>
           </div>
-          <aside className={styles.purchaseCard} aria-label="Zakup AUBE Body Serum">
+          <aside className={styles.purchaseCard} aria-label={t.purchaseAriaLabel}>
             <div className={styles.purchaseMeta}><span>Body serum / 100 ml</span><span>01</span></div>
-            <div className={styles.purchasePrice}><span>Cena</span><strong>189 PLN</strong></div>
+            <div className={styles.purchasePrice}><span>{t.priceLabel}</span><strong>189 PLN</strong></div>
             <button
               className={`${styles.addToCart} ${inCart ? styles.isAdded : ""}`}
               type="button"
               onClick={() => setInCart(true)}
             >
-              <span>{inCart ? "Dodano do koszyka" : "Dodaj do koszyka"}</span>
+              <span>{inCart ? t.addedToCart : t.addToCart}</span>
               <span aria-hidden="true">{inCart ? "✓" : "+"}</span>
             </button>
           </aside>
