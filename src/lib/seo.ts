@@ -22,6 +22,7 @@ export function buildPageMetadata({
   const languages = Object.fromEntries(
     routing.locales.map((loc) => [loc, `${siteConfig.siteUrl}/${loc}${path}`]),
   );
+  languages["x-default"] = `${siteConfig.siteUrl}/${routing.defaultLocale}${path}`;
 
   return {
     title,

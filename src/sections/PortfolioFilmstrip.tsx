@@ -42,12 +42,12 @@ export function PortfolioFilmstrip({
   const overlayRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const lastTriggerRef = useRef<HTMLAnchorElement | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const activeItem = activeIndex !== null ? items[activeIndex] : null;
 
-  function openItem(index: number, trigger: HTMLButtonElement) {
+  function openItem(index: number, trigger: HTMLAnchorElement) {
     lastTriggerRef.current = trigger;
     const video = videoRef.current;
     video?.pause();
@@ -178,12 +178,25 @@ export function PortfolioFilmstrip({
 
       <Container className={styles.hotspotLayer}>
         {items.map((item, index) => (
-          <button
+          <Link
             key={item.slug}
-            type="button"
+            href={`/portfolio/${item.slug}`}
             className={styles.hotspot}
             aria-label={`${item.title} — ${item.subtitle}`}
-            onClick={(event) => openItem(index, event.currentTarget)}
+            onClick={(event) => {
+              if (
+                event.defaultPrevented ||
+                event.button !== 0 ||
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey
+              ) {
+                return;
+              }
+              event.preventDefault();
+              openItem(index, event.currentTarget);
+            }}
           >
             <span className={styles.hotspotHint} aria-hidden="true">
               {hoverHintLabel}
@@ -191,7 +204,7 @@ export function PortfolioFilmstrip({
             <span className="visually-hidden">
               {String(index + 1).padStart(2, "0")}. {item.title}
             </span>
-          </button>
+          </Link>
         ))}
       </Container>
 
