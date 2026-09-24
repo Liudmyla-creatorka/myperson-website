@@ -109,15 +109,16 @@
   flex-shrink: 0;
   width: clamp(13rem, 20vw, 17rem);
   aspect-ratio: 4 / 5;
+  padding: 0;
   border: 0;
   border-radius: var(--radius-md);
   background: transparent;
   cursor: pointer;
   /* No visible affordance at rest (the brief calls for fully transparent
-     hotspots) — hover/focus-visible/active are the discoverability cues:
-     a soft lift (scale) plus the .hotspotHint tag fading in, so sighted
-     pointer/keyboard/touch users all learn these are clickable without any
-     chrome sitting on the frame at rest. */
+     hotspots). On hover the reel itself pauses (see TSX) and the
+     .hotspotHint tag fades in over the stilled frame; focus-visible and
+     active show the same tag, so pointer/keyboard/touch users all learn
+     these are clickable without any chrome sitting on the frame at rest. */
   outline: none;
   transform: scale(1);
   transition:
@@ -130,18 +131,10 @@
 }
 
 @media (hover: hover) {
-  .hotspot:hover {
-    transform: scale(1.03);
-  }
-
   .hotspot:hover .hotspotHint {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
-}
-
-.hotspot:focus-visible {
-  transform: scale(1.03);
 }
 
 .hotspot:focus-visible .hotspotHint,
@@ -150,8 +143,8 @@
   transform: translate(-50%, -50%);
 }
 
-/* Tap gets its own (slightly firmer) feedback rather than reusing the
-   hover scale — a real "press" on touch, not a hover state stuck open. */
+/* Tap gets its own "press" feedback — a real press on touch, not a hover
+   state stuck open. */
 .hotspot:active {
   transform: scale(0.97);
 }
@@ -201,12 +194,13 @@
    markings (see .filmLabelRow) — the real photo and typography sit in the
    unperforated middle band. Standard card width (not a magic number tied to
    text-wrap tuning) — the image's own aspect-ratio + max-height (see
-   .frameImageWrap) is what keeps the whole thing inside the viewport, so
-   the card itself can stay a normal, comfortable rectangle. */
+   .frameImageWrap) keeps the card inside the viewport wherever it can fit.
+   No max-height here: with overflow:hidden it cut off the text on short
+   viewports; instead .modalOverlay scrolls (safe center keeps the top,
+   and the close button, reachable). */
 .filmFrame {
   position: relative;
   width: min(100%, 30rem);
-  max-height: min(85vh, 85svh);
   opacity: 0;
   overflow: hidden;
   border: 1px solid rgb(139 111 71 / 45%);
@@ -319,9 +313,9 @@
   font-size: var(--text-xs);
 }
 
-.modalLink {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.04em;
-  color: var(--color-bronze);
+.modalSummary {
+  margin: 0 0 var(--spacing-2);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--color-chalk-muted);
 }

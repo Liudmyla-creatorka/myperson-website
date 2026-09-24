@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent } from "react";
 import Image from "next/image";
 
 import type { PortfolioItem } from "@/types/content";
-import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { SoundToggle } from "@/components/SoundToggle";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -18,7 +17,6 @@ type PortfolioFilmstripProps = {
   posterImage: string;
   items: PortfolioItem[];
   closeLabel: string;
-  viewCaseStudyLabel: string;
   hoverHintLabel: string;
   muteLabel: string;
   unmuteLabel: string;
@@ -31,7 +29,6 @@ export function PortfolioFilmstrip({
   posterImage,
   items,
   closeLabel,
-  viewCaseStudyLabel,
   hoverHintLabel,
   muteLabel,
   unmuteLabel,
@@ -42,12 +39,27 @@ export function PortfolioFilmstrip({
   const overlayRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const lastTriggerRef = useRef<HTMLAnchorElement | null>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const activeItem = activeIndex !== null ? items[activeIndex] : null;
 
-  function openItem(index: number, trigger: HTMLAnchorElement) {
+  function playReel() {
+    videoRef.current?.play().catch(() => {});
+  }
+
+  function pauseReelOnHover(event: PointerEvent) {
+    if (event.pointerType === "touch") return;
+    videoRef.current?.pause();
+  }
+
+  function resumeReelAfterHover(event: PointerEvent) {
+    // The overlay covering the hotspot also fires pointerleave; the modal owns playback then.
+    if (event.pointerType === "touch" || overlayRef.current) return;
+    playReel();
+  }
+
+  function openItem(index: number, trigger: HTMLButtonElement) {
     lastTriggerRef.current = trigger;
     const video = videoRef.current;
     video?.pause();
@@ -84,7 +96,7 @@ export function PortfolioFilmstrip({
 
   function closeModal() {
     if (activeIndex === null) return;
-    videoRef.current?.play();
+    playReel();
     const trigger = lastTriggerRef.current;
 
     if (prefersReducedMotion) {
@@ -178,33 +190,20 @@ export function PortfolioFilmstrip({
 
       <Container className={styles.hotspotLayer}>
         {items.map((item, index) => (
-          <Link
+          <button
             key={item.slug}
-            href={`/portfolio/${item.slug}`}
+            type="button"
             className={styles.hotspot}
             aria-label={`${item.title} — ${item.subtitle}`}
-            onClick={(event) => {
-              if (
-                event.defaultPrevented ||
-                event.button !== 0 ||
-                event.metaKey ||
-                event.ctrlKey ||
-                event.shiftKey ||
-                event.altKey
-              ) {
-                return;
-              }
-              event.preventDefault();
-              openItem(index, event.currentTarget);
-            }}
+            aria-haspopup="dialog"
+            onPointerEnter={pauseReelOnHover}
+            onPointerLeave={resumeReelAfterHover}
+            onClick={(event) => openItem(index, event.currentTarget)}
           >
             <span className={styles.hotspotHint} aria-hidden="true">
               {hoverHintLabel}
             </span>
-            <span className="visually-hidden">
-              {String(index + 1).padStart(2, "0")}. {item.title}
-            </span>
-          </Link>
+          </button>
         ))}
       </Container>
 
@@ -213,6 +212,7 @@ export function PortfolioFilmstrip({
           ref={overlayRef}
           className={styles.modalOverlay}
           onClick={closeModal}
+          data-lenis-prevent
         >
           <div
             ref={frameRef}
@@ -220,6 +220,7 @@ export function PortfolioFilmstrip({
             role="dialog"
             aria-modal="true"
             aria-labelledby="portfolio-modal-title"
+            aria-describedby="portfolio-modal-summary"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -256,12 +257,9 @@ export function PortfolioFilmstrip({
                 {activeItem.title}
               </h3>
               <p className={styles.modalSubtitle}>{activeItem.subtitle}</p>
-              <Link
-                href={`/portfolio/${activeItem.slug}`}
-                className={styles.modalLink}
-              >
-                {viewCaseStudyLabel}
-              </Link>
+              <p id="portfolio-modal-summary" className={styles.modalSummary}>
+                {activeItem.summary}
+              </p>
             </div>
 
             <div className={styles.filmLabelRow} aria-hidden="true">
