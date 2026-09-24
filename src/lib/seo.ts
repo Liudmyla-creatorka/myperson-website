@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site-config";
 type BuildPageMetadataInput = {
   locale: Locale;
   /** Route path after the locale segment — "" for the home page, otherwise
-   *  a leading-slash path like "/portfolio" or "/portfolio/aurora". */
+   *  a leading-slash path like "/portfolio" or "/services". */
   path: string;
   title: string;
   description: string;
