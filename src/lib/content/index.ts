@@ -1,5 +1,5 @@
 export { getServices, getServiceBySlug } from "./services";
-export { getPortfolioItems, getPortfolioItemBySlug } from "./portfolio";
+export { getPortfolioItems } from "./portfolio";
 export {
   getPageCopy,
   getHomeServices,
