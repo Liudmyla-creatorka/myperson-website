@@ -174,11 +174,15 @@
 /* Dims and blurs the paused video underneath so focus reads entirely on
    the film-frame popup. Starts at opacity:0 — the open/close tweens in the
    TSX own the transition; this is just the pre-mount resting state so
-   there's no one-frame flash at full opacity before JS runs. */
+   there's no one-frame flash at full opacity before JS runs.
+   z-index 60 sits above the cookie banner (50): an open aria-modal dialog
+   must be the top layer. overscroll-behavior stops touch scrolling from
+   chaining to the (locked) page underneath. */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  z-index: 20;
+  z-index: 60;
+  overscroll-behavior: contain;
   display: flex;
   align-items: safe center;
   justify-content: center;

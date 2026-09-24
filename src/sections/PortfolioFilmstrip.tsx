@@ -43,6 +43,22 @@ export function PortfolioFilmstrip({
   const prefersReducedMotion = usePrefersReducedMotion();
 
   const activeItem = activeIndex !== null ? items[activeIndex] : null;
+  const isModalOpen = activeIndex !== null;
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    // Lock the page behind the modal; pad by the scrollbar width so the layout doesn't jump.
+    const root = document.documentElement;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
+    root.style.overflow = "hidden";
+    if (scrollbarWidth > 0) root.style.paddingRight = `${scrollbarWidth}px`;
+
+    return () => {
+      root.style.overflow = "";
+      root.style.paddingRight = "";
+    };
+  }, [isModalOpen]);
 
   function playReel() {
     videoRef.current?.play().catch(() => {});
