@@ -45,14 +45,13 @@ export default async function PortfolioPage({ params }: PageProps) {
     ...pageSeo(copy),
     pageType: "CollectionPage",
     // Works are anchors inside this one page — there are no per-work URLs.
-    extraNodes: works.map((work) => ({
+    hasPart: works.map((work) => ({
       "@type": "CreativeWork",
       "@id": `${url}#work-${work.slug}`,
       name: work.title,
       ...(work.subtitle !== work.title && { alternativeHeadline: work.subtitle }),
       description: work.summary,
       image: absoluteUrl(work.image),
-      dateCreated: work.year,
       creator: organizationRef,
     })),
   });

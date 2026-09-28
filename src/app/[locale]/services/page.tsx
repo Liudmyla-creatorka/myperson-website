@@ -36,13 +36,20 @@ export default async function ServicesPage({ params }: PageProps) {
     locale: locale as Locale,
     path: "/services",
     ...pageSeo(copy),
-    extraNodes: services.items.map((service) => ({
-      "@type": "Service",
-      "@id": `${url}#${service.slug}`,
-      name: service.title,
-      description: service.summary,
-      provider: organizationRef,
-    })),
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: services.items.map((service, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        item: {
+          "@type": "Service",
+          "@id": `${url}#${service.slug}`,
+          name: service.title,
+          description: service.summary,
+          provider: organizationRef,
+        },
+      })),
+    },
   });
 
   return (

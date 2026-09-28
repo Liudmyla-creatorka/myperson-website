@@ -32,15 +32,13 @@ export default async function LandingPagesPage({ params }: PageProps) {
     locale: locale as Locale,
     path: "/landing-pages",
     ...pageSeo(copy),
-    extraNodes: [
-      {
-        "@type": "Service",
-        "@id": `${pageUrl(locale as Locale, "/landing-pages")}#service`,
-        name: copy.title,
-        description: copy.intro,
-        provider: organizationRef,
-      },
-    ],
+    mainEntity: {
+      "@type": "Service",
+      "@id": `${pageUrl(locale as Locale, "/landing-pages")}#service`,
+      name: copy.title,
+      description: copy.intro,
+      provider: organizationRef,
+    },
   });
 
   return (

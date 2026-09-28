@@ -4,7 +4,8 @@ import { pageUrl } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
 
 // Built only from data that already exists in site-config and the content
-// layer. No address, ratings, reviews, prices or clients are asserted here.
+// layer, and only from facts that are visible on the page. No address,
+// ratings, reviews, prices or clients are asserted here.
 
 const ORGANIZATION_ID = `${siteConfig.siteUrl}/#organization`;
 const WEBSITE_ID = `${siteConfig.siteUrl}/#website`;
@@ -19,8 +20,10 @@ type PageJsonLdInput = {
   title: string;
   description: string;
   pageType?: PageType;
-  /** Page-specific entities (services, works); linked to the page via the graph. */
-  extraNodes?: JsonLdNode[];
+  /** What the page is primarily about (a service, or a list of services). */
+  mainEntity?: JsonLdNode;
+  /** Creative works shown on the page; must be CreativeWork nodes with an @id. */
+  hasPart?: JsonLdNode[];
 };
 
 export const organizationRef = { "@id": ORGANIZATION_ID };
@@ -35,7 +38,8 @@ export async function buildPageJsonLd({
   title,
   description,
   pageType = "WebPage",
-  extraNodes = [],
+  mainEntity,
+  hasPart = [],
 }: PageJsonLdInput) {
   const { description: organizationDescription } = await getFooterContent(locale);
   const url = pageUrl(locale, path);
@@ -76,11 +80,12 @@ export async function buildPageJsonLd({
         inLanguage: locale,
         isPartOf: { "@id": WEBSITE_ID },
         about: organizationRef,
-        ...(extraNodes.length > 0 && {
-          hasPart: extraNodes.map((node) => ({ "@id": node["@id"] })),
+        ...(mainEntity && { mainEntity }),
+        ...(hasPart.length > 0 && {
+          hasPart: hasPart.map((node) => ({ "@id": node["@id"] })),
         }),
       },
-      ...extraNodes,
+      ...hasPart,
     ],
   };
 }
