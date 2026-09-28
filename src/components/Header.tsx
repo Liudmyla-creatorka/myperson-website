@@ -33,7 +33,7 @@ export async function Header() {
           </span>
           MY PERSON
         </Link>
-        <nav aria-label="Primary" className={styles.nav}>
+        <nav aria-label={t("ariaLabel")} className={styles.nav}>
           <ul role="list" className={styles.navList}>
             {links.map((link) => (
               <li key={link.href}>

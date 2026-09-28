@@ -11,9 +11,6 @@ export interface PortfolioItem {
   year: string;
   summary: string;
   image: string;
-  /** Modal-only fields for the Home hotspot popup (see PortfolioFilmstrip) —
-   *  additive, kept separate from category/year so the /portfolio route's
-   *  grid and detail pages, which read category/year, are unaffected. */
   subtitle: string;
   tags: string;
 }
@@ -23,12 +20,18 @@ export interface PageCta {
   href: string;
 }
 
+export interface PageSeo {
+  title: string;
+  description: string;
+}
+
 export interface PageCopy {
   title: string;
   intro: string;
   eyebrow?: string;
   primaryCta?: PageCta;
   secondaryCta?: PageCta;
+  seo?: PageSeo;
 }
 
 export interface HomeServiceCard {
@@ -98,6 +101,8 @@ export interface BeforeAfterContent {
   eyebrow: string;
   title: string;
   intro: string;
+  beforeLabel: string;
+  afterLabel: string;
   items: BeforeAfterItem[];
 }
 

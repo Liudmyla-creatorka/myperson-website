@@ -165,6 +165,11 @@ export function PortfolioFilmstrip({
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") closeModal();
+      // The close button is the dialog's only focusable control; Tab must not leave the dialog.
+      if (event.key === "Tab") {
+        event.preventDefault();
+        closeButtonRef.current?.focus();
+      }
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
@@ -210,7 +215,12 @@ export function PortfolioFilmstrip({
             key={item.slug}
             type="button"
             className={styles.hotspot}
-            aria-label={`${item.title} — ${item.subtitle}`}
+            aria-label={
+              item.subtitle === item.title
+                ? item.title
+                : `${item.title} — ${item.subtitle}`
+            }
+            aria-describedby={`work-${item.slug}-summary`}
             aria-haspopup="dialog"
             onPointerEnter={pauseReelOnHover}
             onPointerLeave={resumeReelAfterHover}
@@ -218,6 +228,10 @@ export function PortfolioFilmstrip({
           >
             <span className={styles.hotspotHint} aria-hidden="true">
               {hoverHintLabel}
+            </span>
+            {/* Keeps each work's description in the HTML, not only in the modal. */}
+            <span id={`work-${item.slug}-summary`} className="visually-hidden">
+              {item.summary}
             </span>
           </button>
         ))}

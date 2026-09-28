@@ -4,20 +4,36 @@
     "eyebrow": "Visual Narratives Studio",
     "intro": "A visual narratives studio. Cinematic stories for premium brands.",
     "primaryCta": { "label": "View My Work", "href": "/portfolio" },
-    "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" }
+    "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" },
+    "seo": {
+      "title": "MY PERSON — Visual Narratives Studio",
+      "description": "A visual narratives studio. Cinematic stories for premium brands — websites and visuals that look like a frame from a film."
+    }
   },
   "portfolio": {
     "title": "Portfolio",
     "eyebrow": "My Work",
-    "intro": "Selected work combining image, motion and story."
+    "intro": "Selected work combining image, motion and story.",
+    "seo": {
+      "title": "Portfolio — Video Campaigns & Product Visuals",
+      "description": "Selected work by MY PERSON: video campaigns for KAMIEN.PL and AURA JEWELRY, product image transformations and 80 product cards for the Bises brand."
+    }
   },
   "services": {
     "title": "Services",
-    "intro": "A complete approach to building premium brands."
+    "intro": "A complete approach to building premium brands.",
+    "seo": {
+      "title": "Services — Brand Identity, Visual Strategy & Video",
+      "description": "Brand identity, realistic product and lifestyle imagery, visual strategy and video production for premium brands — MY PERSON."
+    }
   },
   "about": {
     "title": "About",
-    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. I turn brand presence into cohesive, cinematic experiences that immediately establish market position."
+    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. I turn brand presence into cohesive, cinematic experiences that immediately establish market position.",
+    "seo": {
+      "title": "About — Visual Narratives Studio",
+      "description": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. Method: analysis, strategy, production, verification."
+    }
   },
   "contact": {
     "title": "Contact",
@@ -25,7 +41,11 @@
   },
   "landingPages": {
     "title": "Websites & Landing Pages",
-    "intro": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system."
+    "intro": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+    "seo": {
+      "title": "Website & Landing Page Design",
+      "description": "Website and landing page design and development: UX/UI, art direction, interaction, development, integrations and deployment by MY PERSON."
+    }
   },
   "homeServices": {
     "title": "Services",
@@ -140,6 +160,8 @@
     "title": "One product. A new story.",
     "eyebrow": "Transformations",
     "intro": "Every frame starts as a raw shot. It ends as an image that sells.",
+    "beforeLabel": "before",
+    "afterLabel": "after",
     "items": [
       {
         "slug": "perfume",

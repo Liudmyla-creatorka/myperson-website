@@ -98,7 +98,7 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
             </div>
           </div>
 
-          <a className={styles.cta} href={`/${locale}/#kontakt`}>
+          <a className={styles.cta} href={`/${locale}#kontakt`}>
             <span>{copy.cta}</span><span aria-hidden="true">↗</span>
           </a>
         </Container>

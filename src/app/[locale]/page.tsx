@@ -3,7 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, pageSeo } from "@/lib/seo";
+import { buildPageJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/JsonLd";
 import { Hero } from "@/sections/Hero";
 import { PhilosophyShowcase } from "@/sections/PhilosophyShowcase";
 import { ContactCta } from "@/sections/ContactCta";
@@ -20,21 +22,24 @@ export async function generateMetadata({
   return buildPageMetadata({
     locale: locale as Locale,
     path: "",
-    // The eyebrow ("Studio Narracji Wizualnych" / "Visual Narratives
-    // Studio") makes a more useful <title> than copy.title, which is just
-    // the brand name "MY PERSON" — that would otherwise duplicate itself
-    // against the layout's "%s | MY PERSON" template.
-    title: copy.eyebrow ?? copy.title,
-    description: copy.intro,
+    ...pageSeo(copy),
+    absoluteTitle: true,
   });
 }
 
 export default async function HomePage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale as Locale);
+  const copy = await getPageCopy("home", locale as Locale);
+  const jsonLd = await buildPageJsonLd({
+    locale: locale as Locale,
+    path: "",
+    ...pageSeo(copy),
+  });
 
   return (
     <main id="main-content">
+      <JsonLd data={jsonLd} />
       <Hero locale={locale as Locale} />
       <PhilosophyShowcase locale={locale as Locale} />
       <ContactCta locale={locale as Locale} />

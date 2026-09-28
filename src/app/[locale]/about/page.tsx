@@ -3,7 +3,9 @@ import { setRequestLocale } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
 import { getPageCopy } from "@/lib/content";
-import { buildPageMetadata } from "@/lib/seo";
+import { buildPageMetadata, pageSeo } from "@/lib/seo";
+import { buildPageJsonLd } from "@/lib/structured-data";
+import { JsonLd } from "@/components/JsonLd";
 import { Container } from "@/components/ui/Container";
 import { MethodShowcase } from "@/sections/MethodShowcase";
 import styles from "./page.module.css";
@@ -20,8 +22,7 @@ export async function generateMetadata({
   return buildPageMetadata({
     locale: locale as Locale,
     path: "/about",
-    title: copy.title,
-    description: copy.intro,
+    ...pageSeo(copy),
   });
 }
 
@@ -29,9 +30,16 @@ export default async function AboutPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale as Locale);
   const copy = await getPageCopy("about", locale as Locale);
+  const jsonLd = await buildPageJsonLd({
+    locale: locale as Locale,
+    path: "/about",
+    ...pageSeo(copy),
+    pageType: "AboutPage",
+  });
 
   return (
     <main id="main-content">
+      <JsonLd data={jsonLd} />
       <Container className={styles.wrapper}>
         <h1>{copy.title}</h1>
         <p className={styles.intro}>{copy.intro}</p>
