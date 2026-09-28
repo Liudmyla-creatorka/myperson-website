@@ -8,7 +8,8 @@
     "services": "Usługi",
     "landingPages": "Strony i Landing Page'y",
     "about": "O mnie",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "ariaLabel": "Menu główne"
   },
   "footer": {
     "rights": "Wszelkie prawa zastrzeżone.",
@@ -17,7 +18,8 @@
   },
   "languageSwitcher": {
     "pl": "PL",
-    "en": "EN"
+    "en": "EN",
+    "ariaLabel": "Wybór języka"
   },
   "hero": {
     "scroll": "Przewiń"

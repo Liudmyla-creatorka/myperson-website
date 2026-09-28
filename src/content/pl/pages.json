@@ -4,28 +4,44 @@
     "eyebrow": "Studio Narracji Wizualnych",
     "intro": "Tożsamość Twojej marki premium przekładam na kinowy język — strony i wizualizacje jak kadr z filmu.",
     "primaryCta": { "label": "Zobacz moje prace", "href": "/portfolio" },
-    "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" }
+    "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" },
+    "seo": {
+      "title": "MY PERSON — Studio Narracji Wizualnych",
+      "description": "Tożsamość Twojej marki premium przekładam na kinowy język — strony i wizualizacje jak kadr z filmu."
+    }
   },
   "portfolio": {
     "title": "Portfolio",
     "eyebrow": "Moje Prace",
-    "intro": "Wybrane realizacje łączące obraz, ruch i opowieść."
+    "intro": "Wybrane realizacje łączące obraz, ruch i opowieść.",
+    "seo": {
+      "title": "Portfolio — kampanie wideo i wizualizacje produktowe",
+      "description": "Wybrane realizacje MY PERSON: kampanie wideo dla KAMIEN.PL i AURA JEWELRY, transformacje zdjęć produktowych oraz 80 kart produktów dla marki Bises."
+    }
   },
   "services": {
     "title": "Usługi",
-    "intro": "Kompleksowe podejście do budowania premium marek."
+    "intro": "Kompleksowe podejście do budowania premium marek.",
+    "seo": {
+      "title": "Usługi — brand identity, strategia wizualna i wideo",
+      "description": "Brand identity, zdjęcia produktowe i lifestyle, strategia wizualna, produkcja wideo oraz strony i landing page’e dla marek premium — MY PERSON."
+    }
   },
   "about": {
     "title": "O mnie",
-    "intro": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Przekształcam obecność marek w spójne, kinowe doświadczenia, które natychmiast budują ich pozycję rynkową."
-  },
-  "contact": {
-    "title": "Kontakt",
-    "intro": "Porozmawiajmy o Twoim projekcie."
+    "intro": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Przekształcam obecność marek w spójne, kinowe doświadczenia, które natychmiast budują ich pozycję rynkową.",
+    "seo": {
+      "title": "O mnie — studio narracji wizualnych",
+      "description": "MY PERSON to studio narracji wizualnych, które tworzy filmowe i strategiczne tożsamości dla marek premium. Metoda: analiza, strategia, produkcja, weryfikacja."
+    }
   },
   "landingPages": {
     "title": "Strony i Landing Page'y",
-    "intro": "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system."
+    "intro": "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
+    "seo": {
+      "title": "Strony internetowe i landing page'e — projektowanie",
+      "description": "Projektowanie i realizacja stron internetowych oraz landing page’y: UX/UI, art direction, interakcje, development, integracje i wdrożenie — MY PERSON."
+    }
   },
   "homeServices": {
     "title": "Usługi",
@@ -54,6 +70,13 @@
         "title": "Video Production",
         "summary": "Kampanie wideo dla marek premium — od koncepcji i scenariusza po produkcję i montaż. Reklamy, prezentacje, storytelling.",
         "tags": ["REKLAMY", "REELS", "KAMPANIE"]
+      },
+      {
+        "slug": "websites-landing-pages",
+        "title": "Strony i Landing Page'y",
+        "summary": "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
+        "tags": ["UX/UI", "DEVELOPMENT", "WDROŻENIE"],
+        "href": "/landing-pages"
       }
     ]
   },
@@ -140,6 +163,8 @@
     "title": "Jeden produkt. Nowa historia.",
     "eyebrow": "Transformacje",
     "intro": "Każdy kadr zaczyna się od surowego ujęcia. Kończy się na obrazie, który sprzedaje.",
+    "beforeLabel": "przed",
+    "afterLabel": "po",
     "items": [
       {
         "slug": "perfume",
@@ -175,15 +200,15 @@
       "W mojej wizji sztuczna inteligencja nie jest fundamentem — jest wyłącznie zaawansowanym narzędziem wykonawczym. Sercem, reżyserem i prawdziwym autorem każdej filmowej opowieści pozostaje Człowiek. AI słucha, ale to ja nadaję sens, styl i kinową głębię."
     ]
   },
-  "homeLandingPages": {
-    "eyebrow": "Flagowy produkt",
-    "title": "Strony i Landing Page'y"
-  },
   "homeContact": {
     "eyebrow": "KONTAKT",
     "title": "Gotowa marka zasługuje na wizualny język, który ją wyróżnia.",
     "subheading": "Aplikuj na zamknięty audyt wizualny. Przeglądam każde zgłoszenie osobiście. Odpowiadam w 48 godzin.",
     "ctaLabel": "Aplikuj teraz"
+  },
+  "founder": {
+    "name": "Liudmyla Mykhailova",
+    "role": "założycielka i projektantka narracji wizualnych"
   },
   "footer": {
     "description": "Wizualna tożsamość, która sprzedaje. Studio wizualne oparte na strategii dla marek premium."

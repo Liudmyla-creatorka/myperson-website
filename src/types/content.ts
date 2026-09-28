@@ -1,9 +1,3 @@
-export interface Service {
-  slug: string;
-  title: string;
-  summary: string;
-}
-
 export interface PortfolioItem {
   slug: string;
   title: string;
@@ -11,9 +5,6 @@ export interface PortfolioItem {
   year: string;
   summary: string;
   image: string;
-  /** Modal-only fields for the Home hotspot popup (see PortfolioFilmstrip) —
-   *  additive, kept separate from category/year so the /portfolio route's
-   *  grid and detail pages, which read category/year, are unaffected. */
   subtitle: string;
   tags: string;
 }
@@ -23,12 +14,18 @@ export interface PageCta {
   href: string;
 }
 
+export interface PageSeo {
+  title: string;
+  description: string;
+}
+
 export interface PageCopy {
   title: string;
   intro: string;
   eyebrow?: string;
   primaryCta?: PageCta;
   secondaryCta?: PageCta;
+  seo?: PageSeo;
 }
 
 export interface HomeServiceCard {
@@ -36,6 +33,8 @@ export interface HomeServiceCard {
   title: string;
   summary: string;
   tags: string[];
+  /** Locale-less route of the service's own page, e.g. "/landing-pages". */
+  href?: string;
 }
 
 export interface HomeServicesContent {
@@ -98,6 +97,8 @@ export interface BeforeAfterContent {
   eyebrow: string;
   title: string;
   intro: string;
+  beforeLabel: string;
+  afterLabel: string;
   items: BeforeAfterItem[];
 }
 
@@ -107,16 +108,16 @@ export interface PhilosophyContent {
   paragraphs: string[];
 }
 
-export interface LandingPagesContent {
-  eyebrow: string;
-  title: string;
-}
-
 export interface ContactCtaContent {
   eyebrow: string;
   title: string;
   subheading: string;
   ctaLabel: string;
+}
+
+export interface FounderContent {
+  name: string;
+  role: string;
 }
 
 export interface FooterContent {

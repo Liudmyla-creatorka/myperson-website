@@ -4,28 +4,44 @@
     "eyebrow": "Visual Narratives Studio",
     "intro": "A visual narratives studio. Cinematic stories for premium brands.",
     "primaryCta": { "label": "View My Work", "href": "/portfolio" },
-    "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" }
+    "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" },
+    "seo": {
+      "title": "MY PERSON — Visual Narratives Studio",
+      "description": "A visual narratives studio. Cinematic stories for premium brands. A visual identity that sells."
+    }
   },
   "portfolio": {
     "title": "Portfolio",
     "eyebrow": "My Work",
-    "intro": "Selected work combining image, motion and story."
+    "intro": "Selected work combining image, motion and story.",
+    "seo": {
+      "title": "Portfolio — Video Campaigns & Product Visuals",
+      "description": "Selected work by MY PERSON: video campaigns for KAMIEN.PL and AURA JEWELRY, product image transformations and 80 product cards for the Bises brand."
+    }
   },
   "services": {
     "title": "Services",
-    "intro": "A complete approach to building premium brands."
+    "intro": "A complete approach to building premium brands.",
+    "seo": {
+      "title": "Services — Brand Identity, Visual Strategy & Video",
+      "description": "Brand identity, product and lifestyle photography, visual strategy, video production, and websites & landing pages for premium brands — MY PERSON."
+    }
   },
   "about": {
     "title": "About",
-    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. I turn brand presence into cohesive, cinematic experiences that immediately establish market position."
-  },
-  "contact": {
-    "title": "Contact",
-    "intro": "Let's talk about your project."
+    "intro": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. I turn brand presence into cohesive, cinematic experiences that immediately establish market position.",
+    "seo": {
+      "title": "About — Visual Narratives Studio",
+      "description": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. Method: analysis, strategy, production, verification."
+    }
   },
   "landingPages": {
     "title": "Websites & Landing Pages",
-    "intro": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system."
+    "intro": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+    "seo": {
+      "title": "Website & Landing Page Design",
+      "description": "Website and landing page design and development: UX/UI, art direction, interaction, development, integrations and deployment by MY PERSON."
+    }
   },
   "homeServices": {
     "title": "Services",
@@ -54,6 +70,13 @@
         "title": "Video Production",
         "summary": "Video campaigns for premium brands — from concept and script to production and editing. Ads, presentations, storytelling.",
         "tags": ["ADS", "REELS", "CAMPAIGNS"]
+      },
+      {
+        "slug": "websites-landing-pages",
+        "title": "Websites & Landing Pages",
+        "summary": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+        "tags": ["UX/UI", "DEVELOPMENT", "DEPLOYMENT"],
+        "href": "/landing-pages"
       }
     ]
   },
@@ -140,6 +163,8 @@
     "title": "One product. A new story.",
     "eyebrow": "Transformations",
     "intro": "Every frame starts as a raw shot. It ends as an image that sells.",
+    "beforeLabel": "before",
+    "afterLabel": "after",
     "items": [
       {
         "slug": "perfume",
@@ -175,15 +200,15 @@
       "In my approach, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but I give it meaning, style, and cinematic depth."
     ]
   },
-  "homeLandingPages": {
-    "eyebrow": "Flagship product",
-    "title": "Websites & Landing Pages"
-  },
   "homeContact": {
     "eyebrow": "CONTACT",
     "title": "A brand that's ready deserves a visual language that sets it apart.",
     "subheading": "Apply for a private visual audit. I review every submission personally. I respond within 48 hours.",
     "ctaLabel": "APPLY NOW"
+  },
+  "founder": {
+    "name": "Liudmyla Mykhailova",
+    "role": "founder and visual narrative designer"
   },
   "footer": {
     "description": "A visual identity that sells. A visual studio built on strategy for premium brands."

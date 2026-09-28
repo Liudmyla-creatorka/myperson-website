@@ -10,3 +10,9 @@
   color: var(--color-muted);
   text-align: left;
 }
+
+.founder {
+  margin-top: var(--spacing-4);
+  font-size: var(--text-base);
+  color: var(--color-chalk);
+}

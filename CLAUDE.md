@@ -10,15 +10,20 @@ This is not a typical agency website. Every interaction must feel intentional, e
 
 ## Project Shape
 
-Multi-page site, five routes:
+Multi-page site. Every route exists in both locales (`/pl/…`, `/en/…`); these are the only public pages:
 
-- **Home** — the main cinematic experience: immersive scroll storytelling driven by GSAP/ScrollTrigger, with React Three Fiber / Three.js scenes where 3D genuinely serves the story.
-- **Portfolio** — case study grid + individual project pages. Minimal, supportive.
-- **Services** — offering list. Minimal, supportive.
-- **About** — agency story. Minimal, supportive.
-- **Contact** — fully functional contact form. Minimal, supportive.
+| Route | What it is |
+|---|---|
+| `/` (Home) | The main cinematic experience: hero, philosophy ("Dlaczego MY PERSON" / "Why MY PERSON"), contact section `#kontakt`. |
+| `/portfolio` | **One interactive page, not a case-study catalogue.** A looping filmstrip video with invisible hotspot buttons over its frames: hovering a frame pauses the reel, clicking/tapping opens a film-frame modal (photo, tags, title, subtitle, summary). Below it: video campaigns, before/after transformations, the Bises e-commerce case. |
+| `/services` | The service list — five cards from `homeServices` in `pages.json`; the last one (Strony i Landing Page'y / Websites & Landing Pages) links to `/landing-pages`. |
+| `/landing-pages` | Websites & landing pages service, with the interactive AUBE demo (a fictional concept brand) above it. |
+| `/about` | About, the founder line (Liudmyla Mykhailova — founder role from `pages.json` → `founder`), method (Analiza / Strategia / Produkcja / Weryfikacja). |
 
-Only Home carries the heavy cinematic/3D treatment. The other four pages exist to support that experience with restraint, not to compete with it.
+- There are **no per-project portfolio pages**. `/[locale]/portfolio/[slug]` was removed on purpose; old URLs such as `/pl/portfolio/lumen` must keep returning 404 and must never reappear in links, the sitemap or structured data.
+- There is **no separate contact page**. Contact = the Home `#kontakt` section (links to the external Tally form) plus email, phone, WhatsApp and social links in the footer of every page.
+
+Only Home carries the heavy cinematic treatment. The other pages exist to support that experience with restraint, not to compete with it.
 
 ## Workflow (never skip)
 
@@ -60,7 +65,10 @@ Supporting (introduce only when the relevant milestone needs them, with explanat
 - `zod` for shared client/server form validation
 - A transactional email provider (e.g. Resend) for contact form delivery, called server-side only
 
-Note: this project currently uses hand-written CSS with `@layer` cascade + custom properties (`src/styles/tokens.css`, etc.). Introducing Tailwind means deciding how it coexists with or replaces that system — this must be explained and approved as its own architectural decision before it happens, not assumed.
+Current state (keep this accurate):
+- Styling is hand-written CSS (CSS Modules + `@layer` cascade + custom properties in `src/styles/tokens.css`). Tailwind v4 is installed and only its utilities layer is imported in `src/styles/globals.css`; any wider use of Tailwind is its own architectural decision that needs approval.
+- In use: GSAP + ScrollTrigger, Lenis (`src/components/SmoothScroll.tsx`), `next-intl`.
+- Installed but not used in `src/`: React Three Fiber / Three.js. Not installed: Framer Motion, `zod`, an email provider.
 
 ## Architecture Principles
 
@@ -68,20 +76,25 @@ Note: this project currently uses hand-written CSS with `@layer` cascade + custo
 
 Content is stored locally now (structured JSON/TypeScript files), but the frontend must never know that.
 
-- `src/types` defines the stable content contracts (e.g. `PortfolioItem`, `Service`, `PageCopy`).
-- A content-access layer (e.g. `src/lib/content/`) exposes functions like `getPortfolioItems(locale)`, `getServiceBySlug(slug, locale)`, `getPageContent(page, locale)`.
+- `src/types/content.ts` defines the stable content contracts (e.g. `PortfolioItem`, `PageCopy`, `HomeServicesContent`).
+- The content-access layer `src/lib/content/` exposes locale-aware functions like `getPortfolioItems(locale)`, `getPageCopy(page, locale)`, `getHomeServices(locale)`. Data lives in `src/content/{pl,en}/` (`pages.json`, `portfolio.json`).
+- One source of truth per piece of content: e.g. the service list shown on `/services` is `homeServices` in `pages.json`; do not keep a second, diverging copy elsewhere.
+- Per-page SEO title/description live in the content layer (`PageCopy.seo`), not in page code.
 - Pages and components call only these functions — **never** import JSON/data files directly.
 - Migrating to a CMS later means rewriting the inside of these functions only. Signatures and return types stay identical. Zero frontend changes.
 
 ### Internationalization (PL default, EN secondary, expandable)
 
-- Polish is the primary language and the default at launch.
-- English is the secondary language.
+- Polish is the primary language and the default; English is the secondary language.
+- Implemented with `next-intl` locale-segment routing: `src/i18n/routing.ts` (`locales: ["pl", "en"]`, `defaultLocale: "pl"`), `src/middleware.ts` redirects unprefixed paths (e.g. `/` → `/pl`), pages live under `src/app/[locale]/`. UI strings: `src/messages/{pl,en}.json`; content: `src/content/{pl,en}/`.
+- Every page sets a self-canonical plus `hreflang` `pl` / `en` / `x-default` (→ `pl`) via `buildPageMetadata` in `src/lib/seo.ts`; the sitemap lists both locales with the same alternates.
 - Routing must be structured so adding a third language later is a configuration change, not a rewrite (locale-segment routing, not ad hoc conditionals).
 - A language switcher (PL/EN) lives in the shared header and must preserve the current page/context when switching locale.
 - All content-access functions are locale-aware from the start (see above) — never bolt locale on after the fact.
 
 ### Contact form architecture
+
+Not implemented yet: contact currently goes through the external Tally form linked from `#kontakt`, plus direct email/phone/WhatsApp. When an on-site form is built, these rules apply:
 
 - A single server-side entry point (Next.js API route) mediates all email delivery. The frontend never talks to the email provider directly.
 - Spam protection: honeypot field + server-side rate limiting as the baseline; a challenge-based option (e.g. Turnstile) held in reserve if needed post-launch.
@@ -154,6 +167,12 @@ Maintain a clean and predictable asset structure.
 
 Every page must be built with semantic HTML and a proper heading structure. Metadata (title, description, Open Graph, `hreflang` for PL/EN) must be correct per page and per locale — not an afterthought bolted on at the end.
 
+- Metadata: `buildPageMetadata` (`src/lib/seo.ts`) with title/description from `PageCopy.seo`; every page also gets the locale's generated share image (`/[locale]/opengraph-image`).
+- `src/app/sitemap.ts` lists only real public pages; `src/app/robots.ts` allows all and points to the sitemap. A removed page must return 404 and disappear from links, sitemap and JSON-LD.
+- Structured data: `buildPageJsonLd` (`src/lib/structured-data.ts`) + `<JsonLd>`. Only facts that already exist in `site-config` / the content layer **and are visible on the page**. Never add invented addresses, reviews, ratings, prices, clients, dates or awards, and never add schema just to add more of it. The founder `Person` (+ `Organization.founder`) appears only on `/about`, where the name is visible; give it `sameAs` only for personal public profiles the owner has confirmed (the site's Instagram/Facebook belong to the brand).
+- Anything important must be in the server-rendered HTML, not only in video, canvas, hover or a modal. If content is only revealed by interaction (e.g. portfolio summaries), keep an equivalent, identical text in the DOM for assistive technology (`aria-describedby` + `visually-hidden`) — never extra text that users cannot reach.
+- Demo or concept content for fictional brands (e.g. the AUBE demo) must be visibly labelled as such and wrapped in `data-nosnippet`, so it is not quoted as MY PERSON's own claims.
+
 ## Accessibility
 
 Accessibility is required, not optional, even on the cinematic Home page:
@@ -177,6 +196,27 @@ Accessibility is required, not optional, even on the cinematic Home page:
 - Keep commits atomic.
 - Explain what changed before every commit.
 - Never rewrite Git history unless explicitly requested.
+
+## Testing & Deployment
+
+Toolchain is pinned: Node 22 / npm 10 (`.nvmrc`, `engines` in `package.json`, `engine-strict=true` in `.npmrc`). The lockfile must stay npm 10–compatible; run `nvm use` before installing. npm 11 refuses to install by design.
+
+Before every PR, run and report:
+
+1. `npm ci`
+2. `npx tsc --noEmit`
+3. `npm run lint`
+4. `npm run build`
+
+There is no automated test suite yet (`package.json` has no `test` script). Verify in a browser against a production build (`npm run build && npm run start`), in PL and EN, desktop and mobile:
+
+- all public routes return 200; removed routes (e.g. `/pl/portfolio/lumen`) return 404; `sitemap.xml` and `robots.txt` are correct;
+- portfolio filmstrip plays; hover pauses it; click/tap/Enter opens the modal with the summary; Escape, ×, and overlay click close it; focus stays in the modal and returns to the frame;
+- the modal sits above the cookie banner and the page behind it does not scroll;
+- the language switcher keeps the current page;
+- no horizontal scroll and no layout shift.
+
+Deployment: Netlify (project `regal-bublanina-46ca63`, domain `myperson.agency`) builds every PR as a Deploy Preview and deploys `main` to production automatically. Merging to `main` therefore **is** a production deploy — never merge or deploy without the owner's explicit approval. Work on a branch, open a PR, let the owner check the Deploy Preview.
 
 ## Coding Standards
 

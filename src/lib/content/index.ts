@@ -1,4 +1,3 @@
-export { getServices, getServiceBySlug } from "./services";
 export { getPortfolioItems } from "./portfolio";
 export {
   getPageCopy,
@@ -8,7 +7,7 @@ export {
   getHomeCaseStudyBises,
   getHomeBeforeAfter,
   getHomePhilosophy,
-  getHomeLandingPages,
   getHomeContact,
   getFooterContent,
+  getFounder,
 } from "./pages";

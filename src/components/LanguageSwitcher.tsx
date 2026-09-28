@@ -12,7 +12,7 @@ export function LanguageSwitcher() {
   const t = useTranslations("languageSwitcher");
 
   return (
-    <div className={styles.switcher} role="group" aria-label="Language">
+    <div className={styles.switcher} role="group" aria-label={t("ariaLabel")}>
       {routing.locales.map((loc) => (
         <Link
           key={loc}

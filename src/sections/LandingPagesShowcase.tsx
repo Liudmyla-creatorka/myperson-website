@@ -9,6 +9,7 @@ type LandingPagesShowcaseProps = {
 
 const serviceCopy = {
   pl: {
+    demoLabel: "AUBE — demonstracyjny landing page MY PERSON",
     eyebrow: "STRONY INTERNETOWE & LANDING PAGE'E",
     title: "Tworzę cyfrowe doświadczenia, nie tylko strony.",
     intro:
@@ -33,6 +34,7 @@ const serviceCopy = {
     cta: "Porozmawiaj ze mną o projekcie",
   },
   en: {
+    demoLabel: "AUBE — MY PERSON interactive landing page demo",
     eyebrow: "WEBSITES & LANDING PAGES",
     title: "I create digital experiences, not just websites.",
     intro:
@@ -63,7 +65,8 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
 
   return (
     <>
-      <section className={styles.demoIntro} aria-label="AUBE live demo">
+      {/* Demo copy for a fictional concept brand: keep it out of search and AI answer snippets. */}
+      <section className={styles.demoIntro} aria-label={copy.demoLabel} data-nosnippet>
         <div className={styles.demoLabel}>
           <span>MY PERSON / LIVE WEB EXPERIENCE</span>
           <span>AUBE — CONCEPT BRAND</span>
@@ -98,7 +101,7 @@ export function LandingPagesShowcase({ locale }: LandingPagesShowcaseProps) {
             </div>
           </div>
 
-          <a className={styles.cta} href={`/${locale}/#kontakt`}>
+          <a className={styles.cta} href={`/${locale}#kontakt`}>
             <span>{copy.cta}</span><span aria-hidden="true">↗</span>
           </a>
         </Container>

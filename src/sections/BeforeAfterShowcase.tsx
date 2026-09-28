@@ -13,7 +13,8 @@ type BeforeAfterShowcaseProps = {
 export async function BeforeAfterShowcase({
   locale,
 }: BeforeAfterShowcaseProps) {
-  const { eyebrow, title, intro, items } = await getHomeBeforeAfter(locale);
+  const { eyebrow, title, intro, beforeLabel, afterLabel, items } =
+    await getHomeBeforeAfter(locale);
 
   return (
     <section className={styles.section}>
@@ -30,22 +31,25 @@ export async function BeforeAfterShowcase({
       <Container className={styles.grid}>
         {items.map((item) => (
           <div key={item.slug} className={styles.cardColumn}>
-            <div className={styles.card} tabIndex={0} aria-label={item.title}>
+            <div
+              className={styles.card}
+              tabIndex={0}
+              role="group"
+              aria-label={item.title}
+            >
               <Image
                 src={item.beforeImage}
-                alt=""
+                alt={`${item.title} — ${beforeLabel}`}
                 fill
                 sizes="(min-width: 48rem) 33vw, 90vw"
                 className={styles.beforeImage}
-                aria-hidden="true"
               />
               <Image
                 src={item.afterImage}
-                alt=""
+                alt={`${item.title} — ${afterLabel}`}
                 fill
                 sizes="(min-width: 48rem) 33vw, 90vw"
                 className={styles.afterImage}
-                aria-hidden="true"
               />
               <div className={styles.cardVeil} aria-hidden="true" />
             </div>
