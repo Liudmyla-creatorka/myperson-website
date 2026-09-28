@@ -211,14 +211,7 @@ export function AubeDemo({ locale }: AubeDemoProps) {
   };
 
   return (
-    <div
-      ref={rootRef}
-      className={styles.demoRoot}
-      role="region"
-      aria-label={t.rootLabel}
-      // Demo copy for a fictional brand: keep it out of search and AI answer snippets.
-      data-nosnippet
-    >
+    <div ref={rootRef} className={styles.demoRoot} aria-label={t.rootLabel}>
       <section ref={heroRef} className={styles.heroStory} aria-label="AUBE Body Serum">
         <div className={styles.heroSticky}>
           <div className={styles.heroAtmosphere} aria-hidden="true" />
