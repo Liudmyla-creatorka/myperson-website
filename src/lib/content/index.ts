@@ -1,4 +1,3 @@
-export { getServices, getServiceBySlug } from "./services";
 export { getPortfolioItems } from "./portfolio";
 export {
   getPageCopy,

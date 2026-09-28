@@ -1,9 +1,3 @@
-export interface Service {
-  slug: string;
-  title: string;
-  summary: string;
-}
-
 export interface PortfolioItem {
   slug: string;
   title: string;
