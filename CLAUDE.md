@@ -16,9 +16,9 @@ Multi-page site. Every route exists in both locales (`/pl/…`, `/en/…`); thes
 |---|---|
 | `/` (Home) | The main cinematic experience: hero, philosophy ("Dlaczego MY PERSON" / "Why MY PERSON"), contact section `#kontakt`. |
 | `/portfolio` | **One interactive page, not a case-study catalogue.** A looping filmstrip video with invisible hotspot buttons over its frames: hovering a frame pauses the reel, clicking/tapping opens a film-frame modal (photo, tags, title, subtitle, summary). Below it: video campaigns, before/after transformations, the Bises e-commerce case. |
-| `/services` | The service list (currently four services, from `homeServices` in `pages.json`). |
+| `/services` | The service list — five cards from `homeServices` in `pages.json`; the last one (Strony i Landing Page'y / Websites & Landing Pages) links to `/landing-pages`. |
 | `/landing-pages` | Websites & landing pages service, with the interactive AUBE demo (a fictional concept brand) above it. |
-| `/about` | About + method (Analiza / Strategia / Produkcja / Weryfikacja). |
+| `/about` | About, the founder line (Liudmyla Mykhailova — founder role from `pages.json` → `founder`), method (Analiza / Strategia / Produkcja / Weryfikacja). |
 
 - There are **no per-project portfolio pages**. `/[locale]/portfolio/[slug]` was removed on purpose; old URLs such as `/pl/portfolio/lumen` must keep returning 404 and must never reappear in links, the sitemap or structured data.
 - There is **no separate contact page**. Contact = the Home `#kontakt` section (links to the external Tally form) plus email, phone, WhatsApp and social links in the footer of every page.
@@ -169,7 +169,7 @@ Every page must be built with semantic HTML and a proper heading structure. Meta
 
 - Metadata: `buildPageMetadata` (`src/lib/seo.ts`) with title/description from `PageCopy.seo`; every page also gets the locale's generated share image (`/[locale]/opengraph-image`).
 - `src/app/sitemap.ts` lists only real public pages; `src/app/robots.ts` allows all and points to the sitemap. A removed page must return 404 and disappear from links, sitemap and JSON-LD.
-- Structured data: `buildPageJsonLd` (`src/lib/structured-data.ts`) + `<JsonLd>`. Only facts that already exist in `site-config` / the content layer **and are visible on the page**. Never add invented addresses, reviews, ratings, prices, clients, dates or awards, and never add schema just to add more of it.
+- Structured data: `buildPageJsonLd` (`src/lib/structured-data.ts`) + `<JsonLd>`. Only facts that already exist in `site-config` / the content layer **and are visible on the page**. Never add invented addresses, reviews, ratings, prices, clients, dates or awards, and never add schema just to add more of it. The founder `Person` (+ `Organization.founder`) appears only on `/about`, where the name is visible; give it `sameAs` only for personal public profiles the owner has confirmed (the site's Instagram/Facebook belong to the brand).
 - Anything important must be in the server-rendered HTML, not only in video, canvas, hover or a modal. If content is only revealed by interaction (e.g. portfolio summaries), keep an equivalent, identical text in the DOM for assistive technology (`aria-describedby` + `visually-hidden`) — never extra text that users cannot reach.
 - Demo or concept content for fictional brands (e.g. the AUBE demo) must be visibly labelled as such and wrapped in `data-nosnippet`, so it is not quoted as MY PERSON's own claims.
 

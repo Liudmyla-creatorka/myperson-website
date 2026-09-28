@@ -56,8 +56,8 @@
 | P1-6 | Фото «до/після» мали `alt=""` і `aria-hidden`. | ✅ `alt="Perfume Campaign — przed/po"` тощо; картка отримала `role="group"`. |
 | P1-7 | У модалці портфоліо Tab виводив фокус на сторінку за оверлеєм. | ✅ Фокус лишається в модалці; Escape повертає його на кадр. |
 | P1-8 | Метадані `/landing-pages` були зашиті в код. | ✅ Перенесено в `pages.json` → `landingPages.seo`. |
-| P1-9 | Сайт не відповідає на питання «хто створює»: ім'я не вказане. | 📝 **Ім'я не публікується без окремого підтвердження власниці.** Шаблон тексту — в розділі «Пропозиції текстів». |
-| P1-10 | `/services` не показує послугу «Strony i landing page'e», хоча це реальна послуга (підтверджено власницею). | 📝 Точний список PL/EN — в розділі «Послуги». Візуально ще не додано: чекає погодження списку. |
+| P1-9 | Сайт не відповідав на питання «хто створює»: ім'я не було вказане. | ✅ За вказівкою власниці на About / O mnie додано видимий рядок «Liudmyla Mykhailova — założycielka i projektantka narracji wizualnych.» / «Liudmyla Mykhailova — founder and visual narrative designer.». У JSON-LD на цій сторінці — Person (founder MY PERSON). Окремий коміт `9eb236c`. |
+| P1-10 | `/services` не показувала послугу «Strony i landing page'e», хоча це реальна послуга (підтверджено власницею). | ✅ Додано п'ятою, останньою карткою з посиланням на `/landing-pages`; сітка адаптована (див. «Послуги»). |
 | P1-11 | На головній немає короткого переліку послуг. | 📝 Пропозиція — в розділі «Пропозиції текстів». |
 | P1-12 | Два різні набори послуг у репозиторії. | ✅ Невикористаний `services.json` з іншим набором видалено разом із завантажувачем (див. «Послуги»). |
 
@@ -72,7 +72,7 @@
 | P2-5 | `/landing-pages`: H2 демо AUBE стоять у DOM перед H1 сторінки. | ⏸ Виправлення вимагає змінити композицію. Вплив зменшено через P0-1. |
 | P2-6 | `/portfolio` і `/services`: H1 візуально прихований і дублює видимий H2. | ⏸ Допустимо (текст ідентичний видимому). |
 | P2-7 | Непослідовні категорії в `portfolio.json`. | ✅ Дві очевидні помилки виправлено, одну передано на рішення (див. «Портфоліо»). |
-| P2-8 | Невикористаний контент: `homeLandingPages` («Flagowy produkt»), `contact` у `pages.json`; текст `/landing-pages` зашитий у `LandingPagesShowcase.tsx` і дублює `landingPages.intro`. | ⏸ Прибрати або підключити разом із P1-10. |
+| P2-8 | Невикористаний контент: `homeLandingPages` і `contact` у `pages.json`; текст `/landing-pages` зашитий у `LandingPagesShowcase.tsx` і дублює `landingPages.intro`. | ✅ Обидва блоки видалено з кодом, що їх обслуговував (коміт `6b12357`). ⏸ Дублювання тексту в `LandingPagesShowcase.tsx` лишається. |
 | P2-9 | CLAUDE.md описував case-study сторінки й окрему `/contact`. | ✅ Оновлено (див. «Зміни в CLAUDE.md»). |
 | P2-10 | У sitemap немає `lastmod`. | ⏸ Надійних дат немає; вигадувати не варто. |
 | P2-11 | Відео кампаній без субтитрів чи транскрипту; поруч є текстовий опис. VideoObject не додано: потрібні `uploadDate` і `thumbnailUrl`, яких у репозиторії немає. | ⏸ |
@@ -88,16 +88,16 @@
 | `pages.json` → `homeServices.items` | Brand Identity · Editorial Content · Strategia wizualna / Visual Strategy · Video Production | **Так**, картки на `/services` | Лишається єдиним джерелом списку послуг |
 | `src/content/{pl,en}/services.json` | Film wizerunkowy / Brand Film · Identyfikacja wizualna / Visual Identity · Doświadczenia cyfrowe / Digital Experience · Kierownictwo artystyczne / Art Direction | Ні, ніде не використовувався | ✅ Видалено разом із `getServices` / `getServiceBySlug` і типом `Service` |
 | `LandingPagesShowcase.tsx` + `pages.json` → `landingPages` | Strony i landing page'e / Websites & Landing Pages | Так, окрема сторінка `/landing-pages` і пункт меню | Кандидат у 5-ту послугу (нижче) |
-| `pages.json` → `homeLandingPages` | «Flagowy produkt» + «Strony i Landing Page'y» | Ні | ⏸ Див. P2-8 |
+| `pages.json` → `homeLandingPages` | «Flagowy produkt» + «Strony i Landing Page'y» | Ні | ✅ Видалено (P2-8) |
 | `portfolio.json` → `category` | Використовувала назви з `services.json` | Ні (поле не рендериться) | ✅ Див. «Портфоліо» |
 | SEO-описи `/services` (цей PR) | Ті самі 4 послуги, що й на сторінці | — | Узгоджено |
 | JSON-LD `/services` (цей PR) | Ті самі 4 послуги, що й на сторінці | — | Узгоджено |
 
 Нових послуг не додано; розбіжність усунуто видаленням списку, який ніде не показувався.
 
-### Пропонований актуальний список (для погодження, ще не впроваджено)
+### Актуальний список (погоджено власницею і впроваджено)
 
-Перші чотири послуги — точно як зараз на сайті. П'ята складена з уже опублікованих текстів `/landing-pages`: назва — з меню, опис — зі вступу, теги — з видимого списку «Zakres» / «Scope».
+Перші чотири послуги не змінились. П'ята додана останньою і складена з уже опублікованих текстів `/landing-pages`: назва — з меню й `landingPages.title`, опис — зі вступу `landingPages.intro` (побуквено), теги — з видимого списку «Zakres» / «Scope».
 
 | # | PL — назва | PL — опис | PL — теги | EN — назва | EN — опис | EN — теги |
 |---|---|---|---|---|---|---|
@@ -107,12 +107,15 @@
 | 4 | Video Production | Kampanie wideo dla marek premium — od koncepcji i scenariusza po produkcję i montaż. Reklamy, prezentacje, storytelling. | REKLAMY / REELS / KAMPANIE | Video Production | *(без змін — поточний EN-текст)* | *(без змін)* |
 | 5 **нова** | Strony i Landing Page'y | Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system. | UX/UI / DEVELOPMENT / WDROŻENIE | Websites & Landing Pages | I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system. | UX/UI / DEVELOPMENT / DEPLOYMENT |
 
-Що вирішити разом зі списком:
-- **Позиція 5-ї картки.** Остання чи перша (на головній вона «Flagowy produkt»).
-- **Посилання з картки на `/landing-pages`.** Зараз картки послуг не є посиланнями.
-- **Макет.** Сітка на `/services` спроєктована рівно під 4 картки (`CARD_LAYOUT`), тож 5-та картка — це дизайн-рішення для композиції.
-
-Після погодження: додати 5-й елемент у `homeServices.items` (PL/EN) і його макет. JSON-LD підхопить його автоматично.
+Як впроваджено:
+- **Позиція.** Остання, п'ята картка (рішення власниці).
+- **Посилання.** Заголовок картки — `<a>` на `/pl/landing-pages` або `/en/landing-pages` зі стрілкою «↗», як у CTA сайту. Посилання розтягнуте на текстову область, тож клікабельна вся картка. Фокус з клавіатури підсвічує картку. Інші чотири картки не є посиланнями, бо окремих сторінок у них немає.
+- **Сітка.**
+  - Десктоп (≥ 64rem): перший ряд без змін (5 | 7 колонок), другий — три рівні картки 4 | 4 | 4. Для цього додано нові класи `cardTrioOne/Two/Three`. Висота ряду та сама, тож секція, як і раніше, вміщується в один екран (1280×720, 1440×900, 1920×1080), а низ сітки зсунувся на 3 px.
+  - Планшет і мобільний: одна колонка, п'ята картка в кінці.
+  - Сітка методу на `/about` використовує старі класи й не змінилась (перевірено вимірюванням).
+- **JSON-LD.** П'ята послуга в `ItemList` на `/services` має той самий `@id`, що й Service на `/landing-pages`, а також `url` цієї сторінки. Для пошуку й AI це одна сутність.
+- **Опис `/services`** (meta) тепер згадує й сайти та landing page'і.
 
 ## Портфоліо
 
@@ -122,12 +125,34 @@
 |---|---|---|---|---|---|---|
 | `aurora` | AURA | Film wizerunkowy / Brand Film | AURA *(без змін)* | Kampania produktowa / Product Campaign | Категорія суперечить видимому підзаголовку «Product Campaign» і опису («wizualizacje kampanii produktowej»); у модалці статичне фото, не фільм. | ✅ Категорію виправлено |
 | `meridian` | Fashion Editorial | Doświadczenie cyfrowe / Digital Experience | Fashion Editorial *(без змін)* | Fashion Editorial / Fashion Editorial | «Doświadczenie cyfrowe» у старому списку послуг означало «interaktywne strony i aplikacje», а це фотосесія fashion editorial (видимий підзаголовок і опис). | ✅ Категорію виправлено |
-| `lumen` | Personal Brand | Identyfikacja wizualna / Visual Identity | Personal Brand *(без змін)* | — | Не очевидна помилка: портрети для марки особистої можна вважати й «Identyfikacja wizualna», і «Editorial Content». | 📝 Рішення власниці |
+| `lumen` | Personal Brand | Identyfikacja wizualna / Visual Identity | Personal Brand *(без змін)* | Identyfikacja wizualna / Visual Identity *(без змін)* | Не очевидна помилка. | ⏸ Залишено без змін (рішення власниці) |
 
-Назви не змінено: інших достовірних назв у репозиторії немає. Питання до власниці:
-- **AURA проти AURA JEWELRY.** Робота «AURA» (крем у банці, плівка) і кампанія «AURA JEWELRY» (відео біжутерії) — це різні клієнти чи один? Якщо різні, варто розрізнити назви.
+Назви не змінено: інших достовірних назв у репозиторії немає.
+- **AURA і AURA JEWELRY.** Назви й зв'язки між цими роботами не змінюються, поки власниця окремо не підтвердить (рішення власниці). У JSON-LD вони не пов'язані між собою.
 - **Однакові назва й підзаголовок.** У «Fashion Editorial» і «Personal Brand» вони збігаються, бо окремого підзаголовка немає. Якщо є справжні назви клієнтів або проєктів, їх можна вписати в `subtitle`.
 - **Рік.** `year` (2025 / 2024) ніде не показується, тож у JSON-LD його прибрано. Якщо рік потрібен, його спершу треба показати на сайті.
+
+## Невикористані блоки в pages.json — видалено
+
+| Блок | Вміст PL / EN | Хто читає | Звідки взявся |
+|---|---|---|---|
+| `contact` | `{"title": "Kontakt", "intro": "Porozmawiajmy o Twoim projekcie."}` / `{"title": "Contact", "intro": "Let's talk about your project."}` | Ніхто. Лишився тільки ключ `"contact"` у типі `PageKey` (`src/lib/content/pages.ts:20`). | Читався сторінкою `/contact`, яку прибрали в коміті `b7335f1` |
+| `homeLandingPages` | `{"eyebrow": "Flagowy produkt", "title": "Strony i Landing Page'y"}` / `{"eyebrow": "Flagship product", "title": "Websites & Landing Pages"}` | Ніхто. Функція `getHomeLandingPages` і тип `LandingPagesContent` існують, але їх ніхто не викликає. | Читався секцією на головній, яку замінили окремою сторінкою в коміті `a3c9730` |
+
+**Чи безпечно видалити.** Так, обидва:
+- жоден компонент, сторінка, метадані, sitemap чи JSON-LD їх не читають;
+- на видимий сайт видалення не вплине — це перевіряється тим самим build і тестами;
+- підпис «Kontakt» у меню береться з `src/messages/*.json` (`nav.contact`), а не з цього блоку.
+
+Разом із ними треба прибрати `getHomeLandingPages`, `LandingPagesContent` і `"contact"` у `PageKey`, інакше лишиться мертвий код.
+
+**Чому можна залишити.** Ризику вони не несуть, бо ніде не показуються. Але CLAUDE.md вимагає прибирати мертвий код і мати одне джерело для кожного контенту. До того ж «Flagowy produkt» — твердження, якого на сайті зараз немає; якщо воно потрібне, його краще додати видимо (наприклад, як eyebrow п'ятої картки), а не тримати в мертвому блоці.
+
+**Виконано** (за підтвердженням власниці) окремим комітом `6b12357`:
+- видалено обидва блоки в PL і EN;
+- видалено код, що обслуговував тільки їх: `"contact"` у `PageKey`, поле `homeLandingPages`, `getHomeLandingPages`, `LandingPagesContent`.
+
+Після видалення всі сторінки віддають 200, sitemap і metadata не змінились, тести JSON-LD пройшли. Фраза «Flagowy produkt» зникла разом із блоком; якщо вона потрібна, її варто додати видимо.
 
 ## Самоперевірка AI-readiness
 
@@ -153,16 +178,18 @@
 2. Кожна властивість допустима для свого типу schema.org.
 3. Усі `@id`-посилання розв'язуються всередині графа.
 4. `hasPart` посилається тільки на CreativeWork.
-5. Немає старих `/portfolio/{slug}` і заборонених тверджень: дат, адреси, рейтингу, відгуків, цін, нагород, `founder`, `areaServed`.
+5. Немає старих `/portfolio/{slug}` і заборонених тверджень: дат, адреси, рейтингу, відгуків, цін, нагород, `areaServed`.
+6. Person і `founder` є **тільки** на `/about`, де ім'я видно, і ніде більше; у Person немає `sameAs`.
 
 Відповідність видимому змісту:
 
 | Твердження в JSON-LD | Де видно на сторінці |
 |---|---|
 | Organization: назва, логотип | Шапка (логотип + «MY PERSON») |
+| Person (`name`, `jobTitle`) + Organization `founder` — тільки `/about` | Видимий рядок під вступом «Liudmyla Mykhailova — …», побуквено |
 | Organization: `description` | Опис у футері кожної сторінки |
 | Organization: `email`, `telephone`, `sameAs` | Посилання в футері (email, телефон, Instagram, Facebook) |
-| Service (`/services`): назва + опис | Картки послуг, побуквено |
+| Service (`/services`): назва + опис (5 послуг) | Картки послуг, побуквено; 5-та також має `url` і той самий `@id`, що й Service на `/landing-pages` |
 | Service (`/landing-pages`): назва + опис | Пункт меню «Strony i Landing Page'y» + вступ під H1, побуквено |
 | CreativeWork: `name`, `alternativeHeadline`, `description`, `image` | Модалка кадру: заголовок, підзаголовок, опис, фото — побуквено |
 
@@ -180,7 +207,7 @@
 | `/pl` | увесь текст | Вступ hero, побуквено |
 | `/en` | «A visual narratives studio. Cinematic stories for premium brands. A visual identity that sells.» | Вступ hero + опис у футері, побуквено |
 | `/portfolio` | KAMIEN.PL, AURA JEWELRY; transformacje; 80 kart produktów, Bises | Секції «Wybrane kampanie», «Transformacje», «80 kart produktów — Bises» |
-| `/services` | brand identity, zdjęcia produktowe i lifestyle, strategia wizualna, wideo; marki premium | 4 картки послуг |
+| `/services` | brand identity, zdjęcia produktowe i lifestyle, strategia wizualna, wideo, strony i landing page'e; marki premium | 5 карток послуг |
 | `/about` | перше речення | Вступ під H1, побуквено |
 | `/about` | «Metoda: analiza, strategia, produkcja, weryfikacja» | Заголовок «Metoda» + 4 підзаголовки |
 | `/landing-pages` | UX/UI, art direction, interakcje, development, integracje, wdrożenie | Видимий список «Zakres» (опис існував до цього PR; перенесено з коду в content-шар без змін) |
@@ -214,8 +241,8 @@
 
 | Файл | Що змінено |
 |---|---|
-| `src/types/content.ts` | Тип `PageSeo`, поле `seo` у `PageCopy`, `beforeLabel`/`afterLabel`; видалено тип `Service`; прибрано застарілий коментар |
-| `src/content/pl/pages.json`, `src/content/en/pages.json` | Блоки `seo` для 5 сторінок; підписи «przed/po», «before/after» |
+| `src/types/content.ts` | Тип `PageSeo`, поле `seo` у `PageCopy`, `beforeLabel`/`afterLabel`, `href` у `HomeServiceCard`; видалено тип `Service`; прибрано застарілий коментар |
+| `src/content/pl/pages.json`, `src/content/en/pages.json` | Блоки `seo` для 5 сторінок; підписи «przed/po», «before/after»; 5-та послуга в `homeServices` |
 | `src/content/pl/portfolio.json`, `src/content/en/portfolio.json` | Дві виправлені категорії |
 | `src/content/{pl,en}/services.json`, `src/lib/content/services.ts` | **Видалено** (невикористаний список послуг, що суперечив сайту) |
 | `src/lib/content/index.ts` | Прибрано експорт `getServices` / `getServiceBySlug` |
@@ -223,10 +250,14 @@
 | `src/lib/structured-data.ts` (новий) | Граф JSON-LD: Organization, WebSite, WebPage + `mainEntity` / `hasPart` |
 | `src/components/JsonLd.tsx` (новий) | Вивід `<script type="application/ld+json">` з екрануванням `<` |
 | `src/app/[locale]/page.tsx`, `about/`, `services/`, `portfolio/`, `landing-pages/page.tsx` | Метадані з content-шару + JSON-LD |
+| `src/app/[locale]/about/page.tsx`, `page.module.css` | Видимий рядок засновниці + Person у JSON-LD |
+| `src/lib/content/pages.ts`, `index.ts` | `getFounder`; видалено `getHomeLandingPages`, `"contact"` у `PageKey` |
 | `src/sections/PortfolioFilmstrip.tsx` | Описи робіт у DOM (`aria-describedby`), без дублів у назвах, фокус утримується в модалці |
 | `src/sections/BeforeAfterShowcase.tsx` | `alt` для фото «до/після», `role="group"` |
 | `src/sections/LandingPagesShowcase.tsx` | Локалізована назва і `data-nosnippet` на секції демо; посилання на контакт без редиректу |
 | `src/components/Header.tsx`, `src/components/LanguageSwitcher.tsx`, `src/messages/{pl,en}.json` | Локалізовані `aria-label` |
+| `src/components/PhotoCardGrid.tsx`, `.module.css` | Необов'язкове посилання картки (`href`), розтягнуте на текстову область; класи `cardTrioOne/Two/Three` для ряду з трьох карток |
+| `src/sections/ServicesShowcase.tsx` | Макет п'яти карток |
 | `CLAUDE.md` | Оновлено під фактичну структуру (див. вище) |
 | `AI_READINESS_AUDIT.md` (новий) | Цей звіт |
 
@@ -234,20 +265,15 @@
 
 ## Невирішене (рішення власниці)
 
-1. **P1-9 — ім'я.** Публікується тільки після окремого підтвердження.
-2. **P1-10 — 5-та послуга «Strony i Landing Page'y»:** погодити список, позицію, посилання й макет картки.
-3. **P1-11 — рядок з переліком послуг на головній.**
-4. **Портфоліо:** категорія `lumen`; AURA проти AURA JEWELRY; підзаголовки.
-5. **P2-5 — порядок заголовків на `/landing-pages`.**
-6. **P2-8 — `homeLandingPages` і `contact`:** невикористаний контент, прибрати або підключити.
-7. **Search Console → Removals** для шести старих URL (вручну).
+1. **P1-11 — рядок з переліком послуг на головній.**
+2. **Портфоліо:** AURA і AURA JEWELRY — без змін до окремого підтвердження; підзаголовки. Категорія `lumen` лишається як є (рішення власниці).
+3. **P2-5 — порядок заголовків на `/landing-pages`.**
+4. **Person `sameAs`:** додати тільки після окремого підтвердження особистих публічних профілів.
+5. **Search Console → Removals** для шести старих URL (вручну).
 
 ## Пропозиції текстів (не впроваджено, потрібне погодження)
 
-**1. Хто створює (P1-9)** — тільки після підтвердження імені:
-
-- PL: «MY PERSON prowadzi [imię i nazwisko — do potwierdzenia] — strateżka AI i dyrektorka wizualna. Tworzę premium wizualizacje AI, które zmieniają sposób, w jaki klienci postrzegają produkt.»
-- EN: «MY PERSON is led by [name — to be confirmed], an AI strategist and visual director. I create premium AI visuals that change how customers perceive a product.»
+**1. Хто створює (P1-9)** — впроваджено текстом власниці (див. P1-9). Запропоновані раніше формулювання («strateżka AI i dyrektorka wizualna» тощо) не використано.
 
 **2. Послуги одним рядком на головній (P1-11)** — під hero-слоганом:
 
@@ -261,7 +287,7 @@
 
 **4. Для кого і який результат** — уже сказано у блоці «Dlaczego MY PERSON». Нового тексту не потрібно.
 
-## Результати перевірок (після follow-up)
+## Результати перевірок (після п'ятої послуги, видалення блоків і засновниці)
 
 | Перевірка | Результат |
 |---|---|
@@ -273,10 +299,12 @@
 | PL/EN маршрути | ✅ 10 × 200 |
 | Старі `/portfolio/{slug}` | ✅ 6 × 404 + `noindex` |
 | sitemap / robots | ✅ 10 URL; robots посилається на sitemap |
-| Відповідність видимому змісту + JSON-LD | ✅ 80/80 |
+| Відповідність видимому змісту + JSON-LD (включно з Person на About) | ✅ 90/90 |
 | Доступність / agent-ready | ✅ 64/64 |
 | Регресія портфоліо (плівка, пауза при наведенні, модалка, summary, мови, мобільна версія) | ✅ 98/98 |
 | Модалка / cookie-банер / scroll lock | ✅ 129/129 |
+| П'ята картка послуг (посилання, клік/тап, клавіатура) | ✅ 28/28 |
+| Сітка послуг: текст у картках, висота секції (5 екранів) | ✅ без обрізання; десктоп — один екран; `/about` без змін |
 | Netlify build | перевіряється Deploy Preview PR #3 |
 
 ## Рекомендації для майбутньої послуги «AI-ready сайт» для клієнтів
