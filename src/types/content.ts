@@ -115,6 +115,11 @@ export interface ContactCtaContent {
   ctaLabel: string;
 }
 
+export interface FounderContent {
+  name: string;
+  role: string;
+}
+
 export interface FooterContent {
   description: string;
 }

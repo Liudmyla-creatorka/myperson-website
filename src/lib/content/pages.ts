@@ -5,6 +5,7 @@ import type {
   CaseStudyContent,
   ContactCtaContent,
   FooterContent,
+  FounderContent,
   HomeServicesContent,
   MethodContent,
   PageCopy,
@@ -26,6 +27,7 @@ interface PagesData extends Record<PageKey, PageCopy> {
   homeBeforeAfter: BeforeAfterContent;
   homePhilosophy: PhilosophyContent;
   homeContact: ContactCtaContent;
+  founder: FounderContent;
   footer: FooterContent;
 }
 
@@ -92,4 +94,9 @@ export async function getHomeContact(
 export async function getFooterContent(locale: Locale): Promise<FooterContent> {
   const data = await loadPagesData(locale);
   return data.footer;
+}
+
+export async function getFounder(locale: Locale): Promise<FounderContent> {
+  const data = await loadPagesData(locale);
+  return data.founder;
 }

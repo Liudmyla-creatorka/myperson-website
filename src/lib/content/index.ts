@@ -9,4 +9,5 @@ export {
   getHomePhilosophy,
   getHomeContact,
   getFooterContent,
+  getFounder,
 } from "./pages";

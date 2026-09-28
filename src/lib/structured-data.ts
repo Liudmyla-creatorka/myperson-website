@@ -2,6 +2,7 @@ import type { Locale } from "@/i18n/routing";
 import { getFooterContent } from "@/lib/content";
 import { pageUrl } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
+import type { FounderContent } from "@/types/content";
 
 // Built only from data that already exists in site-config and the content
 // layer, and only from facts that are visible on the page. No address,
@@ -9,6 +10,7 @@ import { siteConfig } from "@/lib/site-config";
 
 const ORGANIZATION_ID = `${siteConfig.siteUrl}/#organization`;
 const WEBSITE_ID = `${siteConfig.siteUrl}/#website`;
+const FOUNDER_ID = `${siteConfig.siteUrl}/#founder`;
 
 type JsonLdNode = Record<string, unknown>;
 
@@ -24,6 +26,8 @@ type PageJsonLdInput = {
   mainEntity?: JsonLdNode;
   /** Creative works shown on the page; must be CreativeWork nodes with an @id. */
   hasPart?: JsonLdNode[];
+  /** Only on pages where the founder is visibly named. */
+  founder?: FounderContent;
 };
 
 export const organizationRef = { "@id": ORGANIZATION_ID };
@@ -40,6 +44,7 @@ export async function buildPageJsonLd({
   pageType = "WebPage",
   mainEntity,
   hasPart = [],
+  founder,
 }: PageJsonLdInput) {
   const { description: organizationDescription } = await getFooterContent(locale);
   const url = pageUrl(locale, path);
@@ -62,7 +67,20 @@ export async function buildPageJsonLd({
         email: siteConfig.email,
         telephone: siteConfig.phoneHref,
         sameAs: [siteConfig.instagram, siteConfig.facebook],
+        ...(founder && { founder: { "@id": FOUNDER_ID } }),
       },
+      // No sameAs: the Instagram/Facebook profiles on the site belong to the brand, not the person.
+      ...(founder
+        ? [
+            {
+              "@type": "Person",
+              "@id": FOUNDER_ID,
+              name: founder.name,
+              jobTitle: founder.role,
+              worksFor: organizationRef,
+            },
+          ]
+        : []),
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
