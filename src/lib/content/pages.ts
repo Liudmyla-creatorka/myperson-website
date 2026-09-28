@@ -1,10 +1,10 @@
 import type { Locale } from "@/i18n/routing";
 import type {
   BeforeAfterContent,
+  BrandContent,
   CampaignsContent,
   CaseStudyContent,
   ContactCtaContent,
-  FooterContent,
   FounderContent,
   HomeServicesContent,
   MethodContent,
@@ -28,7 +28,7 @@ interface PagesData extends Record<PageKey, PageCopy> {
   homePhilosophy: PhilosophyContent;
   homeContact: ContactCtaContent;
   founder: FounderContent;
-  footer: FooterContent;
+  brand: BrandContent;
 }
 
 async function loadPagesData(locale: Locale): Promise<PagesData> {
@@ -91,9 +91,9 @@ export async function getHomeContact(
   return data.homeContact;
 }
 
-export async function getFooterContent(locale: Locale): Promise<FooterContent> {
+export async function getBrandContent(locale: Locale): Promise<BrandContent> {
   const data = await loadPagesData(locale);
-  return data.footer;
+  return data.brand;
 }
 
 export async function getFounder(locale: Locale): Promise<FounderContent> {

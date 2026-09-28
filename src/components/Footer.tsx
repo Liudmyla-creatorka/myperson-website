@@ -2,7 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import type { Locale } from "@/i18n/routing";
-import { getFooterContent } from "@/lib/content";
+import { getBrandContent } from "@/lib/content";
 import { siteConfig } from "@/lib/site-config";
 import { Container } from "@/components/ui/Container";
 import styles from "./Footer.module.css";
@@ -13,7 +13,7 @@ type FooterProps = {
 
 export async function Footer({ locale }: FooterProps) {
   const t = await getTranslations("footer");
-  const { description } = await getFooterContent(locale);
+  const { description } = await getBrandContent(locale);
   const year = new Date().getFullYear();
 
   return (
