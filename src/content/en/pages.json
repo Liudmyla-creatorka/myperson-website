@@ -24,7 +24,7 @@
     "intro": "A complete approach to building premium brands.",
     "seo": {
       "title": "Services — Brand Identity, Visual Strategy & Video",
-      "description": "Brand identity, realistic product and lifestyle photography, visual strategy and video production for premium brands — MY PERSON."
+      "description": "Brand identity, product and lifestyle photography, visual strategy, video production, and websites & landing pages for premium brands — MY PERSON."
     }
   },
   "about": {
@@ -74,6 +74,13 @@
         "title": "Video Production",
         "summary": "Video campaigns for premium brands — from concept and script to production and editing. Ads, presentations, storytelling.",
         "tags": ["ADS", "REELS", "CAMPAIGNS"]
+      },
+      {
+        "slug": "websites-landing-pages",
+        "title": "Websites & Landing Pages",
+        "summary": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
+        "tags": ["UX/UI", "DEVELOPMENT", "DEPLOYMENT"],
+        "href": "/landing-pages"
       }
     ]
   },

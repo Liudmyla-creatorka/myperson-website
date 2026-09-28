@@ -33,6 +33,8 @@ export interface HomeServiceCard {
   title: string;
   summary: string;
   tags: string[];
+  /** Locale-less route of the service's own page, e.g. "/landing-pages". */
+  href?: string;
 }
 
 export interface HomeServicesContent {

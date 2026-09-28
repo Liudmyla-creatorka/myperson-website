@@ -150,6 +150,29 @@
     grid-row: 2;
     aspect-ratio: 1.94;
   }
+
+  /* Five-card variant: row 1 stays 01/02 (cardOne/cardTwo); row 2 becomes
+     three equal cards. Same span → same aspect-ratio → equal heights, tuned
+     so the row is as tall as the four-card row 2 and the section still fits
+     one viewport. */
+  .cardTrioOne,
+  .cardTrioTwo,
+  .cardTrioThree {
+    grid-row: 2;
+    aspect-ratio: 1.5;
+  }
+
+  .cardTrioOne {
+    grid-column: 1 / span 4;
+  }
+
+  .cardTrioTwo {
+    grid-column: 5 / span 4;
+  }
+
+  .cardTrioThree {
+    grid-column: 9 / span 4;
+  }
 }
 
 /* No border, no shadow, no background at rest — a card must be
@@ -340,6 +363,14 @@
   margin: 0;
   font-size: var(--text-lg);
   color: var(--color-chalk);
+}
+
+/* Stretches the title link over the text block so the whole card is
+   clickable; the card's own :focus-within styles mark keyboard focus. */
+.cardLink::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 .summary {

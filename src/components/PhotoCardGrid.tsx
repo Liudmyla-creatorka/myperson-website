@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 
+import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { ScrollRevealList } from "@/components/ScrollRevealList";
 import { CardSpotlight } from "@/components/CardSpotlight";
@@ -10,6 +11,8 @@ export type PhotoCardGridItem = {
   title: string;
   summary: string;
   tags?: string[];
+  /** Makes the whole card a link to this locale-less route. */
+  href?: string;
 };
 
 type PhotoCardGridProps = {
@@ -20,7 +23,7 @@ type PhotoCardGridProps = {
   // Keyed by the content layer's stable slug, not array position — the
   // asymmetric editorial layout is a designed composition, not a
   // repeating pattern, so a card's grid slot shouldn't shift if content
-  // order changes. See cardOne–cardFour in PhotoCardGrid.module.css.
+  // order changes. See the card* layout classes in PhotoCardGrid.module.css.
   cardLayout: Record<string, string>;
 };
 
@@ -53,7 +56,16 @@ export function PhotoCardGrid({
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className={styles.textBlock}>
-                  <h3 className={styles.title}>{item.title}</h3>
+                  <h3 className={styles.title}>
+                    {item.href ? (
+                      <Link href={item.href} className={styles.cardLink}>
+                        {item.title}
+                        <span aria-hidden="true"> ↗</span>
+                      </Link>
+                    ) : (
+                      item.title
+                    )}
+                  </h3>
                   <p className={styles.summary}>{item.summary}</p>
                   {item.tags && item.tags.length > 0 && (
                     <ul role="list" className={styles.tags}>

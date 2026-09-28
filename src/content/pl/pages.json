@@ -24,7 +24,7 @@
     "intro": "Kompleksowe podejście do budowania premium marek.",
     "seo": {
       "title": "Usługi — brand identity, strategia wizualna i wideo",
-      "description": "Brand identity, realistyczne zdjęcia produktowe i lifestyle, strategia wizualna oraz produkcja wideo dla marek premium — MY PERSON."
+      "description": "Brand identity, zdjęcia produktowe i lifestyle, strategia wizualna, produkcja wideo oraz strony i landing page’e dla marek premium — MY PERSON."
     }
   },
   "about": {
@@ -74,6 +74,13 @@
         "title": "Video Production",
         "summary": "Kampanie wideo dla marek premium — od koncepcji i scenariusza po produkcję i montaż. Reklamy, prezentacje, storytelling.",
         "tags": ["REKLAMY", "REELS", "KAMPANIE"]
+      },
+      {
+        "slug": "websites-landing-pages",
+        "title": "Strony i Landing Page'y",
+        "summary": "Projektuję i realizuję strony internetowe oraz landing page’e, łącząc strategię, design, treść, interakcję i technologię w jeden spójny system.",
+        "tags": ["UX/UI", "DEVELOPMENT", "WDROŻENIE"],
+        "href": "/landing-pages"
       }
     ]
   },

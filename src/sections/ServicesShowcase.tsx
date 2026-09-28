@@ -12,8 +12,9 @@ type ServicesShowcaseProps = {
 const CARD_LAYOUT: Record<string, string> = {
   "brand-identity": "cardOne",
   "editorial-content": "cardTwo",
-  "visual-strategy": "cardThree",
-  "video-production": "cardFour",
+  "visual-strategy": "cardTrioOne",
+  "video-production": "cardTrioTwo",
+  "websites-landing-pages": "cardTrioThree",
 };
 
 export async function ServicesShowcase({ locale }: ServicesShowcaseProps) {

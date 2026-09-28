@@ -41,13 +41,23 @@ export default async function ServicesPage({ params }: PageProps) {
       itemListElement: services.items.map((service, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        item: {
-          "@type": "Service",
-          "@id": `${url}#${service.slug}`,
-          name: service.title,
-          description: service.summary,
-          provider: organizationRef,
-        },
+        // A service with its own page shares that page's Service @id.
+        item: service.href
+          ? {
+              "@type": "Service",
+              "@id": `${pageUrl(locale as Locale, service.href)}#service`,
+              url: pageUrl(locale as Locale, service.href),
+              name: service.title,
+              description: service.summary,
+              provider: organizationRef,
+            }
+          : {
+              "@type": "Service",
+              "@id": `${url}#${service.slug}`,
+              name: service.title,
+              description: service.summary,
+              provider: organizationRef,
+            },
       })),
     },
   });
