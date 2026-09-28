@@ -35,10 +35,6 @@
       "description": "MY PERSON is a visual narratives studio crafting cinematic, strategic identities for premium brands. Method: analysis, strategy, production, verification."
     }
   },
-  "contact": {
-    "title": "Contact",
-    "intro": "Let's talk about your project."
-  },
   "landingPages": {
     "title": "Websites & Landing Pages",
     "intro": "I design and build websites and landing pages by combining strategy, design, content, interaction and technology into one coherent system.",
@@ -203,10 +199,6 @@
       "The client doesn't pay for technology. They pay for a result that changes how the market perceives their brand.",
       "In my approach, artificial intelligence is not the foundation — it is purely an advanced executional tool. The heart, the director, and the true author of every cinematic story remains the Human. AI listens, but I give it meaning, style, and cinematic depth."
     ]
-  },
-  "homeLandingPages": {
-    "eyebrow": "Flagship product",
-    "title": "Websites & Landing Pages"
   },
   "homeContact": {
     "eyebrow": "CONTACT",

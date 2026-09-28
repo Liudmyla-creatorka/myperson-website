@@ -7,7 +7,6 @@ export {
   getHomeCaseStudyBises,
   getHomeBeforeAfter,
   getHomePhilosophy,
-  getHomeLandingPages,
   getHomeContact,
   getFooterContent,
 } from "./pages";

@@ -108,11 +108,6 @@ export interface PhilosophyContent {
   paragraphs: string[];
 }
 
-export interface LandingPagesContent {
-  eyebrow: string;
-  title: string;
-}
-
 export interface ContactCtaContent {
   eyebrow: string;
   title: string;
