@@ -178,16 +178,16 @@
 2. Кожна властивість допустима для свого типу schema.org.
 3. Усі `@id`-посилання розв'язуються всередині графа.
 4. `hasPart` посилається тільки на CreativeWork.
-5. Немає старих `/portfolio/{slug}` і заборонених тверджень: дат, адреси, рейтингу, відгуків, цін, нагород, `areaServed`.
-6. Person і `founder` є **тільки** на `/about`, де ім'я видно, і ніде більше; у Person немає `sameAs`.
+5. Немає старих `/portfolio/{slug}` і заборонених тверджень: дат, адреси, рейтингу, відгуків, цін, нагород. `areaServed` дозволено лише як текст з офіційного опису бренду (див. «Entity-сигнали»).
+6. Person і `Organization.founder` є на всіх сторінках (рішення власниці, див. «Entity-сигнали»); видимий рядок із ім'ям — тільки на `/about`; у Person немає `sameAs`.
 
 Відповідність видимому змісту:
 
 | Твердження в JSON-LD | Де видно на сторінці |
 |---|---|
 | Organization: назва, логотип | Шапка (логотип + «MY PERSON») |
-| Person (`name`, `jobTitle`) + Organization `founder` — тільки `/about` | Видимий рядок під вступом «Liudmyla Mykhailova — …», побуквено |
-| Organization: `description` | Опис у футері кожної сторінки |
+| Person (`name`, `jobTitle`) + Organization `founder` — усі сторінки | Видимий рядок під вступом на `/about` «Liudmyla Mykhailova — …», побуквено. На інших сторінках ім'я не показується — виняток, погоджений власницею |
+| Organization: `description`, `alternateName`, `knowsAbout`, `areaServed` | Офіційний опис бренду в футері кожної сторінки; `alternateName` — назва + підзаголовок у футері |
 | Organization: `email`, `telephone`, `sameAs` | Посилання в футері (email, телефон, Instagram, Facebook) |
 | Service (`/services`): назва + опис (5 послуг) | Картки послуг, побуквено; 5-та також має `url` і той самий `@id`, що й Service на `/landing-pages` |
 | Service (`/landing-pages`): назва + опис | Пункт меню «Strony i Landing Page'y» + вступ під H1, побуквено |
@@ -204,8 +204,7 @@
 
 | Сторінка | Твердження в description | Джерело на сторінці |
 |---|---|---|
-| `/pl` | увесь текст | Вступ hero, побуквено |
-| `/en` | «A visual narratives studio. Cinematic stories for premium brands. A visual identity that sells.» | Вступ hero + опис у футері, побуквено |
+| `/pl`, `/en` | студія, 4 напрями, марки premium, Polska i za granicą | Офіційний опис бренду в футері |
 | `/portfolio` | KAMIEN.PL, AURA JEWELRY; transformacje; 80 kart produktów, Bises | Секції «Wybrane kampanie», «Transformacje», «80 kart produktów — Bises» |
 | `/services` | brand identity, zdjęcia produktowe i lifestyle, strategia wizualna, wideo, strony i landing page'e; marki premium | 5 карток послуг |
 | `/about` | перше речення | Вступ під H1, побуквено |
@@ -306,6 +305,46 @@
 | П'ята картка послуг (посилання, клік/тап, клавіатура) | ✅ 28/28 |
 | Сітка послуг: текст у картках, висота секції (5 екранів) | ✅ без обрізання; десктоп — один екран; `/about` без змін |
 | Netlify build | перевіряється Deploy Preview PR #3 |
+
+## Entity-сигнали та LinkedIn
+
+Контекст: під час ручної перевірки AI-пошуку Perplexity змішував myperson.agency зі сторінкою компанії в LinkedIn (`linkedin.com/company/mypersonagency`). Це офіційна сторінка MY PERSON, але позиціонування там застаріле: personal branding, SMM, «AI-powered services», старі локації.
+
+### Причини плутанини
+
+1. `Organization.description` брався з короткого слогану у футері. У ньому не було ні послуг, ні AI, ні ринку, тому детальніший текст LinkedIn виглядав змістовнішим джерелом.
+2. Ринок (Polska i za granicą) ніде не був названий, тож старі локації з LinkedIn нічим не перекривались.
+3. «MY PERSON» — звичайна фраза, а `alternateName` у schema не було.
+4. Засновниця була пов'язана з брендом лише на `/about`.
+5. Сайт на LinkedIn не посилається. Отже, зв'язок, найімовірніше, іде від самого LinkedIn (посилання на домен і та сама назва). Головне виправлення — оновити сторінку в LinkedIn.
+
+### Що змінено на сайті
+
+- **Офіційний опис бренду** (PL/EN, погоджено власницею) — блок `brand` у `pages.json` замість `footer`. Його видно у футері кожної сторінки, і він же є `Organization.description`.
+- **Organization:**
+  - `alternateName` «MY PERSON — Visual Narratives Studio»;
+  - `knowsAbout` — 5 напрямів з опису;
+  - `areaServed` «Polska i za granicą» / «Poland and internationally» — тільки те, що сказано в описі;
+  - `founder` на всіх сторінках.
+- **Person** (ім'я + роль із `pages.json` → `founder`) — у графі всіх сторінок. Видимий рядок, як і раніше, тільки на `/about`. Без `sameAs`, соцмереж і біографічних даних.
+- **Meta description головної PL/EN** — той самий зміст, що й в офіційному описі.
+- **Без змін:**
+  - sitemap, robots, Open Graph (метадані й зображення);
+  - портфоліо, назва «Personal Brand», теги «AI PRODUCTION».
+
+### LinkedIn — оновити вручну
+
+До оновлення LinkedIn **не** додається ні в `sameAs`, ні у футер. Інакше сайт сам підтвердив би, що застарілий профіль — це та сама сутність. Після оновлення посилання додається тільки в `Organization.sameAs`.
+
+Що оновити на сторінці компанії:
+- Назва: MY PERSON. Tagline: Visual Narratives Studio.
+- About: офіційний опис бренду (PL або EN, дослівно з сайту).
+- Specialties: Visual Strategy, Brand Identity, Cinematic Visual Campaigns, Websites & Landing Pages, AI-assisted Visual Production.
+- Прибрати: personal branding, SMM, «AI-powered services» як головну послугу.
+- Локації: прибрати старі; вказати лише підтверджену або лишити порожнім.
+- Website: `https://myperson.agency`.
+- Контакти: `kontakt@myperson.agency`, +48 534 029 978.
+- Особистий профіль засновниці: місце роботи — сторінка компанії MY PERSON.
 
 ## Рекомендації для майбутньої послуги «AI-ready сайт» для клієнтів
 
