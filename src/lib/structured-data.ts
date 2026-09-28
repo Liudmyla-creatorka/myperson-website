@@ -1,12 +1,14 @@
 import type { Locale } from "@/i18n/routing";
-import { getFooterContent } from "@/lib/content";
+import { getBrandContent, getFounder } from "@/lib/content";
 import { pageUrl } from "@/lib/seo";
 import { siteConfig } from "@/lib/site-config";
-import type { FounderContent } from "@/types/content";
 
 // Built only from data that already exists in site-config and the content
 // layer, and only from facts that are visible on the page. No address,
-// ratings, reviews, prices or clients are asserted here.
+// ratings, reviews, prices or clients are asserted here. One exception,
+// approved by the owner: the founder is part of the global Organization on
+// every page (the visible founder line is only on /about), because it is
+// the factual link between MY PERSON, myperson.agency and its founder.
 
 const ORGANIZATION_ID = `${siteConfig.siteUrl}/#organization`;
 const WEBSITE_ID = `${siteConfig.siteUrl}/#website`;
@@ -26,8 +28,6 @@ type PageJsonLdInput = {
   mainEntity?: JsonLdNode;
   /** Creative works shown on the page; must be CreativeWork nodes with an @id. */
   hasPart?: JsonLdNode[];
-  /** Only on pages where the founder is visibly named. */
-  founder?: FounderContent;
 };
 
 export const organizationRef = { "@id": ORGANIZATION_ID };
@@ -44,9 +44,11 @@ export async function buildPageJsonLd({
   pageType = "WebPage",
   mainEntity,
   hasPart = [],
-  founder,
 }: PageJsonLdInput) {
-  const { description: organizationDescription } = await getFooterContent(locale);
+  const [brand, founder] = await Promise.all([
+    getBrandContent(locale),
+    getFounder(locale),
+  ]);
   const url = pageUrl(locale, path);
 
   return {
@@ -56,8 +58,13 @@ export async function buildPageJsonLd({
         "@type": "Organization",
         "@id": ORGANIZATION_ID,
         name: siteConfig.name,
+        // Visible as the footer brand name + tagline and at the start of
+        // the brand description.
+        alternateName: `${siteConfig.name} — ${siteConfig.tagline}`,
         url: siteConfig.siteUrl,
-        description: organizationDescription,
+        description: brand.description,
+        knowsAbout: brand.knowsAbout,
+        areaServed: brand.areaServed,
         logo: {
           "@type": "ImageObject",
           url: absoluteUrl("/images/logo.jpg"),
@@ -66,21 +73,19 @@ export async function buildPageJsonLd({
         },
         email: siteConfig.email,
         telephone: siteConfig.phoneHref,
+        // LinkedIn (company page) is deliberately left out until its outdated
+        // positioning is updated by hand; see CLAUDE.md → SEO.
         sameAs: [siteConfig.instagram, siteConfig.facebook],
-        ...(founder && { founder: { "@id": FOUNDER_ID } }),
+        founder: { "@id": FOUNDER_ID },
       },
       // No sameAs: the Instagram/Facebook profiles on the site belong to the brand, not the person.
-      ...(founder
-        ? [
-            {
-              "@type": "Person",
-              "@id": FOUNDER_ID,
-              name: founder.name,
-              jobTitle: founder.role,
-              worksFor: organizationRef,
-            },
-          ]
-        : []),
+      {
+        "@type": "Person",
+        "@id": FOUNDER_ID,
+        name: founder.name,
+        jobTitle: founder.role,
+        worksFor: organizationRef,
+      },
       {
         "@type": "WebSite",
         "@id": WEBSITE_ID,
