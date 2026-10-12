@@ -363,7 +363,13 @@
 
 ### LinkedIn — додано на сайт
 
-Додано після того, як власниця оновила company page.
+Додано після того, як власниця оновила company page і перевірила її публічно (2026-10-12). Публічна версія перевірена й тут:
+- Заголовок: «MY PERSON | Brand Visual Studio | Strategy».
+- Опис: офіційний опис бренду «MY PERSON — Visual Narratives Studio…».
+- Галузь: Design Services.
+- Прибрано: позиціонування SMM / personal branding, старі мовні описи, Telegram, стару email-адресу.
+- Основна локація лишається Częstochowa: це обов'язкове поле LinkedIn, а не застаріле позиціонування. Сайт локацію не вказує і не суперечить їй.
+
 - Посилання `https://www.linkedin.com/company/mypersonagency/` стоїть у футері поруч з Instagram і Facebook. Воно одне, з `siteConfig.linkedin`, тому однакове в PL і EN.
 - Посилання є в `Organization.sameAs` (Instagram, Facebook, LinkedIn).
 - У `Person.sameAs` його немає.
