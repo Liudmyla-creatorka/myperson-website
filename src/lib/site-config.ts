@@ -9,5 +9,6 @@ export const siteConfig = {
   whatsapp: "https://wa.me/48534029978",
   instagram: "https://www.instagram.com/myperson_creative/",
   facebook: "https://www.facebook.com/profile.php?id=61578941157869",
+  linkedin: "https://www.linkedin.com/company/mypersonagency/",
   tallyUrl: "https://tally.so/r/RGLp2J",
 } as const;

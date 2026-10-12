@@ -120,6 +120,11 @@ export interface FounderContent {
   role: string;
 }
 
-export interface FooterContent {
+/** The official brand description, shown in the footer of every page and
+ *  used as the Organization description in JSON-LD. `knowsAbout` and
+ *  `areaServed` must only restate what `description` already says. */
+export interface BrandContent {
   description: string;
+  knowsAbout: string[];
+  areaServed: string;
 }

@@ -7,7 +7,7 @@
     "secondaryCta": { "label": "Skontaktuj się", "href": "/#kontakt" },
     "seo": {
       "title": "MY PERSON — Studio Narracji Wizualnych",
-      "description": "Tożsamość Twojej marki premium przekładam na kinowy język — strony i wizualizacje jak kadr z filmu."
+      "description": "Studio narracji wizualnych: strategia wizualna, brand identity, filmowe kampanie wizualne oraz strony i landing page'e dla marek premium w Polsce i za granicą."
     }
   },
   "portfolio": {
@@ -210,7 +210,15 @@
     "name": "Liudmyla Mykhailova",
     "role": "założycielka i projektantka narracji wizualnych"
   },
-  "footer": {
-    "description": "Wizualna tożsamość, która sprzedaje. Studio wizualne oparte na strategii dla marek premium."
+  "brand": {
+    "description": "MY PERSON — Visual Narratives Studio. Studio narracji wizualnych, które łączy strategię wizualną, brand identity, filmowe kampanie wizualne oraz projektowanie stron i landing page'y. Produkcję wizualną wspierają narzędzia AI, ale kierunek artystyczny i decyzje pozostają po stronie człowieka. Pracuje z markami premium w Polsce i za granicą.",
+    "knowsAbout": [
+      "strategia wizualna",
+      "brand identity",
+      "filmowe kampanie wizualne",
+      "projektowanie stron i landing page'y",
+      "produkcja wizualna wspierana narzędziami AI"
+    ],
+    "areaServed": "Polska i za granicą"
   }
 }

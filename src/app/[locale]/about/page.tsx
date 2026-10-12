@@ -38,7 +38,6 @@ export default async function AboutPage({ params }: PageProps) {
     path: "/about",
     ...pageSeo(copy),
     pageType: "AboutPage",
-    founder,
   });
 
   return (

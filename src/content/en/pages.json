@@ -7,7 +7,7 @@
     "secondaryCta": { "label": "Get in Touch", "href": "/#kontakt" },
     "seo": {
       "title": "MY PERSON — Visual Narratives Studio",
-      "description": "A visual narratives studio. Cinematic stories for premium brands. A visual identity that sells."
+      "description": "Visual narratives studio: visual strategy, brand identity, cinematic visual campaigns, and websites and landing pages for premium brands in Poland and internationally."
     }
   },
   "portfolio": {
@@ -210,7 +210,15 @@
     "name": "Liudmyla Mykhailova",
     "role": "founder and visual narrative designer"
   },
-  "footer": {
-    "description": "A visual identity that sells. A visual studio built on strategy for premium brands."
+  "brand": {
+    "description": "MY PERSON — Visual Narratives Studio. A visual narratives studio that combines visual strategy, brand identity, cinematic visual campaigns, and website and landing page design. Visual production is AI-assisted, but art direction and decisions remain in human hands. Works with premium brands in Poland and internationally.",
+    "knowsAbout": [
+      "visual strategy",
+      "brand identity",
+      "cinematic visual campaigns",
+      "website and landing page design",
+      "AI-assisted visual production"
+    ],
+    "areaServed": "Poland and internationally"
   }
 }

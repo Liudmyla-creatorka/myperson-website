@@ -8,6 +8,6 @@ export {
   getHomeBeforeAfter,
   getHomePhilosophy,
   getHomeContact,
-  getFooterContent,
+  getBrandContent,
   getFounder,
 } from "./pages";
