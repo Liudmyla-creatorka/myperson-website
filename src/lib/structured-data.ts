@@ -73,9 +73,8 @@ export async function buildPageJsonLd({
         },
         email: siteConfig.email,
         telephone: siteConfig.phoneHref,
-        // LinkedIn (company page) is deliberately left out until its outdated
-        // positioning is updated by hand; see CLAUDE.md → SEO.
-        sameAs: [siteConfig.instagram, siteConfig.facebook],
+        // The brand's own profiles only; the same links are in the footer.
+        sameAs: [siteConfig.instagram, siteConfig.facebook, siteConfig.linkedin],
         founder: { "@id": FOUNDER_ID },
       },
       // No sameAs: the Instagram/Facebook profiles on the site belong to the brand, not the person.

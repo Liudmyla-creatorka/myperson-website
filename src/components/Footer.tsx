@@ -72,6 +72,14 @@ export async function Footer({ locale }: FooterProps) {
           >
             Facebook
           </a>
+          <a
+            href={siteConfig.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.link}
+          >
+            LinkedIn
+          </a>
         </div>
       </Container>
 

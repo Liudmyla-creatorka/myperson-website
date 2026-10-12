@@ -188,7 +188,7 @@
 | Organization: назва, логотип | Шапка (логотип + «MY PERSON») |
 | Person (`name`, `jobTitle`) + Organization `founder` — усі сторінки | Видимий рядок під вступом на `/about` «Liudmyla Mykhailova — …», побуквено. На інших сторінках ім'я не показується — виняток, погоджений власницею |
 | Organization: `description`, `alternateName`, `knowsAbout`, `areaServed` | Офіційний опис бренду в футері кожної сторінки; `alternateName` — назва + підзаголовок у футері |
-| Organization: `email`, `telephone`, `sameAs` | Посилання в футері (email, телефон, Instagram, Facebook) |
+| Organization: `email`, `telephone`, `sameAs` | Посилання в футері (email, телефон, Instagram, Facebook, LinkedIn) |
 | Service (`/services`): назва + опис (5 послуг) | Картки послуг, побуквено; 5-та також має `url` і той самий `@id`, що й Service на `/landing-pages` |
 | Service (`/landing-pages`): назва + опис | Пункт меню «Strony i Landing Page'y» + вступ під H1, побуквено |
 | CreativeWork: `name`, `alternativeHeadline`, `description`, `image` | Модалка кадру: заголовок, підзаголовок, опис, фото — побуквено |
@@ -360,6 +360,13 @@
 - Website: `https://myperson.agency`.
 - Контакти: `kontakt@myperson.agency`, +48 534 029 978.
 - Особистий профіль засновниці: місце роботи — сторінка компанії MY PERSON.
+
+### LinkedIn — додано на сайт
+
+Додано після того, як власниця оновила company page.
+- Посилання `https://www.linkedin.com/company/mypersonagency/` стоїть у футері поруч з Instagram і Facebook. Воно одне, з `siteConfig.linkedin`, тому однакове в PL і EN.
+- Посилання є в `Organization.sameAs` (Instagram, Facebook, LinkedIn).
+- У `Person.sameAs` його немає.
 
 ## Рекомендації для майбутньої послуги «AI-ready сайт» для клієнтів
 
